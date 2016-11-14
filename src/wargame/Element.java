@@ -1,6 +1,7 @@
 package wargame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class Element
 {
@@ -26,5 +27,19 @@ public class Element
 	public Position getPosition()
 	{
 		return pos;
+	}
+	
+	public void setPosition(Position newpos)
+	{
+		pos=newpos;
+	}
+	public void seDessiner(Graphics g){
+		g.setColor(couleur);
+		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,18,18);
+		//.... On dessine un carré à la position pos de 20x20 ?
+	}
+	public String toString() 
+	{ 
+		return "("+this.getPosition().getX()+","+this.getPosition().getY()+" VIDE"; 
 	}
 }

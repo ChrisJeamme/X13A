@@ -3,21 +3,20 @@ package wargame;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Heros extends Soldat implements IConfig,ISoldat
-{
-	private final TypesH TYPE;
+public class Monstre extends Soldat {
+	private final TypesM TYPE;
 	
-	public Heros(int x, int y)
+	public Monstre(int x, int y)
 	{
 		super(x,y);
-		TYPE=TypesH.getTypeHAlea();
+		TYPE=TypesM.getTypeMAlea();
 		points_de_vie=TYPE.getPoints();
 		portee_visuelle=TYPE.getPortee();
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
-		couleur=Color.YELLOW;
+		couleur = Color.ORANGE;
 	}
-	public Heros(TypesH type,int x, int y)
+	public Monstre(TypesM type,int x, int y)
 	{
 		super(x,y);
 		TYPE=type;
@@ -25,15 +24,12 @@ public class Heros extends Soldat implements IConfig,ISoldat
 		portee_visuelle=TYPE.getPortee();
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
-		couleur=Color.YELLOW;
-		
-		System.out.println("BIP "+couleur);
+		couleur = Color.ORANGE;
 	}
 	public String toString() 
 	{ 
 		return "("+this.getPosition().getX()+","+this.getPosition().getY()+") "+TYPE+" ("+points_de_vie+"PV/"+TYPE.getPoints()+")"; 
 	}
-	
 	public void seDessiner(Graphics g){
 		g.setColor(couleur);
 		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,18,18);

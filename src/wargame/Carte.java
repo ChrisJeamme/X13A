@@ -2,20 +2,33 @@ package wargame;
 
 import java.awt.Graphics;
 
+import wargame.ISoldat.TypesH;
+import wargame.Obstacle.TypeObstacle;
+
 public class Carte implements ICarte, IConfig
 {
 	public Element[][] caseCarte;
 
 	public Carte()
 	{
+		System.out.println("TEST");
+		
 		caseCarte = new Element[IConfig.LARGEUR_CARTE][IConfig.HAUTEUR_CARTE];
 
-		for(int i=0; i<IConfig.HAUTEUR_CARTE; i++)
+		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 		{
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 			{
-				caseCarte[j][i] = new Element(j,i);
+				caseCarte[i][j] = new Element(i,j);
 			}
+		}
+		
+		for(int i=0; i<25; i++)
+		{
+			Position p=trouvePositionVide();
+			//caseCarte[p.getX()][p.getY()]=new Obstacle(TypeObstacle.getObstacleAlea(),p);
+			caseCarte[p.getX()][p.getY()]=new Heros(TypesH.getTypeHAlea(),p.getX(),p.getY());
+			System.out.println(caseCarte[p.getX()][p.getY()].couleur);
 		}
 	}
 	
@@ -139,12 +152,22 @@ public class Carte implements ICarte, IConfig
 
 	public void mort(Soldat perso)
 	{
-		
+		caseCarte[perso.getPosition().getX()][perso.getPosition().getY()]=new Element(perso.getPosition());
 	}
 	
 	public boolean actionHeros(Position pos, Position pos2)
 	{
-		return false;
+		if (pos2.estValide())
+		{
+			if (estVide(pos2))
+				return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);
+			else 
+			{   /* J'ai le droit sans verifier la portee ? */
+				((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]);
+				return true;
+			}
+		}
+		else return false;
 	}
 	
 	public void jouerSoldats(PanneauJeu pj)
@@ -154,7 +177,13 @@ public class Carte implements ICarte, IConfig
 	
 	public void toutDessiner(Graphics g)
 	{
-		
+		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
+		{
+			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
+			{
+				caseCarte[i][j].seDessiner(g);
+			}
+		}
 	}
 	
 }

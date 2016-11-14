@@ -14,7 +14,15 @@ public class Obstacle extends Element implements IConfig
 		}
 	}
 	private TypeObstacle TYPE;
-	public boolean vide = false;
-	Obstacle(TypeObstacle type, Position pos) { TYPE = type; this.pos = pos; }
+	Obstacle(TypeObstacle type, Position pos) 
+	{ 
+		super(pos);
+		TYPE = type; 
+		vide=false;
+	}
 	public String toString() { return ""+TYPE; }
+	public void seDessiner(Graphics g){
+		g.setColor(couleur);
+		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,18,18);
+	}
 }
