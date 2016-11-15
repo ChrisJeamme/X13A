@@ -30,7 +30,7 @@ public class Test1 extends JFrame
 	}
 	public static void main(String[] args)
 	{
-		JFrame frame=new Test1();
+		JFrame frame = new Test1();
 		//c = carte
 		//c.caseCarte = tableau d'éléments (cases de la carte)
 		//c.caseCarte[0][0] = case tout en haut à gauche de la carte
@@ -38,16 +38,20 @@ public class Test1 extends JFrame
 		
 		Carte c = new Carte();
 		
-		log.info(c.caseCarte[10][2]);
-		log.info(c.caseCarte[10][2].getPosition().getX());
+		//log.info(c.caseCarte[10][2]);
+		//log.info(c.caseCarte[10][2].getPosition().getX());
+
+		//for(TypesH h: TypesH.values())
+		//	System.out.println(h+" "+h.getPoints()+" "+h.getPortee()+" "+h.getPuissance()+" "+h.getTir());
+		
+		
+		
+		
 		
 		/*log.info("coucou");
 		log.warn("Attention");
 		log.error("Et merde...");*/
 		
-		for(TypesH h: TypesH.values())
-			System.out.println(h+" "+h.getPoints()+" "+h.getPortee()+" "+h.getPuissance()+" "+h.getTir());
-
 	}
 
 }
