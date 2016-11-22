@@ -32,6 +32,7 @@ public class Monstre extends Soldat {
 	}
 	public void seDessiner(Graphics g){
 		g.setColor(couleur);
-		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,18,18);
+		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
+		//.... On dessine un carré à la position pos de 20x20 ?
 	}
 }

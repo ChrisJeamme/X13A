@@ -27,7 +27,6 @@ public class Heros extends Soldat implements IConfig,ISoldat
 		tir=TYPE.getTir();
 		couleur=Color.YELLOW;
 		
-		System.out.println("BIP "+couleur);
 	}
 	public String toString() 
 	{ 
@@ -36,6 +35,7 @@ public class Heros extends Soldat implements IConfig,ISoldat
 	
 	public void seDessiner(Graphics g){
 		g.setColor(couleur);
-		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,18,18);
+		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
+		//.... On dessine un carré à la position pos de 20x20 ?
 	}
 }

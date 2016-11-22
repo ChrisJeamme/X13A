@@ -1,18 +1,17 @@
 package wargame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import wargame.ISoldat.TypesH;
+import wargame.ISoldat.TypesM;
 import wargame.Obstacle.TypeObstacle;
 
 public class Carte implements ICarte, IConfig
 {
 	public Element[][] caseCarte;
-
 	public Carte()
 	{
-		System.out.println("TEST");
-		
 		caseCarte = new Element[IConfig.LARGEUR_CARTE][IConfig.HAUTEUR_CARTE];
 
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
@@ -23,15 +22,41 @@ public class Carte implements ICarte, IConfig
 			}
 		}
 		
-		for(int i=0; i<25; i++)
+		for(int i=0; i<IConfig.NB_OBSTACLES; i++)
 		{
 			Position p=trouvePositionVide();
-			//caseCarte[p.getX()][p.getY()]=new Obstacle(TypeObstacle.getObstacleAlea(),p);
-			caseCarte[p.getX()][p.getY()]=new Heros(TypesH.getTypeHAlea(),p.getX(),p.getY());
-			System.out.println(caseCarte[p.getX()][p.getY()].couleur);
+			caseCarte[p.getX()][p.getY()]=new Obstacle(TypeObstacle.getObstacleAlea(),p);
 		}
+		for(int i=0; i<IConfig.NB_HEROS; i++)
+		{
+			Position p=trouvePositionVide();
+			if (p.getX()<IConfig.LARGEUR_CARTE/2)
+				i--;
+			else
+			{
+				Position test=trouvePositionVide(p);
+				if (test.getX()==-1 && test.getY()==-1)
+					i--;
+				else caseCarte[p.getX()][p.getY()]=new Heros(TypesH.getTypeHAlea(),p.getX(),p.getY());
+			}
+		}
+		for(int i=0; i<IConfig.NB_MONSTRES; i++)
+		{
+			Position p=trouvePositionVide();
+			if (p.getX()>IConfig.LARGEUR_CARTE/2)
+				i--;
+			else
+			{
+				Position test=trouvePositionVide(p);
+				if (test.getX()==-1 && test.getY()==-1)
+					i--;
+				else caseCarte[p.getX()][p.getY()]=new Monstre(TypesM.getTypeMAlea(),p.getX(),p.getY());
+			}
+		}
+		
+		//caseCarte[8][8]=new Heros(TypesH.getTypeHAlea(),8,8);
 	}
-	
+
 	public Element getElement(Position pos)
 	{
 		int x = pos.getX();
@@ -41,20 +66,14 @@ public class Carte implements ICarte, IConfig
 	}
 	
 	public Position trouvePositionVide() // Trouve aléatoirement une position vide sur la carte
-	{
-		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
+	{  
+		int x=(int)(Math.random()*IConfig.LARGEUR_CARTE), y=(int)(Math.random()*IConfig.HAUTEUR_CARTE);
+		while (!(caseCarte[x][y].estVide()))
 		{
-			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
-			{
-				if (caseCarte[i][j].estVide())
-				{
-					return new Position(i,j);
-				}
-			}
+			x=(int)(Math.random()*IConfig.LARGEUR_CARTE);
+			y=(int)(Math.random()*IConfig.HAUTEUR_CARTE);
 		}
-		
-		System.out.println("Aucune position vide sur la carte");
-		return null;
+		return new Position(x,y);
 	}
 	
 	public Position trouvePositionVide(Position pos) // Trouve une position vide choisie aléatoirement parmi les 8 positions adjacentes de pos
@@ -63,6 +82,9 @@ public class Carte implements ICarte, IConfig
 		int y = pos.getY();
 		
 		//Vérification que le cadre des positions adjacentes ne dépassent pas une limite
+		
+		/* J'ai rien compris a ça mais erreur donc j'en fais une autre en attendant 
+		 
 		int limiteHaut = (y+1>=0)? y+1 : 0;
 		int limiteBas = (y-1<=IConfig.HAUTEUR_CARTE)? y-1 : IConfig.HAUTEUR_CARTE;
 		int limiteGauche = (x+1>=0)? x+1 : 0;
@@ -78,7 +100,15 @@ public class Carte implements ICarte, IConfig
 				}
 			}
 		}
-		
+		*/
+		for(int i=x-1; i<=x+1; i++)
+		{
+			if (i<IConfig.LARGEUR_CARTE && i>=0)
+				for(int j=y-1; j<=y+1; j++)
+					if (j<IConfig.HAUTEUR_CARTE && j>=0)
+						if (caseCarte[i][j].estVide())
+							return new Position(i,j);
+		}
 		//Non trouvé
 		System.out.println("Il n'y a aucune case vide autour");
 
@@ -177,11 +207,31 @@ public class Carte implements ICarte, IConfig
 	
 	public void toutDessiner(Graphics g)
 	{
+		g.setColor(new Color(50,90,100));
+		g.fillRect(0,0,IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE);
+
+		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
+			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
+				caseCarte[i][j].visible=false;
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 		{
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 			{
-				caseCarte[i][j].seDessiner(g);
+				if (caseCarte[i][j] instanceof Heros){
+					/* Jean-Code Degueux, pas fait un carré je trouve ça plus sympa*/
+					for (int k=-((Soldat)caseCarte[i][j]).getPortee(); k<=((Soldat)caseCarte[i][j]).getPortee();k++){
+						for (int l=0; l<=((Soldat)caseCarte[i][j]).getPortee()-(Math.abs(k));l++){
+							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i+l<IConfig.LARGEUR_CARTE){
+								caseCarte[i+l][j+k].visible=true;
+								caseCarte[i+l][j+k].seDessiner(g);
+							}
+							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i-l>=0){
+								caseCarte[i-l][j+k].visible=true;
+								caseCarte[i-l][j+k].seDessiner(g);
+							}
+						}
+					}
+				}
 			}
 		}
 	}

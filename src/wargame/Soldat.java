@@ -6,7 +6,7 @@ import wargame.ISoldat.TypesH;
 import wargame.ISoldat.TypesM;
 import wargame.Obstacle.TypeObstacle;
 
-public class Soldat extends Element implements ISoldat, IConfig
+public abstract class Soldat extends Element implements ISoldat, IConfig
 {
 	protected int points_de_vie;
 	protected int portee_visuelle;
