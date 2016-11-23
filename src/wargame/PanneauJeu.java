@@ -86,6 +86,7 @@ public class PanneauJeu extends JPanel
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		labelAlerte.setText(c.informations);
 		c.toutDessiner(g);
 	}
 }

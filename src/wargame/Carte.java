@@ -10,6 +10,8 @@ import wargame.Obstacle.TypeObstacle;
 public class Carte implements ICarte, IConfig
 {
 	public Element[][] caseCarte;
+	public String informations = "";
+	
 	public Carte()
 	{
 		caseCarte = new Element[IConfig.LARGEUR_CARTE][IConfig.HAUTEUR_CARTE];
@@ -199,11 +201,11 @@ public class Carte implements ICarte, IConfig
 		{
 			if (estVide(pos2))	//Case vide
 			{
-				System.out.println("La position 2 est vide");
+				informations = "La position est vide";
 				return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);
 			}
 			else 				
-			{   /* J'ai le droit sans verifier la portee ? */System.out.println("La position 2 est un ennemi");
+			{   /* J'ai le droit sans verifier la portee ? */informations = "La position est un soldat";
 				if(getElement(pos2) instanceof Soldat)	//Soldat ennemi
 				{
 					if (((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]))	//Si combat gagné
@@ -213,13 +215,13 @@ public class Carte implements ICarte, IConfig
 				}
 				else	//Obstacle
 				{
-					System.out.println("La position 2 est un obstacle");
+					informations = "La position est un obstacle";
 					return false;
 				}
 			}
 		}
 		else
-			System.out.println("La position 2 est en dehors de la carte");return false;		//Pas une position valide
+			System.out.println("La position est en dehors de la carte");return false;		//Pas une position valide
 	}
 	
 	public void jouerSoldats(PanneauJeu pj)
