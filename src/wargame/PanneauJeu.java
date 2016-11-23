@@ -8,42 +8,57 @@ public class PanneauJeu extends JPanel
 {
 	/* Ceci est dégueulasse et ne fonctionnera probablement pas */
 	static final long serialVersionUID=0; 
-	private Carte c=new Carte();
-	private JLabel label=new JLabel();
-	public PanneauJeu(){	
+	private Carte c = new Carte();
+	private JLabel labelInfo = new JLabel();
+	private JLabel labelAlerte = new JLabel();
+	
+	public PanneauJeu()
+	{	
 		setLayout(new BorderLayout());
 		
 		setBackground(new Color(200,200,200));
 		setOpaque(true);
 		setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+70));
 
-		addMouseMotionListener(new MouseMotionAdapter(){
-			public void mouseMoved(MouseEvent e){
-				if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE)
+		addMouseMotionListener(new MouseMotionAdapter()
+		{
+			public void mouseMoved(MouseEvent e)
+			{
+				if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE)	//TODO à commenter
 					if(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].visible==true)
-						label.setText(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].toString());
-				else label.setText("");
+						labelInfo.setText(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].toString());
+				else labelInfo.setText("");
 			}
 		});
 		
-		addMouseListener(new MouseAdapter(){
-			Heros h;
+		addMouseListener(new MouseAdapter()
+		{
+			Heros h; //Héros selectionné
 			int test;
-			public void mousePressed(MouseEvent e){
-				if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros){
-					h=(Heros)c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
+			public void mousePressed(MouseEvent e)
+			{
+				if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
+				{
+					h = (Heros)c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
 					test=1;
+					labelAlerte.setText("Mouvement d'un héros");
 				}
 			}
-			public void mouseReleased(MouseEvent e){
+			public void mouseReleased(MouseEvent e)
+			{
+				labelAlerte.setText("");
+				
 				/*Test, pas complet du tout aucune verif faite*/
-				if (test==1){
-					Position p=h.getPosition();
+				if (test==1)
+				{
+					Position p = h.getPosition();
 					System.out.println(h.getPosition().getX()+" "+h.getPosition().getY());
 					h.setPosition(new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
 					System.out.println(h.getPosition().getX()+" "+h.getPosition().getY());
-					c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE]=h;
-					c.caseCarte[p.getX()][p.getY()]=new Element(p.getX(),p.getY());
+					//c.actionHeros(h.getPosition(), new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)); //On met le héros à la nouvelle case
+					c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] = h;
+					c.caseCarte[p.getX()][p.getY()] = new Element(p.getX(),p.getY());
+					
 					c.toutDessiner(getGraphics());
 					if (c.caseCarte[p.getX()][p.getY()] instanceof Heros)
 						System.out.print("BLBLBLBBLBLBL");
@@ -53,17 +68,26 @@ public class PanneauJeu extends JPanel
 			}
 		});
 		
-		label.setOpaque(true);
-		label.setBackground(Color.WHITE);
-		label.setPreferredSize(new Dimension(500,70));	
-		label.setHorizontalAlignment(JLabel.CENTER);
-		label.setVerticalAlignment(JLabel.CENTER);
-		Font font = new Font("Arial",Font.BOLD,17);
-		label.setFont(font);
-		add(label,BorderLayout.SOUTH);
+		labelInfo.setOpaque(true);
+		labelInfo.setBackground(Color.WHITE);
+		labelInfo.setPreferredSize(new Dimension(500,70));	
+		labelInfo.setHorizontalAlignment(JLabel.CENTER);
+		labelInfo.setVerticalAlignment(JLabel.CENTER);
+		Font font1 = new Font("Calibri",Font.BOLD,17);
+		labelInfo.setFont(font1);
+		add(labelInfo,BorderLayout.SOUTH);
+		
+		labelAlerte.setPreferredSize(new Dimension(500,70));	
+		labelAlerte.setHorizontalAlignment(JLabel.CENTER);
+		labelAlerte.setVerticalAlignment(JLabel.CENTER);
+		Font font2 = new Font("Calibri",Font.BOLD,28);
+		labelAlerte.setFont(font2);
+		add(labelAlerte,BorderLayout.NORTH);
 		
 	}
-	public void paintComponent(Graphics g){
+	
+	public void paintComponent(Graphics g)
+	{
 		super.paintComponent(g);
 		c.toutDessiner(g);
 	}

@@ -195,18 +195,29 @@ public class Carte implements ICarte, IConfig
 	/** Demande de déplacer un héros en vérifiant si obstacle / ennemi */
 	public boolean actionHeros(Position pos, Position pos2)
 	{
-		if (pos2.estValide())	//Case vide
+		if (pos2.estValide())	//Case dans la carte
 		{
-			if (estVide(pos2))
+			if (estVide(pos2))	//Case vide
+			{
+				System.out.println("La position 2 est vide");
 				return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);
-			else 				//Soldat ennemi
-			{   /* J'ai le droit sans verifier la portee ? */
-				((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]);
-				//Il faut vérifier l'issu et modifier ici les position selon le cas?
+			}
+			else 				
+			{   /* J'ai le droit sans verifier la portee ? */System.out.println("La position 2 est un ennemi");
+				if(getElement(pos2) instanceof Soldat)	//Soldat ennemi
+				{
+					((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]);
+					//Il faut vérifier l'issu et modifier ici les position selon le cas?
+				}
+				else	//Obstacle
+				{
+					System.out.println("La position 2 est un obstacle");
+				}
 				return true;
 			}
 		}
-		else return false;		//Obstacle
+		else
+			System.out.println("La position 2 est en dehors de la carte");return false;		//Pas une position valide
 	}
 	
 	public void jouerSoldats(PanneauJeu pj)

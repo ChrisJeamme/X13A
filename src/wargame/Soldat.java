@@ -47,18 +47,18 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 	}
 	public void combat(Soldat soldat)
 	{
-		if (this.getPosition().estVoisine(soldat.getPosition()))
+		if (this.getPosition().estVoisine(soldat.getPosition()))	//TODO A commenter
 		{
-			soldat.points_de_vie-=Math.random()*this.puissance;
+			soldat.points_de_vie -= Math.random()*this.puissance;
 			if (soldat.points_de_vie>0)
-				this.points_de_vie-=Math.random()*soldat.puissance;
+				this.points_de_vie -= Math.random()*soldat.puissance;
 			/*Apres appel fonction : verifier si un des deux mort */
 		}
-		else
+	else															//TODO A commenter
 		{
-			soldat.points_de_vie-=Math.random()*this.tir;
+			soldat.points_de_vie -= Math.random()*this.tir;
 			if (soldat.points_de_vie>0)
-				this.points_de_vie-=Math.random()*soldat.tir;
+				this.points_de_vie -= Math.random()*soldat.tir;
 			/*Apres appel fonction : verifier si un des deux mort */
 		}
 	}
