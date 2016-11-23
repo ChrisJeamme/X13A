@@ -52,16 +52,13 @@ public class PanneauJeu extends JPanel
 				if (test==1)
 				{
 					Position p = h.getPosition();
-					System.out.println(h.getPosition().getX()+" "+h.getPosition().getY());
-					h.setPosition(new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
-					System.out.println(h.getPosition().getX()+" "+h.getPosition().getY());
-					//c.actionHeros(h.getPosition(), new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)); //On met le héros à la nouvelle case
-					c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] = h;
-					c.caseCarte[p.getX()][p.getY()] = new Element(p.getX(),p.getY());
-					
+			
+					if (c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)))//Changement carte OK
+					{
+						h.setPosition(new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)); // On change dans le héros
+					}
+
 					c.toutDessiner(getGraphics());
-					if (c.caseCarte[p.getX()][p.getY()] instanceof Heros)
-						System.out.print("BLBLBLBBLBLBL");
 					repaint();
 					test=0;
 				}

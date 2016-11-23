@@ -45,7 +45,9 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 	{
 		
 	}
-	public void combat(Soldat soldat)
+	
+	/** Renvoi vrai si le combat est gagné par le soldat courant */
+	public boolean combat(Soldat soldat)
 	{
 		if (this.getPosition().estVoisine(soldat.getPosition()))	//TODO A commenter
 		{
@@ -54,13 +56,15 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 				this.points_de_vie -= Math.random()*soldat.puissance;
 			/*Apres appel fonction : verifier si un des deux mort */
 		}
-	else															//TODO A commenter
+		else															//TODO A commenter
 		{
 			soldat.points_de_vie -= Math.random()*this.tir;
 			if (soldat.points_de_vie>0)
 				this.points_de_vie -= Math.random()*soldat.tir;
 			/*Apres appel fonction : verifier si un des deux mort */
 		}
+		
+		return true; //On retourne oui si le courant a gagné, il faudra le faire comme il faut là c'est pour test
 	}
 	public void seDeplace(Position newPos)
 	{

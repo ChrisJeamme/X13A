@@ -206,14 +206,16 @@ public class Carte implements ICarte, IConfig
 			{   /* J'ai le droit sans verifier la portee ? */System.out.println("La position 2 est un ennemi");
 				if(getElement(pos2) instanceof Soldat)	//Soldat ennemi
 				{
-					((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]);
-					//Il faut vérifier l'issu et modifier ici les position selon le cas?
+					if (((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]))	//Si combat gagné
+					{
+						return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);	//On déplace et on renvoi vrai
+					}
 				}
 				else	//Obstacle
 				{
 					System.out.println("La position 2 est un obstacle");
+					return false;
 				}
-				return true;
 			}
 		}
 		else
