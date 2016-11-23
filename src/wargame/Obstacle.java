@@ -7,7 +7,7 @@ public class Obstacle extends Element implements IConfig
 	{
 		ROCHER (COULEUR_ROCHER), FORET (COULEUR_FORET), EAU (COULEUR_EAU);
 		private final Color COULEUR;
-		TypeObstacle(Color couleur) { COULEUR = couleur; }
+		TypeObstacle(Color couleur) { COULEUR = couleur;}
 		public static TypeObstacle getObstacleAlea()
 		{
 			return values()[(int)(Math.random()*values().length)];
@@ -19,10 +19,12 @@ public class Obstacle extends Element implements IConfig
 		super(pos);
 		TYPE = type; 
 		vide=false;
+		couleur=TYPE.COULEUR;
 	}
 	public String toString() { return ""+TYPE; }
 	public void seDessiner(Graphics g){
 		g.setColor(couleur);
-		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,18,18);
+		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
+		//.... On dessine un carré à la position pos de 20x20 ?
 	}
 }

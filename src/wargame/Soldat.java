@@ -6,7 +6,7 @@ import wargame.ISoldat.TypesH;
 import wargame.ISoldat.TypesM;
 import wargame.Obstacle.TypeObstacle;
 
-public class Soldat extends Element implements ISoldat, IConfig
+public abstract class Soldat extends Element implements ISoldat, IConfig
 {
 	protected int points_de_vie;
 	protected int portee_visuelle;
@@ -45,22 +45,26 @@ public class Soldat extends Element implements ISoldat, IConfig
 	{
 		
 	}
-	public void combat(Soldat soldat)
+	
+	/** Renvoi vrai si le combat est gagné par le soldat courant */
+	public boolean combat(Soldat soldat)
 	{
-		if (this.getPosition().estVoisine(soldat.getPosition()))
+		if (this.getPosition().estVoisine(soldat.getPosition()))	//TODO A commenter
 		{
-			soldat.points_de_vie-=Math.random()*this.puissance;
+			soldat.points_de_vie -= Math.random()*this.puissance;
 			if (soldat.points_de_vie>0)
-				this.points_de_vie-=Math.random()*soldat.puissance;
+				this.points_de_vie -= Math.random()*soldat.puissance;
 			/*Apres appel fonction : verifier si un des deux mort */
 		}
-		else
+		else															//TODO A commenter
 		{
-			soldat.points_de_vie-=Math.random()*this.tir;
+			soldat.points_de_vie -= Math.random()*this.tir;
 			if (soldat.points_de_vie>0)
-				this.points_de_vie-=Math.random()*soldat.tir;
+				this.points_de_vie -= Math.random()*soldat.tir;
 			/*Apres appel fonction : verifier si un des deux mort */
 		}
+		
+		return true; //On retourne oui si le courant a gagné, il faudra le faire comme il faut là c'est pour test
 	}
 	public void seDeplace(Position newPos)
 	{

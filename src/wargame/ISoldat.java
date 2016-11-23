@@ -42,6 +42,6 @@ public interface ISoldat
 	}
 	int getPoints(); int getTour(); int getPortee();
 	void joueTour(int tour);
-	void combat(Soldat soldat);
+	boolean combat(Soldat soldat);	//Combat avec un autre Soldat, renvoi le gagnant
 	void seDeplace(Position newPos);
 }

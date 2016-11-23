@@ -1,30 +1,92 @@
 package wargame;
 
 import java.awt.*;
-
+import java.awt.event.*;
 import javax.swing.*;
 
 public class PanneauJeu extends JPanel
 {
 	/* Ceci est dégueulasse et ne fonctionnera probablement pas */
 	static final long serialVersionUID=0; 
-	private Carte c;
-	public PanneauJeu(){/*
-		setLayout(new GridLayout(IConfig.HAUTEUR_CARTE,IConfig.LARGEUR_CARTE));
-		for(int i=0;i<IConfig.LARGEUR_CARTE;i++)
-			for(int j=0;j<IConfig.HAUTEUR_CARTE;j++){
-				JButton jb=new JButton("");
-				jb.setPreferredSize(new Dimension(20,20));
-				add(jb);
-		}*/
+	private Carte c = new Carte();
+	private JLabel labelInfo = new JLabel();
+	private JLabel labelAlerte = new JLabel();
+	
+	public PanneauJeu()
+	{	
+		setLayout(new BorderLayout());
+		
 		setBackground(new Color(200,200,200));
 		setOpaque(true);
-		setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+50));
+		setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+70));
 
+		addMouseMotionListener(new MouseMotionAdapter()
+		{
+			public void mouseMoved(MouseEvent e)
+			{
+				if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE)	//TODO à commenter
+					if(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].visible==true)
+						labelInfo.setText(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].toString());
+				else labelInfo.setText("");
+			}
+		});
+		
+		addMouseListener(new MouseAdapter()
+		{
+			Heros h; //Héros selectionné
+			int test;
+			public void mousePressed(MouseEvent e)
+			{
+				if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
+				{
+					h = (Heros)c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
+					test=1;
+					labelAlerte.setText("Mouvement d'un héros");
+				}
+			}
+			public void mouseReleased(MouseEvent e)
+			{
+				labelAlerte.setText("");
+				
+				/*Test, pas complet du tout aucune verif faite*/
+				if (test==1)
+				{
+					Position p = h.getPosition();
+			
+					if (c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)))//Changement carte OK
+					{
+						h.setPosition(new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)); // On change dans le héros
+					}
+
+					c.toutDessiner(getGraphics());
+					repaint();
+					test=0;
+				}
+			}
+		});
+		
+		labelInfo.setOpaque(true);
+		labelInfo.setBackground(Color.WHITE);
+		labelInfo.setPreferredSize(new Dimension(500,70));	
+		labelInfo.setHorizontalAlignment(JLabel.CENTER);
+		labelInfo.setVerticalAlignment(JLabel.CENTER);
+		Font font1 = new Font("Calibri",Font.BOLD,17);
+		labelInfo.setFont(font1);
+		add(labelInfo,BorderLayout.SOUTH);
+		
+		labelAlerte.setPreferredSize(new Dimension(500,70));	
+		labelAlerte.setHorizontalAlignment(JLabel.CENTER);
+		labelAlerte.setVerticalAlignment(JLabel.CENTER);
+		Font font2 = new Font("Calibri",Font.BOLD,28);
+		labelAlerte.setFont(font2);
+		add(labelAlerte,BorderLayout.NORTH);
+		
 	}
-	public void paintComponent(Graphics g){
+	
+	public void paintComponent(Graphics g)
+	{
 		super.paintComponent(g);
-		c=new Carte();
+		labelAlerte.setText(c.informations);
 		c.toutDessiner(g);
 	}
 }
