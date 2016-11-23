@@ -194,31 +194,49 @@ public class Carte implements ICarte, IConfig
 		caseCarte[perso.getPosition().getX()][perso.getPosition().getY()] = new Element(perso.getPosition());
 	}
 	
-	/** Demande de déplacer un héros en vérifiant si obstacle / ennemi */
+	/** Déplacement d'un soldat, renvoi vrai si effecuté et faux sinon (Obstacle, allié, combat perdu)*/
 	public boolean actionHeros(Position pos, Position pos2)
 	{
 		if (pos2.estValide())	//Case dans la carte
 		{
-			if (estVide(pos2))	//Case vide
+			//Case vide
+			
+			if (estVide(pos2))	
 			{
-				informations = "La position est vide";
+				informations = "";
+				//informations = "Changement de position effectué";
 				return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);
 			}
-			else 				
-			{   /* J'ai le droit sans verifier la portee ? */informations = "La position est un soldat";
-				if(getElement(pos2) instanceof Soldat)	//Soldat ennemi
+			
+			//Case non vide		
+			
+				//Héros
+			
+			if(getElement(pos2) instanceof Heros)
+			{
+				informations = "La position est héros allié";
+				return false;
+			}
+	
+				//Ennemi
+			
+			if(getElement(pos2) instanceof Monstre)	
+			{
+				informations = "Combat !";
+				if (((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]))	//Si combat gagné
 				{
-					if (((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]))	//Si combat gagné
-					{
-						return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);	//On déplace et on renvoi vrai
-					}
-				}
-				else	//Obstacle
-				{
-					informations = "La position est un obstacle";
-					return false;
+					return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);	//On déplace et on renvoit vrai
 				}
 			}
+			
+				//Obstacle
+			
+			if(getElement(pos2) instanceof Obstacle) 
+			{
+				informations = "La position est un obstacle";
+				return false;
+			}
+		
 		}
 		else
 			System.out.println("La position est en dehors de la carte");return false;		//Pas une position valide
@@ -242,15 +260,20 @@ public class Carte implements ICarte, IConfig
 		{
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 			{
-				if (caseCarte[i][j] instanceof Heros){
+				if (caseCarte[i][j] instanceof Heros)
+				{
 					/* Jean-Code Degueux, pas fait un carré je trouve ça plus sympa*/
-					for (int k=-((Soldat)caseCarte[i][j]).getPortee(); k<=((Soldat)caseCarte[i][j]).getPortee();k++){
-						for (int l=0; l<=((Soldat)caseCarte[i][j]).getPortee()-(Math.abs(k));l++){
-							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i+l<IConfig.LARGEUR_CARTE){
+					for (int k=-((Soldat)caseCarte[i][j]).getPortee(); k<=((Soldat)caseCarte[i][j]).getPortee();k++)
+					{
+						for (int l=0; l<=((Soldat)caseCarte[i][j]).getPortee()-(Math.abs(k));l++)
+						{
+							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i+l<IConfig.LARGEUR_CARTE)
+							{
 								caseCarte[i+l][j+k].visible=true;
 								caseCarte[i+l][j+k].seDessiner(g);
 							}
-							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i-l>=0){
+							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i-l>=0)
+							{
 								caseCarte[i-l][j+k].visible=true;
 								caseCarte[i-l][j+k].seDessiner(g);
 							}

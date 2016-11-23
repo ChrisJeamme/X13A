@@ -3,7 +3,8 @@ package wargame;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Monstre extends Soldat {
+public class Monstre extends Soldat
+{
 	private final TypesM TYPE;
 	
 	public Monstre(int x, int y)
