@@ -65,7 +65,8 @@ public class Carte implements ICarte, IConfig
 		return caseCarte[x][y];
 	}
 	
-	public Position trouvePositionVide() // Trouve aléatoirement une position vide sur la carte
+	/** Trouve aléatoirement une position vide sur la carte */
+	public Position trouvePositionVide()
 	{  
 		int x=(int)(Math.random()*IConfig.LARGEUR_CARTE), y=(int)(Math.random()*IConfig.HAUTEUR_CARTE);
 		while (!(caseCarte[x][y].estVide()))
@@ -76,7 +77,8 @@ public class Carte implements ICarte, IConfig
 		return new Position(x,y);
 	}
 	
-	public Position trouvePositionVide(Position pos) // Trouve une position vide choisie aléatoirement parmi les 8 positions adjacentes de pos
+	/** Trouve une position vide choisie aléatoirement parmi les 8 positions adjacentes de pos */
+	public Position trouvePositionVide(Position pos)
 	{
 		int x = pos.getX();
 		int y = pos.getY();
@@ -115,7 +117,8 @@ public class Carte implements ICarte, IConfig
 		return new Position(-1,-1); //On renvoi une position invalide dans l'attente de trouver une meilleure solution
 	}
 	
-	public Heros trouveHeros() // Trouve aléatoirement un héros sur la carte
+	/** Trouve aléatoirement un héros sur la carte */
+	public Heros trouveHeros()
 	{
 		for(int i=0; i<=IConfig.LARGEUR_CARTE; i++)
 		{
@@ -131,7 +134,8 @@ public class Carte implements ICarte, IConfig
 		return null;
 	}
 	
-	public Heros trouveHeros(Position pos) // Trouve un héros choisi aléatoirement parmi les 8 positions adjacentes de pos
+	/** Trouve un héros choisi aléatoirement parmi les 8 positions adjacentes de pos */
+	public Heros trouveHeros(Position pos)
 	{
 		int x = pos.getX();
 		int y = pos.getY();
@@ -156,6 +160,7 @@ public class Carte implements ICarte, IConfig
 		return null;
 	}
 	
+	/** Effectue le déplacement du soldat, pas de vérification ! (voir actionHeros) */
 	public boolean deplaceSoldat(Position pos, Soldat soldat)
 	{	
 		int x = soldat.getPosition().getX();
@@ -175,29 +180,33 @@ public class Carte implements ICarte, IConfig
 		return false;
 	}
 	
+	/** Renvoi true si la position pos est vide */
 	private boolean estVide(Position pos)
 	{
 		return (caseCarte[pos.getX()][pos.getY()].estVide());
 	}
 
+	/** Rend mort le soldat */
 	public void mort(Soldat perso)
 	{
-		caseCarte[perso.getPosition().getX()][perso.getPosition().getY()]=new Element(perso.getPosition());
+		caseCarte[perso.getPosition().getX()][perso.getPosition().getY()] = new Element(perso.getPosition());
 	}
 	
+	/** Demande de déplacer un héros en vérifiant si obstacle / ennemi */
 	public boolean actionHeros(Position pos, Position pos2)
 	{
-		if (pos2.estValide())
+		if (pos2.estValide())	//Case vide
 		{
 			if (estVide(pos2))
 				return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);
-			else 
+			else 				//Soldat ennemi
 			{   /* J'ai le droit sans verifier la portee ? */
 				((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]);
+				//Il faut vérifier l'issu et modifier ici les position selon le cas?
 				return true;
 			}
 		}
-		else return false;
+		else return false;		//Obstacle
 	}
 	
 	public void jouerSoldats(PanneauJeu pj)
@@ -205,6 +214,7 @@ public class Carte implements ICarte, IConfig
 		
 	}
 	
+	/** Déssine la carte avec ses éléments */
 	public void toutDessiner(Graphics g)
 	{
 		g.setColor(new Color(50,90,100));
