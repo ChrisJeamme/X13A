@@ -2,12 +2,14 @@ package wargame;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
+
 import javax.swing.*;
 
-public class PanneauJeu extends JPanel
+public class PanneauJeu extends JPanel implements Serializable
 {
-	/* Ceci est dégueulasse et ne fonctionnera probablement pas */
-	static final long serialVersionUID=0; 
+	private static final long serialVersionUID = 1877005263173998764L;
+	
 	private Carte c = new Carte();
 	private JLabel labelInfo = new JLabel();
 	private JLabel labelAlerte = new JLabel();

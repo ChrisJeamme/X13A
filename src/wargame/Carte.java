@@ -2,13 +2,16 @@ package wargame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 
 import wargame.ISoldat.TypesH;
 import wargame.ISoldat.TypesM;
 import wargame.Obstacle.TypeObstacle;
 
-public class Carte implements ICarte, IConfig
+public class Carte implements ICarte, IConfig, Serializable
 {
+	private static final long serialVersionUID = 3933938513841317615L;
+	
 	public Element[][] caseCarte;
 	public String informations = "";
 	

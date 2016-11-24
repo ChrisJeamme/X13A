@@ -28,6 +28,7 @@ public class Test1 extends JFrame
 		pack();
 		setVisible(true);
 	}
+	
 	public static void main(String[] args)
 	{
 		JFrame frame=new Test1();
