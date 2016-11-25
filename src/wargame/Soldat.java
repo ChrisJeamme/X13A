@@ -54,6 +54,8 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 			soldat.points_de_vie -= Math.random()*this.puissance;
 			if (soldat.points_de_vie>0)
 				this.points_de_vie -= Math.random()*soldat.puissance;
+			if (this.points_de_vie<=0)
+				return false;
 			/*Apres appel fonction : verifier si un des deux mort */
 		}
 		else															//TODO A commenter
@@ -61,10 +63,12 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 			soldat.points_de_vie -= Math.random()*this.tir;
 			if (soldat.points_de_vie>0)
 				this.points_de_vie -= Math.random()*soldat.tir;
+			if (this.points_de_vie<=0)
+				return false;
 			/*Apres appel fonction : verifier si un des deux mort */
 		}
 		
-		return true; //On retourne oui si le courant a gagné, il faudra le faire comme il faut là c'est pour test
+		return true;
 	}
 	public void seDeplace(Position newPos)
 	{

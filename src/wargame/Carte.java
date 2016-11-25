@@ -125,13 +125,13 @@ public class Carte implements ICarte, IConfig, Serializable
 	/** Trouve aléatoirement un héros sur la carte */
 	public Heros trouveHeros()
 	{
-		for(int i=0; i<=IConfig.LARGEUR_CARTE; i++)
+		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 		{
-			for(int j=0; j<=IConfig.HAUTEUR_CARTE; j++)
+			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 			{
 				if (caseCarte[i][j] instanceof Heros)
 				{
-					return (Heros) caseCarte[i][j];
+					return (Heros)caseCarte[i][j];
 				}
 			}
 		}
@@ -168,6 +168,12 @@ public class Carte implements ICarte, IConfig, Serializable
 	/** Effectue le déplacement du soldat, pas de vérification ! (voir actionHeros) */
 	public boolean deplaceSoldat(Position pos, Soldat soldat)
 	{	
+		/* On peut se deplace que d'une case */
+		if (pos.distance(soldat.getPosition())!=1)
+		{
+			informations = "Hors de portée";
+			return false;
+		}
 		int x = soldat.getPosition().getX();
 		int y = soldat.getPosition().getY();
 		int newX = pos.getX();
@@ -181,7 +187,6 @@ public class Carte implements ICarte, IConfig, Serializable
 			soldat.seDeplace(pos); //On place le soldat à sa nouvelle position (dans son objet)
 			return true;
 		}
-		
 		return false;
 	}
 	
@@ -194,12 +199,20 @@ public class Carte implements ICarte, IConfig, Serializable
 	/** Rend mort le soldat */
 	public void mort(Soldat perso)
 	{
-		caseCarte[perso.getPosition().getX()][perso.getPosition().getY()] = new Element(perso.getPosition());
+		if (perso.getPoints()<=0)
+			caseCarte[perso.getPosition().getX()][perso.getPosition().getY()] = new Element(perso.getPosition());
 	}
 	
 	/** Déplacement d'un soldat, renvoi vrai si effecuté et faux sinon (Obstacle, allié, combat perdu)*/
 	public boolean actionHeros(Position pos, Position pos2)
 	{
+		/* Futurement a verif si il a deja joué > false */
+		
+		if (!(caseCarte[pos.getX()][pos.getY()] instanceof Heros))
+		{
+			return false;
+		}
+		
 		if (pos2.estValide())	//Case dans la carte
 		{
 			//Case vide
@@ -217,7 +230,7 @@ public class Carte implements ICarte, IConfig, Serializable
 			
 			if(getElement(pos2) instanceof Heros)
 			{
-				informations = "La position est héros allié";
+				informations = "La position est un héros allié";
 				return false;
 			}
 	
@@ -225,24 +238,45 @@ public class Carte implements ICarte, IConfig, Serializable
 			
 			if(getElement(pos2) instanceof Monstre)	
 			{
+				if (pos.distance(pos2)>((Soldat)caseCarte[pos.getX()][pos.getY()]).getPortee())
+				{
+					/* Pour ne pas avoir des infos dans le brouillard de guerre */
+					if (caseCarte[pos2.getX()][pos2.getY()].visible==true)
+						informations= "Ennemi hors de portee";
+					else informations="Hors de portee";
+					return false;
+				}
 				informations = "Combat !";
 				if (((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]))	//Si combat gagné
 				{
-					return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);	//On déplace et on renvoit vrai
+					//return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);	//On déplace et on renvoit vrai
+					/* Non on le deplace pas ?*/
+					if (((Soldat)caseCarte[pos2.getX()][pos2.getY()]).getPoints()<=0)
+						informations = "Monstre mort";
+					mort((Soldat)caseCarte[pos2.getX()][pos2.getY()]); /* Si mort, ça le supprime */
 				}
+				else 
+				{
+					mort((Soldat)caseCarte[pos.getX()][pos.getY()]); /*Heros mort */
+					informations = "Heros mort";
+				}
+				return true;
 			}
 			
-				//Obstacle
+			//Obstacle
 			
 			if(getElement(pos2) instanceof Obstacle) 
-			{
-				informations = "La position est un obstacle";
+			{					
+				if (caseCarte[pos2.getX()][pos2.getY()].visible==true)
+					informations = "La position est un obstacle";
+				else informations="Hors de portee";
 				return false;
 			}
 		
 		}
 		else
-			System.out.println("La position est en dehors de la carte");return false;		//Pas une position valide
+			informations="La position est en dehors de la carte";
+		return false;		//Pas une position valide
 	}
 	
 	public void jouerSoldats(PanneauJeu pj)

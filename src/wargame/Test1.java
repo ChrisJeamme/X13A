@@ -2,6 +2,8 @@ package wargame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import org.apache.log4j.Logger;
 
@@ -10,11 +12,42 @@ import wargame.ISoldat.TypesH;
 public class Test1 extends JFrame
 {
 	private static Logger log = Logger.getLogger(Test1.class);
+	private JPanel p;
 	static final long serialVersionUID=0;
+	private static int test=0;
 	Test1(){
 		super("Ja va Saigner !");
-		PanneauJeu p=new PanneauJeu();
+		/* Rien compris a ce truc c'était pour tester */
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridheight = 50;
+		gbc.gridwidth = 10;
+
+		    
+		p=new LancementJeu();
+		p.setLayout(new GridBagLayout());
 		getContentPane().add(p);
+		
+		JButton lancement=new JButton("Lancer une partie");
+		lancement.setPreferredSize(new Dimension(300,30));
+		p.add(lancement,gbc);
+		
+		JButton chargement=new JButton("Charger une partie");
+		chargement.setPreferredSize(new Dimension(300,30));
+		gbc.gridy = -10;
+		p.add(chargement,gbc);
+		
+		lancement.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e){
+				remove(p);
+				setContentPane(new PanneauJeu());
+				repaint();
+				revalidate();
+			}
+		});
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100,100);
@@ -49,6 +82,11 @@ public class Test1 extends JFrame
 		for(TypesH h: TypesH.values())
 			System.out.println(h+" "+h.getPoints()+" "+h.getPortee()+" "+h.getPuissance()+" "+h.getTir());
 
+		Position p=new Position(0,0);
+		Position p2= new Position(8,5);
+		Position p3= new Position (5,2);
+		System.out.println("Test :"+p.distance(p2)+" "+p2.distance(p3));
+		
 	}
 
 }

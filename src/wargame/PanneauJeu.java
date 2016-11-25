@@ -35,16 +35,16 @@ public class PanneauJeu extends JPanel implements Serializable
 		
 		addMouseListener(new MouseAdapter()
 		{
-			Heros h; //Héros selectionné
+			Element h; //Héros selectionné
 			int test;
 			public void mousePressed(MouseEvent e)
 			{
-				if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
-				{
-					h = (Heros)c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
+				//if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
+				//{
+					h =c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
 					test=1;
 					labelAlerte.setText("Mouvement d'un héros");
-				}
+				//}
 			}
 			public void mouseReleased(MouseEvent e)
 			{
@@ -55,15 +55,19 @@ public class PanneauJeu extends JPanel implements Serializable
 				{
 					Position p = h.getPosition();
 			
-					if (c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)))//Changement carte OK
-					{
-						h.setPosition(new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)); // On change dans le héros
-					}
-
+					c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
+					
 					c.toutDessiner(getGraphics());
+					
 					repaint();
 					test=0;
 				}
+				
+				/*Inutile juste pour tester*/
+				if(c.trouveHeros()==null){
+					System.out.print("Perdu");
+				}
+			
 			}
 		});
 		
@@ -90,5 +94,6 @@ public class PanneauJeu extends JPanel implements Serializable
 		super.paintComponent(g);
 		labelAlerte.setText(c.informations);
 		c.toutDessiner(g);
+	
 	}
 }

@@ -23,4 +23,9 @@ public class Position implements IConfig
 	{
 		return ((Math.abs(x-pos.x)<=1) && (Math.abs(y-pos.y)<=1));
 	}
+	
+	public int distance(Position pos)
+	{
+		return (Math.abs(this.x-pos.x))+(Math.abs(this.y-pos.y));
+	}
 }
