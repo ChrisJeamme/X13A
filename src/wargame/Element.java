@@ -3,26 +3,31 @@ package wargame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
-public class Element
+public class Element implements IConfig
 {
 	public java.awt.Color couleur = Color.WHITE;
+	public Image image;
 	private Position pos;
 	public boolean visible = false;
 	public boolean vide = true;
+	public ImageObserver i;
 	
 	public Element(int x, int y)
 	{
 		pos = new Position(x,y);
+		changerImage(4);
 	}
 	
 	public Element(Position p)
 	{
-		pos = new Position(p.getX(),p.getY());
+		this(p.getX(),p.getY());
 	}
 	
 	public boolean estVide()
@@ -40,27 +45,55 @@ public class Element
 		pos=newpos;
 	}
 	
+	public void changerImage(int typeCase)
+	{
+		int choixAlea;
+		String nomFichier;
+		
+		switch(typeCase)
+		{
+			case 1 : //FORET
+				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_FORET-1)+1;
+				nomFichier = "Foret"+choixAlea;
+				break;
+			case 2: //EAU
+				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_EAU-1)+1;
+				nomFichier = "Eau"+choixAlea;
+				break;
+			case 3: //ROCHER
+				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_ROCHER-1)+1;
+				nomFichier = "Rocher"+choixAlea;
+				break;
+			case 4: //ELEMENT
+				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_HERBE-1)+1;
+				nomFichier = "Herbe"+choixAlea;
+				break;
+			case 5: //MONSTRE
+				nomFichier = "Troll1";
+				break;
+			case 6: //HEROS
+				nomFichier = "Heros1";
+				break;
+			default:
+				nomFichier = "Erreur";
+				System.out.println("Il y a une couille ma couille !");
+				break;
+		}
+		
+		try
+		{
+		      image = ImageIO.read(new File("img/"+nomFichier+".png"));
+		}
+		catch (IOException e){e.printStackTrace();} 
+	}
+	
 	public void seDessiner(Graphics g)
 	{
 		g.setColor(couleur);
-		 try
-		 {
-
-		      Image img = ImageIO.read(new File("img/"+this.getClass().getSimpleName()+".png"));
-
-		      g.drawImage(img, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2, this);
-
-		      //Pour une image de fond
-
-		      //g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-
-		 }
-		 catch (IOException e)
-		 {
-		      e.printStackTrace();
-		 } 
-		 
-		g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
+		//g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
+		
+	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
+		
 		//.... On dessine un carré à la position pos de 20x20 ?
 	}
 	
@@ -68,4 +101,5 @@ public class Element
 	{ 
 		return "("+this.getPosition().getX()+","+this.getPosition().getY()+") "+" VIDE"; 
 	}
+	
 }

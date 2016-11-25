@@ -94,6 +94,5 @@ public class PanneauJeu extends JPanel implements Serializable
 		super.paintComponent(g);
 		labelAlerte.setText(c.informations);
 		c.toutDessiner(g);
-	
 	}
 }

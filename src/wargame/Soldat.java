@@ -1,7 +1,6 @@
 package wargame;
 
 import java.awt.Color;
-
 import wargame.ISoldat.TypesH;
 import wargame.ISoldat.TypesM;
 import wargame.Obstacle.TypeObstacle;

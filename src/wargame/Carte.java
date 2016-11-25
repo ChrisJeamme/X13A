@@ -2,7 +2,13 @@ package wargame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import wargame.ISoldat.TypesH;
 import wargame.ISoldat.TypesM;
@@ -308,11 +314,13 @@ public class Carte implements ICarte, IConfig, Serializable
 							{
 								caseCarte[i+l][j+k].visible=true;
 								caseCarte[i+l][j+k].seDessiner(g);
+							    //g.drawImage(caseCarte[i+l][j+k].image, caseCarte[i+l][j+k].getPosition().getX()*IConfig.NB_PIX_CASE+1, caseCarte[i+l][j+k].getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2, this);
 							}
 							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i-l>=0)
 							{
 								caseCarte[i-l][j+k].visible=true;
 								caseCarte[i-l][j+k].seDessiner(g);
+							    //g.drawImage(caseCarte[i-l][j+k].image, caseCarte[i-l][j+k].getPosition().getX()*IConfig.NB_PIX_CASE+1, caseCarte[i-l][j+k].getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2, this);
 							}
 						}
 					}
