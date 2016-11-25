@@ -21,26 +21,32 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 		vide=false;
 	}
 	
+	/** Renvoi les points de vie */
 	public int getPoints()
 	{
 		return points_de_vie;
 	}
+	
 	public int getTour()
 	{
 		return this.getTour();
 	}
+	
 	public int getPortee()
 	{
 		return portee_visuelle;
 	}
+	
 	public int getPuissance()
 	{
 		return puissance;
 	}
+	
 	public int getTir()
 	{
 		return tir;
 	}
+	
 	public void joueTour(int tour)
 	{
 		
@@ -49,23 +55,22 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 	/** Renvoi vrai si le combat est gagné par le soldat courant */
 	public boolean combat(Soldat soldat)
 	{
-		if (this.getPosition().estVoisine(soldat.getPosition()))	//TODO A commenter
+		if (this.getPosition().estVoisine(soldat.getPosition()))	//A coté de l'ennemi
 		{
 			soldat.points_de_vie -= Math.random()*this.puissance;
 			if (soldat.points_de_vie>0)
-				this.points_de_vie -= Math.random()*soldat.puissance;
-			/*Apres appel fonction : verifier si un des deux mort */
+				this.points_de_vie -= Math.random()*soldat.puissance;			
 		}
-		else															//TODO A commenter
+		else															//A distance de l'ennemi
 		{
 			soldat.points_de_vie -= Math.random()*this.tir;
 			if (soldat.points_de_vie>0)
 				this.points_de_vie -= Math.random()*soldat.tir;
-			/*Apres appel fonction : verifier si un des deux mort */
 		}
 		
-		return true; //On retourne oui si le courant a gagné, il faudra le faire comme il faut là c'est pour test
+		return (getPoints() > 0 && soldat.getPoints() <= 0);	//Vrai si combat gagné
 	}
+	
 	public void seDeplace(Position newPos)
 	{
 		this.setPosition(newPos);
