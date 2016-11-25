@@ -2,12 +2,14 @@ package wargame;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
+
 import javax.swing.*;
 
-public class PanneauJeu extends JPanel
+public class PanneauJeu extends JPanel implements Serializable
 {
-	/* Ceci est dégueulasse et ne fonctionnera probablement pas */
-	static final long serialVersionUID=0; 
+	private static final long serialVersionUID = 1877005263173998764L;
+	
 	private Carte c = new Carte();
 	private JLabel labelInfo = new JLabel();
 	private JLabel labelAlerte = new JLabel();
@@ -33,16 +35,16 @@ public class PanneauJeu extends JPanel
 		
 		addMouseListener(new MouseAdapter()
 		{
-			Heros h; //Héros selectionné
+			Element h; //Héros selectionné
 			int test;
 			public void mousePressed(MouseEvent e)
 			{
-				if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
-				{
-					h = (Heros)c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
+				//if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
+				//{
+					h =c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
 					test=1;
 					labelAlerte.setText("Mouvement d'un héros");
-				}
+				//}
 			}
 			public void mouseReleased(MouseEvent e)
 			{
@@ -53,15 +55,19 @@ public class PanneauJeu extends JPanel
 				{
 					Position p = h.getPosition();
 			
-					if (c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)))//Changement carte OK
-					{
-						h.setPosition(new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE)); // On change dans le héros
-					}
-
+					c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
+					
 					c.toutDessiner(getGraphics());
+					
 					repaint();
 					test=0;
 				}
+				
+				/*Inutile juste pour tester*/
+				if(c.trouveHeros()==null){
+					System.out.print("Perdu");
+				}
+			
 			}
 		});
 		
@@ -88,5 +94,6 @@ public class PanneauJeu extends JPanel
 		super.paintComponent(g);
 		labelAlerte.setText(c.informations);
 		c.toutDessiner(g);
+	
 	}
 }
