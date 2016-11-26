@@ -38,6 +38,12 @@ public class Fenetre extends JFrame
 			public void mouseClicked(MouseEvent e)
 			{
 				remove(p);	//On supprime le menu
+				
+				//Ici je pensais faire
+				//p = new InterfaceChargementJeu();
+				//Qui elle appelle PanneauJeu avec la carte chargé 
+				//Mais comment pourra t-elle se supprimer elle meme?
+				
 				panneau = new PanneauJeu(false); //Panneau sans chargement
 				setContentPane(panneau);
 				repaint();
