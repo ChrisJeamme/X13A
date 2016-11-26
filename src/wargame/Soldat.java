@@ -1,10 +1,5 @@
 package wargame;
 
-import java.awt.Color;
-import wargame.ISoldat.TypesH;
-import wargame.ISoldat.TypesM;
-import wargame.Obstacle.TypeObstacle;
-
 public abstract class Soldat extends Element implements ISoldat, IConfig
 {
 	protected int points_de_vie;

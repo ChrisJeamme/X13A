@@ -14,8 +14,9 @@ public class Test1 extends JFrame
 	private static Logger log = Logger.getLogger(Test1.class);
 	private JPanel p;
 	static final long serialVersionUID=0;
-	private static int test=0;
-	Test1(){
+	
+	public Test1()
+	{
 		super("Ja va Saigner !");
 		/* Rien compris a ce truc c'était pour tester */
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -24,9 +25,8 @@ public class Test1 extends JFrame
 		gbc.gridy = 1;
 		gbc.gridheight = 50;
 		gbc.gridwidth = 10;
-
 		    
-		p=new LancementJeu();
+		p = new LancementJeu();
 		p.setLayout(new GridBagLayout());
 		getContentPane().add(p);
 		
@@ -41,7 +41,8 @@ public class Test1 extends JFrame
 		
 		lancement.addMouseListener(new MouseAdapter()
 		{
-			public void mouseClicked(MouseEvent e){
+			public void mouseClicked(MouseEvent e)
+			{
 				remove(p);
 				setContentPane(new PanneauJeu());
 				repaint();
@@ -72,21 +73,18 @@ public class Test1 extends JFrame
 		
 		Carte c = new Carte();
 		
-		log.info(c.caseCarte[10][2]);
-		log.info(c.caseCarte[10][2].getPosition().getX());
-		
-		/*log.info("coucou");
-		log.warn("Attention");
-		log.error("Et merde...");*/
-		
 		for(TypesH h: TypesH.values())
-			System.out.println(h+" "+h.getPoints()+" "+h.getPortee()+" "+h.getPuissance()+" "+h.getTir());
-
+			log.info(h+" "+h.getPoints()+" "+h.getPortee()+" "+h.getPuissance()+" "+h.getTir());
+		
+		/*
 		Position p=new Position(0,0);
 		Position p2= new Position(8,5);
 		Position p3= new Position (5,2);
-		System.out.println("Test :"+p.distance(p2)+" "+p2.distance(p3));
+		System.out.println("Test :"+p.distance(p2)+" "+p2.distance(p3));*/
 		
 	}
-
 }
+
+/*log.info("coucou");
+log.warn("Attention");
+log.error("Et merde...");*/

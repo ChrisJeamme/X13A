@@ -3,12 +3,10 @@ package wargame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 public class Element implements IConfig
 {
@@ -17,7 +15,6 @@ public class Element implements IConfig
 	private Position pos;
 	public boolean visible = false;
 	public boolean vide = true;
-	public ImageObserver i;
 	
 	public Element(int x, int y)
 	{
@@ -62,7 +59,7 @@ public class Element implements IConfig
 				break;
 			case 3: //ROCHER
 				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_ROCHER-1)+1;
-				nomFichier = "Rocher"+choixAlea;	System.out.println("Rocher numéro "+choixAlea);
+				nomFichier = "Rocher"+choixAlea;
 				break;
 			case 4: //ELEMENT
 				//choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_HERBE-1)+1;	Désactivé car il faut stocker quel type c'est à chaque fois

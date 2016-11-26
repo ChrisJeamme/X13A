@@ -2,9 +2,6 @@ package wargame;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.ImageObserver;
-
-import javax.swing.JPanel;
 
 public class Monstre extends Soldat
 {

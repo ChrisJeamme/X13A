@@ -12,6 +12,6 @@ public interface IConfig
 	Color COULEUR_EAU = Color.blue, COULEUR_FORET = Color.green, COULEUR_ROCHER = Color.gray;
 	int NB_SPRITE_FORET = 1;
 	int NB_SPRITE_EAU = 1;
-	int NB_SPRITE_ROCHER = 2;	
+	int NB_SPRITE_ROCHER = 3;	
 	int NB_SPRITE_HERBE = 2;
 }
