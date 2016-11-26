@@ -27,7 +27,7 @@ public class Obstacle extends Element implements IConfig
 		
 		if(TYPE.name() == "ROCHER"){changerImage(3);}
 		if(TYPE.name() == "FORET"){changerImage(1);}
-		if(TYPE.name() == "EAU"){changerImage(5);}
+		if(TYPE.name() == "EAU"){changerImage(2);}
 	}
 	
 	public String toString() { return ""+TYPE; }

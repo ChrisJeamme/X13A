@@ -62,11 +62,11 @@ public class Element implements IConfig
 				break;
 			case 3: //ROCHER
 				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_ROCHER-1)+1;
-				nomFichier = "Rocher"+choixAlea;
+				nomFichier = "Rocher"+choixAlea;	System.out.println("Rocher numéro "+choixAlea);
 				break;
 			case 4: //ELEMENT
-				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_HERBE-1)+1;
-				nomFichier = "Herbe"+choixAlea;
+				//choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_HERBE-1)+1;	Désactivé car il faut stocker quel type c'est à chaque fois
+				nomFichier = "Herbe1"/*+choixAlea*/;
 				break;
 			case 5: //MONSTRE
 				nomFichier = "Troll1";
@@ -76,7 +76,7 @@ public class Element implements IConfig
 				break;
 			default:
 				nomFichier = "Erreur";
-				System.out.println("Il y a une couille ma couille !");
+				System.out.println("Horreur !");
 				break;
 		}
 		
