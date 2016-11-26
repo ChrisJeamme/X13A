@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 public class Monstre extends Soldat
 {
+	private static final long serialVersionUID = 1232616690858916564L;
+	
 	private final TypesM TYPE;
 	
 	public Monstre(int x, int y)
@@ -17,12 +19,11 @@ public class Monstre extends Soldat
 		tir=TYPE.getTir();
 		couleur = Color.ORANGE;
 
-		if(TYPE == TypesM.TROLL)
-			changerImage(5);
-		if(TYPE == TypesM.ORC)
-			changerImage(6);
-		if(TYPE == TypesM.GOBELIN)
-			changerImage(7);
+		//On met l'image correspondate au type d'ennemi
+		
+		if(TYPE == TypesM.TROLL)		{TypeImage = 5;changerImage(5);}	//Et on stock cet id (pour recharger l'image avec chargement partie)
+		if(TYPE == TypesM.ORC)			{TypeImage = 6;changerImage(6);}
+		if(TYPE == TypesM.GOBELIN)		{TypeImage = 7;changerImage(7);}
 	}
 	
 	public Monstre(TypesM type,int x, int y)
@@ -35,12 +36,9 @@ public class Monstre extends Soldat
 		tir=TYPE.getTir();
 		couleur = Color.ORANGE;
 		
-		if(type == TypesM.TROLL)
-			changerImage(5);
-		if(type == TypesM.ORC)
-			changerImage(6);
-		if(type == TypesM.GOBELIN)
-			changerImage(7);
+		if(TYPE == TypesM.TROLL)		{TypeImage = 5;changerImage(5);}
+		if(TYPE == TypesM.ORC)			{TypeImage = 6;changerImage(6);}
+		if(TYPE == TypesM.GOBELIN)		{TypeImage = 7;changerImage(7);}
 	}
 	
 	public String toString() 

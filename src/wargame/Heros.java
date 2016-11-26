@@ -4,10 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
 
 public class Heros extends Soldat implements ISoldat
 {
+	private static final long serialVersionUID = 3756416095361088558L;
+	
 	private final TypesH TYPE;
 	
 	public Heros(int x, int y)
@@ -20,14 +21,10 @@ public class Heros extends Soldat implements ISoldat
 		tir=TYPE.getTir();
 		couleur=Color.YELLOW;
 		
-		if(TYPE == TypesH.NAIN)
-			changerImage(10);
-		if(TYPE == TypesH.HUMAIN)
-			changerImage(8);
-		if(TYPE == TypesH.ELF)
-			changerImage(9);
-		if(TYPE == TypesH.HOBBIT)
-			changerImage(11);
+		if(TYPE == TypesH.NAIN)		{TypeImage = 10;changerImage(10);}
+		if(TYPE == TypesH.HUMAIN)	{TypeImage = 8;changerImage(8);}
+		if(TYPE == TypesH.ELF)		{TypeImage = 9;changerImage(9);}
+		if(TYPE == TypesH.HOBBIT)	{TypeImage = 11;changerImage(11);}
 	}
 	
 	public Heros(TypesH type,int x, int y)
@@ -39,15 +36,11 @@ public class Heros extends Soldat implements ISoldat
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
 		couleur=Color.YELLOW;
-		
-		if(type == TypesH.NAIN)
-			changerImage(10);
-		if(type == TypesH.HUMAIN)
-			changerImage(8);
-		if(type == TypesH.ELF)
-			changerImage(9);
-		if(type == TypesH.HOBBIT)
-			changerImage(11);
+
+		if(TYPE == TypesH.NAIN)		{TypeImage = 10;changerImage(10);}
+		if(TYPE == TypesH.HUMAIN)	{TypeImage = 8;changerImage(8);}
+		if(TYPE == TypesH.ELF)		{TypeImage = 9;changerImage(9);}
+		if(TYPE == TypesH.HOBBIT)	{TypeImage = 11;changerImage(11);}
 		
 		
 	}

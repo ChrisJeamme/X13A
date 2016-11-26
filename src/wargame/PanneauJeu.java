@@ -2,6 +2,11 @@ package wargame;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.swing.*;
@@ -10,12 +15,20 @@ public class PanneauJeu extends JPanel implements Serializable
 {
 	private static final long serialVersionUID = 1877005263173998764L;
 	
-	private Carte c = new Carte();
+	private Carte c;
 	private JLabel labelInfo = new JLabel();
 	private JLabel labelAlerte = new JLabel();
+	private JButton sauvegarde;
+	private JButton menu;
+	private JMenuBar menuBar;
 	
-	public PanneauJeu()
+	public PanneauJeu(boolean chargement)
 	{	
+		if(chargement)
+			c = chargementCarte();
+		else
+			c = new Carte();
+		
 		setLayout(new BorderLayout());
 		
 		setBackground(new Color(200,200,200));
@@ -66,7 +79,8 @@ public class PanneauJeu extends JPanel implements Serializable
 				}
 				
 				/*Inutile juste pour tester*/
-				if(c.trouveHeros()==null){
+				if(c.trouveHeros()==null)
+				{
 					System.out.print("Perdu");
 				}
 			
@@ -89,11 +103,116 @@ public class PanneauJeu extends JPanel implements Serializable
 		labelAlerte.setFont(font2);
 		add(labelAlerte,BorderLayout.NORTH);
 		
+		//Menu du haut
+		
+		menuBar=new JMenuBar();
+		menuBar.setOpaque(true);
+		menuBar.setPreferredSize(new Dimension(200,50));
+		menuBar.setBackground(new Color(125,125,125));
+		add(menuBar, BorderLayout.NORTH);
+		
+		//Bouton Menu dans barre du haut 
+		
+		menu = new Boutton("Menu", "img/BouttonF.png", "img/BouttonB.png");
+		menu.setPreferredSize(new Dimension(300,30));
+		menu.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				//TODO
+				repaint();
+				revalidate();
+			}
+		});
+		menuBar.add(menu);
+		
+		sauvegarde = new Boutton("Sauvegarder une partie", "img/BouttonF.png", "img/BouttonB.png");
+		sauvegarde.setPreferredSize(new Dimension(300,30));
+		sauvegarde.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(MouseEvent e)
+			{
+				sauvegardeCarte();
+				labelAlerte.setText("Partie sauvegardé");
+			}
+		});
+		menuBar.add(sauvegarde);
+	}
+
+
+	protected Carte chargementCarte()
+	{
+		ObjectInputStream ois = null;
+		Carte c = null;
+
+	    try
+	    {
+	      final FileInputStream fichier = new FileInputStream("save");
+	      ois = new ObjectInputStream(fichier);
+	      c = (Carte) ois.readObject();
+	    }
+	    catch (final java.io.IOException e)
+	    {
+	      e.printStackTrace();
+	    }
+	    catch (final ClassNotFoundException e)
+	    {
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	    	try
+	    	{
+	    		if (ois != null)
+	    			{
+	    				ois.close();
+	    			}
+	    	}
+	    	catch (final IOException ex)
+	    	{
+	    		ex.printStackTrace();
+	    	}
+	    }
+	    return c;
+	}
+
+	protected void sauvegardeCarte()
+	{
+	    ObjectOutputStream oos = null;
+
+	    try
+	    {
+	      final FileOutputStream fichier = new FileOutputStream("save");
+	      oos = new ObjectOutputStream(fichier);
+	      oos.writeObject(c);
+	      oos.flush();
+	    }
+	    catch (final java.io.IOException e)
+	    {
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	    	try
+	    	{
+	    		if (oos != null)
+				{
+	    			oos.flush();
+	    			oos.close();
+				}
+			}
+	      catch (final IOException ex)
+	      {
+	        ex.printStackTrace();
+	      }
+	    }
+		
 	}
 	
 	public void paintComponent(Graphics g)
 	{
 		//super.paintComponent(g);
+		
 		labelAlerte.setText(c.informations);
 		c.toutDessiner(g);
 		

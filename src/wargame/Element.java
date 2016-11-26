@@ -5,13 +5,17 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-public class Element implements IConfig
+public class Element implements IConfig, Serializable
 {
+	private static final long serialVersionUID = -5790544026462153601L;
+	
 	public java.awt.Color couleur = Color.WHITE;
-	public Image image;
+	public transient Image image;
+	public int TypeImage;
 	private Position pos;
 	public boolean visible = false;
 	public boolean vide = true;
@@ -19,7 +23,8 @@ public class Element implements IConfig
 	public Element(int x, int y)
 	{
 		pos = new Position(x,y);
-		changerImage(4);
+		TypeImage = 4;
+		changerImage(TypeImage);
 	}
 	
 	public Element(Position p)
@@ -93,7 +98,7 @@ public class Element implements IConfig
 		
 		try
 		{
-		      image = ImageIO.read(new File("img/"+nomFichier+".png"));
+		      image = ImageIO.read(new File("img/"+nomFichier+".png"));	//On charge l'image correspondante au type de case
 		}
 		catch (IOException e){e.printStackTrace();} 
 	}
@@ -104,8 +109,6 @@ public class Element implements IConfig
 		//g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
 		
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
-		
-		//.... On dessine un carré à la position pos de 20x20 ?
 	}
 	
 	public String toString() 

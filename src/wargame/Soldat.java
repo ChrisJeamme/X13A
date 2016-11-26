@@ -2,6 +2,8 @@ package wargame;
 
 public abstract class Soldat extends Element implements ISoldat, IConfig
 {
+	private static final long serialVersionUID = -3756577513065161512L;
+	
 	protected int points_de_vie;
 	protected int portee_visuelle;
 	protected int puissance;

@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 public class Obstacle extends Element implements IConfig
 {
+	private static final long serialVersionUID = -4591273601582318390L;
+
 	public enum TypeObstacle
 	{
 		ROCHER (COULEUR_ROCHER), FORET (COULEUR_FORET), EAU (COULEUR_EAU);
@@ -25,9 +27,9 @@ public class Obstacle extends Element implements IConfig
 		vide=false;
 		couleur=TYPE.COULEUR;
 		
-		if(TYPE.name() == "ROCHER"){changerImage(3);}
-		if(TYPE.name() == "FORET"){changerImage(1);}
-		if(TYPE.name() == "EAU"){changerImage(2);}
+		if(TYPE.name() == "ROCHER")			{TypeImage = 3;changerImage(3);}
+		if(TYPE.name() == "FORET")			{TypeImage = 1;changerImage(1);}
+		if(TYPE.name() == "EAU")			{TypeImage = 2;changerImage(2);}
 	}
 	
 	public String toString() { return ""+TYPE; }
