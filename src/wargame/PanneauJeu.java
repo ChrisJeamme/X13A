@@ -42,6 +42,8 @@ public class PanneauJeu extends JPanel implements Serializable
 				//if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
 				//{
 					h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
+					if (h instanceof Heros)
+						((Heros) h).estSelection(getGraphics(), c);
 					test=1;
 					labelAlerte.setText("Mouvement d'un héros");
 				//}

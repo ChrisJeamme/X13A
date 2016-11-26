@@ -257,8 +257,9 @@ public class Carte implements ICarte, IConfig, Serializable
 				}
 				else 
 				{
-					mort((Soldat)caseCarte[pos.getX()][pos.getY()]); /*Heros mort */
-					informations = "Heros mort";
+					if (((Soldat)caseCarte[pos.getX()][pos.getY()]).getPoints()<=0)
+						informations = "Heros mort";
+					mort((Soldat)caseCarte[pos.getX()][pos.getY()]); /*Heros mort */ 	
 				}
 				return true;
 			}
