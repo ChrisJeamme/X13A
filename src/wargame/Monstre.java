@@ -16,7 +16,13 @@ public class Monstre extends Soldat
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
 		couleur = Color.ORANGE;
-		changerImage(5);
+
+		if(TYPE == TypesM.TROLL)
+			changerImage(5);
+		if(TYPE == TypesM.ORC)
+			changerImage(6);
+		if(TYPE == TypesM.GOBELIN)
+			changerImage(7);
 	}
 	
 	public Monstre(TypesM type,int x, int y)
@@ -28,7 +34,13 @@ public class Monstre extends Soldat
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
 		couleur = Color.ORANGE;
-		changerImage(5);
+		
+		if(type == TypesM.TROLL)
+			changerImage(5);
+		if(type == TypesM.ORC)
+			changerImage(6);
+		if(type == TypesM.GOBELIN)
+			changerImage(7);
 	}
 	
 	public String toString() 

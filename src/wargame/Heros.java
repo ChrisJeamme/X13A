@@ -2,9 +2,6 @@ package wargame;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.ImageObserver;
-
-import javax.swing.JPanel;
 
 public class Heros extends Soldat implements ISoldat
 {
@@ -19,7 +16,15 @@ public class Heros extends Soldat implements ISoldat
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
 		couleur=Color.YELLOW;
-		changerImage(6);
+		
+		if(TYPE == TypesH.NAIN)
+			changerImage(10);
+		if(TYPE == TypesH.HUMAIN)
+			changerImage(8);
+		if(TYPE == TypesH.ELF)
+			changerImage(9);
+		if(TYPE == TypesH.HOBBIT)
+			changerImage(11);
 	}
 	
 	public Heros(TypesH type,int x, int y)
@@ -31,7 +36,16 @@ public class Heros extends Soldat implements ISoldat
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
 		couleur=Color.YELLOW;
-		changerImage(6);
+		
+		if(type == TypesH.NAIN)
+			changerImage(10);
+		if(type == TypesH.HUMAIN)
+			changerImage(8);
+		if(type == TypesH.ELF)
+			changerImage(9);
+		if(type == TypesH.HOBBIT)
+			changerImage(11);
+		
 		
 	}
 	

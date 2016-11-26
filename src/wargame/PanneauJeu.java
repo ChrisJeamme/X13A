@@ -26,9 +26,9 @@ public class PanneauJeu extends JPanel implements Serializable
 		{
 			public void mouseMoved(MouseEvent e)
 			{
-				if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE)	//TODO à commenter
-					if(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].visible==true)
-						labelInfo.setText(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].toString());
+				if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE)	//Si position souris correcte
+					if(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].visible==true)	//Et sur une case visible
+						labelInfo.setText(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].toString());	//On met à jour le labelInfo
 				else labelInfo.setText("");
 			}
 		});
@@ -41,7 +41,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			{
 				//if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
 				//{
-					h =c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
+					h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
 					test=1;
 					labelAlerte.setText("Mouvement d'un héros");
 				//}
@@ -91,8 +91,9 @@ public class PanneauJeu extends JPanel implements Serializable
 	
 	public void paintComponent(Graphics g)
 	{
-		super.paintComponent(g);
+		//super.paintComponent(g);
 		labelAlerte.setText(c.informations);
 		c.toutDessiner(g);
+		
 	}
 }

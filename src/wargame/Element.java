@@ -50,26 +50,40 @@ public class Element implements IConfig
 		switch(typeCase)
 		{
 			case 1 : //FORET
-				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_FORET-1)+1;
+				choixAlea =(int)(Math.random() * (NB_SPRITE_FORET));
 				nomFichier = "Foret"+choixAlea;
 				break;
 			case 2: //EAU
-				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_EAU-1)+1;
+				choixAlea =(int)(Math.random() * (NB_SPRITE_EAU));
 				nomFichier = "Eau"+choixAlea;
 				break;
 			case 3: //ROCHER
-				choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_ROCHER-1)+1;
+				choixAlea =(int)(Math.random() * (NB_SPRITE_ROCHER));
 				nomFichier = "Rocher"+choixAlea;
 				break;
 			case 4: //ELEMENT
-				//choixAlea =(int) (Math.random()*1000 % (int)NB_SPRITE_HERBE-1)+1;	Désactivé car il faut stocker quel type c'est à chaque fois
-				nomFichier = "Herbe1"/*+choixAlea*/;
+				nomFichier = "Herbe0"/*+choixAlea*/;
 				break;
-			case 5: //MONSTRE
-				nomFichier = "Troll1";
+			case 5: //TROLL
+				nomFichier = "Troll0";
 				break;
-			case 6: //HEROS
-				nomFichier = "Heros1";
+			case 6: //ORC
+				nomFichier = "Troll0";
+				break;
+			case 7: //GOBELIN
+				nomFichier = "Troll0";
+				break;
+			case 8: //HUMAIN
+				nomFichier = "Heros0";
+				break;
+			case 9: //ELF
+				nomFichier = "Heros0";
+				break;
+			case 10: //NAIN
+				nomFichier = "Nain0";
+				break;
+			case 11: //HOBBIT
+				nomFichier = "Nain0";
 				break;
 			default:
 				nomFichier = "Erreur";

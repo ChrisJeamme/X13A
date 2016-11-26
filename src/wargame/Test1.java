@@ -30,11 +30,11 @@ public class Test1 extends JFrame
 		p.setLayout(new GridBagLayout());
 		getContentPane().add(p);
 		
-		JButton lancement=new JButton("Lancer une partie");
+		JButton lancement = new Boutton("Lancer une partie", "img/BouttonF.png", "img/BouttonB.png");
 		lancement.setPreferredSize(new Dimension(300,30));
 		p.add(lancement,gbc);
 		
-		JButton chargement=new JButton("Charger une partie");
+		JButton chargement = new Boutton("Charger une partie", "img/BouttonF.png", "img/BouttonB.png");
 		chargement.setPreferredSize(new Dimension(300,30));
 		gbc.gridy = -10;
 		p.add(chargement,gbc);

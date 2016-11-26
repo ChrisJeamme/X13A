@@ -1,7 +1,6 @@
 package wargame;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,7 +22,6 @@ public class LancementJeu extends JPanel implements IConfig
 			fond = ImageIO.read(new File("img/menu.png"));
 			
 		}catch (IOException e){System.out.println("Impossible d'ouvrir l'image "+e.getMessage());e.printStackTrace();}
-
 		
 		setLayout(new BorderLayout());
 		setBackground(new Color(200,200,200));
@@ -35,7 +33,7 @@ public class LancementJeu extends JPanel implements IConfig
 	{
 		super.paintComponent(g);
 		
-	    g.drawImage(fond, 0, 0, g.getClipBounds().width, g.getClipBounds().height, null);
+	    g.drawImage(fond, 0, 0, g.getClipBounds().width, g.getClipBounds().width/16*9+70, null);
 	    g.drawImage(titre, (g.getClipBounds().width-768)/2, (g.getClipBounds().height-880)/2, 768, 432, null);
 	}
 }

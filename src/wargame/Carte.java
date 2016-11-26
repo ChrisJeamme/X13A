@@ -308,13 +308,11 @@ public class Carte implements ICarte, IConfig, Serializable
 							{
 								caseCarte[i+l][j+k].visible=true;
 								caseCarte[i+l][j+k].seDessiner(g);
-							    //g.drawImage(caseCarte[i+l][j+k].image, caseCarte[i+l][j+k].getPosition().getX()*IConfig.NB_PIX_CASE+1, caseCarte[i+l][j+k].getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2, this);
 							}
 							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i-l>=0)
 							{
 								caseCarte[i-l][j+k].visible=true;
 								caseCarte[i-l][j+k].seDessiner(g);
-							    //g.drawImage(caseCarte[i-l][j+k].image, caseCarte[i-l][j+k].getPosition().getX()*IConfig.NB_PIX_CASE+1, caseCarte[i-l][j+k].getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2, this);
 							}
 						}
 					}
