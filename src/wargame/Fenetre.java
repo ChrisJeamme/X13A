@@ -10,13 +10,29 @@ public class Fenetre extends JFrame
 	private JPanel p;
 	JButton chargement;
 	JButton lancement;
+	JPanel tmp;
+	JMenuBar menuBar;
 	PanneauJeu panneau;
 	static final long serialVersionUID=0;
 	
 	public Fenetre()
 	{
-		super("Ja va Saigner !");
-		/* Rien compris a ce truc c'était pour tester */
+		super("Ja va Saigner !");	
+		boutons();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocation(100,100);
+		pack();
+		setVisible(true);
+	
+	}
+
+	public void boutons(){
+		/*Ne contient pas que les boutons mais aussi le JPanel*/
+		final JFrame f=this;
+		p = new LancementJeu();	//Menu
+		p.setLayout(new GridBagLayout());
+		getContentPane().add(p);
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.gridx = 0;
@@ -24,12 +40,6 @@ public class Fenetre extends JFrame
 		gbc.gridheight = 50;
 		gbc.gridwidth = 10;
 		    
-		p = new LancementJeu();	//Menu
-		p.setLayout(new GridBagLayout());
-		getContentPane().add(p);
-		
-		//Bouton Lancement
-		
 		lancement = new Boutton("Lancer une partie", "img/BouttonF.png", "img/BouttonB.png");
 		lancement.setPreferredSize(new Dimension(300,30));
 		p.add(lancement,gbc);
@@ -44,7 +54,7 @@ public class Fenetre extends JFrame
 				//Qui elle appelle PanneauJeu avec la carte chargé 
 				//Mais comment pourra t-elle se supprimer elle meme?
 				
-				panneau = new PanneauJeu(false); //Panneau sans chargement
+				panneau = new PanneauJeu(false,f); //Panneau sans chargement
 				setContentPane(panneau);
 				repaint();
 				revalidate();
@@ -61,8 +71,9 @@ public class Fenetre extends JFrame
 		{
 			public void mouseClicked(MouseEvent e)
 			{
+				tmp=p;
 				remove(p);	//On supprime le menu
-				panneau = new PanneauJeu(true); //Panneau avec chargement
+				panneau = new PanneauJeu(true,f); //Panneau avec chargement
 				setContentPane(panneau);
 				repaint();
 				revalidate();
@@ -73,8 +84,16 @@ public class Fenetre extends JFrame
 		setLocation(100,100);
 		pack();
 		setVisible(true);
-	
 	}
-	
+
+	public void retourMenu(){
+		/*J'enleve le JPanel actuel pour en remettre un autre */
+		remove(p);	
+		setContentPane(new LancementJeu());
+		/*Sans oublier le contenu*/
+		boutons();
+		repaint();
+		revalidate();
+	}
 }
 	
