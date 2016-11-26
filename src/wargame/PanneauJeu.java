@@ -24,18 +24,23 @@ public class PanneauJeu extends JPanel implements Serializable
 	
 	public PanneauJeu(boolean chargement)
 	{	
+		//Si chargement
 		if(chargement)
 			c = chargementCarte();
 		else
 			c = new Carte();
+		
+		//Configuration d'affichage
 		
 		setLayout(new BorderLayout());
 		
 		setBackground(new Color(200,200,200));
 		setOpaque(true);
 		setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+70));
+		
+		//Déclaration des JElements & Ecouteurs
 
-		addMouseMotionListener(new MouseMotionAdapter()
+		addMouseMotionListener(new MouseMotionAdapter() //Gestion des héros
 		{
 			public void mouseMoved(MouseEvent e)
 			{
@@ -46,7 +51,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			}
 		});
 		
-		addMouseListener(new MouseAdapter()
+		addMouseListener(new MouseAdapter()	//Gestion des héros
 		{
 			Element h; //Héros selectionné
 			int test;
@@ -86,6 +91,8 @@ public class PanneauJeu extends JPanel implements Serializable
 			
 			}
 		});
+		
+		//Ajout des JElements
 		
 		labelInfo.setOpaque(true);
 		labelInfo.setBackground(Color.WHITE);
@@ -173,6 +180,16 @@ public class PanneauJeu extends JPanel implements Serializable
 	    		ex.printStackTrace();
 	    	}
 	    }
+	    
+	    for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
+		{
+			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
+			{
+				c.caseCarte[i][j].changerImage();
+			}
+		}
+				
+	    
 	    return c;
 	}
 

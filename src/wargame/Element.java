@@ -24,7 +24,7 @@ public class Element implements IConfig, Serializable
 	{
 		pos = new Position(x,y);
 		TypeImage = 4;
-		changerImage(TypeImage);
+		changerImage();
 	}
 	
 	public Element(Position p)
@@ -47,12 +47,12 @@ public class Element implements IConfig, Serializable
 		pos=newpos;
 	}
 	
-	public void changerImage(int typeCase)
+	public void changerImage()
 	{
 		int choixAlea;
 		String nomFichier;
 		
-		switch(typeCase)
+		switch(TypeImage)
 		{
 			case 1 : //FORET
 				choixAlea =(int)(Math.random() * (NB_SPRITE_FORET));
@@ -107,7 +107,6 @@ public class Element implements IConfig, Serializable
 	{
 		g.setColor(couleur);
 		//g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
-		
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 	}
 	

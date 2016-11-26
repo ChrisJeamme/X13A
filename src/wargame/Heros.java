@@ -21,10 +21,10 @@ public class Heros extends Soldat implements ISoldat
 		tir=TYPE.getTir();
 		couleur=Color.YELLOW;
 		
-		if(TYPE == TypesH.NAIN)		{TypeImage = 10;changerImage(10);}
-		if(TYPE == TypesH.HUMAIN)	{TypeImage = 8;changerImage(8);}
-		if(TYPE == TypesH.ELF)		{TypeImage = 9;changerImage(9);}
-		if(TYPE == TypesH.HOBBIT)	{TypeImage = 11;changerImage(11);}
+		if(TYPE == TypesH.NAIN)		{TypeImage = 10;changerImage();}
+		if(TYPE == TypesH.HUMAIN)	{TypeImage = 8;changerImage();}
+		if(TYPE == TypesH.ELF)		{TypeImage = 9;changerImage();}
+		if(TYPE == TypesH.HOBBIT)	{TypeImage = 11;changerImage();}
 	}
 	
 	public Heros(TypesH type,int x, int y)
@@ -37,10 +37,10 @@ public class Heros extends Soldat implements ISoldat
 		tir=TYPE.getTir();
 		couleur=Color.YELLOW;
 
-		if(TYPE == TypesH.NAIN)		{TypeImage = 10;changerImage(10);}
-		if(TYPE == TypesH.HUMAIN)	{TypeImage = 8;changerImage(8);}
-		if(TYPE == TypesH.ELF)		{TypeImage = 9;changerImage(9);}
-		if(TYPE == TypesH.HOBBIT)	{TypeImage = 11;changerImage(11);}
+		if(TYPE == TypesH.NAIN)		{TypeImage = 10;changerImage();}
+		if(TYPE == TypesH.HUMAIN)	{TypeImage = 8;changerImage();}
+		if(TYPE == TypesH.ELF)		{TypeImage = 9;changerImage();}
+		if(TYPE == TypesH.HOBBIT)	{TypeImage = 11;changerImage();}
 		
 		
 	}

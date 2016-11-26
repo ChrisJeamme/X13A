@@ -21,9 +21,9 @@ public class Monstre extends Soldat
 
 		//On met l'image correspondate au type d'ennemi
 		
-		if(TYPE == TypesM.TROLL)		{TypeImage = 5;changerImage(5);}	//Et on stock cet id (pour recharger l'image avec chargement partie)
-		if(TYPE == TypesM.ORC)			{TypeImage = 6;changerImage(6);}
-		if(TYPE == TypesM.GOBELIN)		{TypeImage = 7;changerImage(7);}
+		if(TYPE == TypesM.TROLL)		{TypeImage = 5;changerImage();}	//Et on stock cet id (pour recharger l'image avec chargement partie)
+		if(TYPE == TypesM.ORC)			{TypeImage = 6;changerImage();}
+		if(TYPE == TypesM.GOBELIN)		{TypeImage = 7;changerImage();}
 	}
 	
 	public Monstre(TypesM type,int x, int y)
@@ -36,9 +36,9 @@ public class Monstre extends Soldat
 		tir=TYPE.getTir();
 		couleur = Color.ORANGE;
 		
-		if(TYPE == TypesM.TROLL)		{TypeImage = 5;changerImage(5);}
-		if(TYPE == TypesM.ORC)			{TypeImage = 6;changerImage(6);}
-		if(TYPE == TypesM.GOBELIN)		{TypeImage = 7;changerImage(7);}
+		if(TYPE == TypesM.TROLL)		{TypeImage = 5;changerImage();}
+		if(TYPE == TypesM.ORC)			{TypeImage = 6;changerImage();}
+		if(TYPE == TypesM.GOBELIN)		{TypeImage = 7;changerImage();}
 	}
 	
 	public String toString() 
