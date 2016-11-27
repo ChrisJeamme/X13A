@@ -76,19 +76,19 @@ public class Element implements IConfig, Serializable
 				nomFichier = "Orc0";
 				break;
 			case 7: //GOBELIN
-				nomFichier = "Troll0";
+				nomFichier = "Gobelin0";
 				break;
 			case 8: //HUMAIN
-				nomFichier = "Heros0";
+				nomFichier = "Humain0";
 				break;
 			case 9: //ELF
-				nomFichier = "Heros0";
+				nomFichier = "Elf0";
 				break;
 			case 10: //NAIN
 				nomFichier = "Nain0";
 				break;
 			case 11: //HOBBIT
-				nomFichier = "Nain0";
+				nomFichier = "Hobbit0";
 				break;
 			default:
 				nomFichier = "Erreur";

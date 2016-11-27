@@ -26,7 +26,7 @@ public class LancementJeu extends JPanel implements IConfig
 		setLayout(new BorderLayout());
 		setBackground(new Color(200,200,200));
 		setOpaque(true);
-		setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE, IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+70));		
+		setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE, IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+90));		
 	}
 	
 	public void paintComponent(Graphics g)
