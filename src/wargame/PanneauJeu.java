@@ -35,7 +35,8 @@ public class PanneauJeu extends JPanel implements Serializable
 			private int selection=0;
 			private Element h; //Héros selectionné
 			
-			public PanneauJeuImbric(boolean chargement){
+			public PanneauJeuImbric(boolean chargement)
+			{
 				//Si chargement
 				if(chargement)
 					c = chargementCarte();
@@ -65,48 +66,46 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 				addMouseListener(new MouseAdapter()	//Gestion des héros
 				{
-					int test;
-					public void mousePressed(MouseEvent e)
-					{
-						//if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
-						//{
-						if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE)){
-							System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
-							h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
-						}
-						if (h instanceof Heros){
-							selection=1;
-							((Heros) h).estSelection(getGraphics(), c);
-							test=1;
-						}
-						labelAlerte.setText("Mouvement d'un héros");
-						//}
-					}
-					public void mouseReleased(MouseEvent e)
-					{
-						labelAlerte.setText("");
-						
-						/*Test, pas complet du tout aucune verif faite*/
-						if (test==1)
-						{
-							Position p = h.getPosition();
+					boolean selected = false;
 					
-							c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
-							
+					public void mouseClicked(MouseEvent e)
+					{
+						if(e.getButton() == 1 && selected == false)	//Clic Gauche sur un héros
+						{							
+							if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
+							{
+								System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
+								h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
+							}
 							if (h instanceof Heros)
 							{
-								c.toutDessiner(getGraphics());
-								repaint();
-								selection=0;
+								selection = 1;
+								((Heros) h).estSelection(getGraphics(), c);
+								selected = true;
 							}
-
-							test=0;
+							labelAlerte.setText("Mouvement d'un héros");
+							
 						}
 						
-						/*Inutile juste pour tester*/
-						if(c.trouveHeros()==null)
+						if(e.getButton() == 3) //Clic Droit
 						{
-							System.out.print("Perdu");
+							labelAlerte.setText("");
+							
+							if (selected)	//Si un héros à été précédemment selectionné
+							{
+								Position p = h.getPosition();
+						
+								c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
+								
+								if (h instanceof Heros)
+								{
+									c.toutDessiner(getGraphics());
+									repaint();
+									selection=0;
+								}
+	
+								selected = false;
+							}
 						}
 					
 					}
@@ -231,6 +230,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			}
 			
 		}
+		
 		PanneauJeuImbric p2=new PanneauJeuImbric(chargement);		
 		
 		labelAlerte.setPreferredSize(new Dimension(500,40));	
