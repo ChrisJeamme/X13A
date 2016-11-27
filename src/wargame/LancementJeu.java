@@ -26,14 +26,14 @@ public class LancementJeu extends JPanel implements IConfig
 		setLayout(new BorderLayout());
 		setBackground(new Color(200,200,200));
 		setOpaque(true);
-		setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE, IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+90));		
+		setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE, IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+150));		
 	}
 	
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		
-	    g.drawImage(fond, 0, 0, g.getClipBounds().width, g.getClipBounds().width/16*9+70, null);
+	    g.drawImage(fond, 0, 0, g.getClipBounds().width, g.getClipBounds().width/16*9+150, null);
 	    g.drawImage(titre, (g.getClipBounds().width-768)/2, (g.getClipBounds().height-880)/2, 768, 432, null);
 	}
 }
