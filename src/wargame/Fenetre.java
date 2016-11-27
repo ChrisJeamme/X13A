@@ -26,7 +26,8 @@ public class Fenetre extends JFrame
 	
 	}
 
-	public void boutons(){
+	public void boutons()
+	{
 		/*Ne contient pas que les boutons mais aussi le JPanel*/
 		final JFrame f=this;
 		p = new LancementJeu();	//Menu
