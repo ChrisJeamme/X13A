@@ -19,6 +19,7 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JButton menu;
 	private JLabel labelAlerte = new JLabel();
 	private JPanel hautfenetre = new JPanel();
+	private boolean aDejaJoue = false;
 	
 	public PanneauJeu(boolean chargement, final JFrame f)
 	{	
@@ -70,41 +71,72 @@ public class PanneauJeu extends JPanel implements Serializable
 					
 					public void mouseClicked(MouseEvent e)
 					{
-						if(e.getButton() == 1 && selected == false)	//Clic Gauche sur un héros
-						{							
-							if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
-							{
-								System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
-								h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
-							}
-							if (h instanceof Heros)
-							{
-								selection = 1;
-								((Heros) h).estSelection(getGraphics(), c);
-								selected = true;
-							}
-							labelAlerte.setText("Mouvement d'un héros");
-							
-						}
-						
-						if(e.getButton() == 3) //Clic Droit
+						if (aDejaJoue)
 						{
-							labelAlerte.setText("");
-							
-							if (selected)	//Si un héros à été précédemment selectionné
-							{
-								Position p = h.getPosition();
+							labelAlerte.setText("Vous avez déjà joué ce tour !");
+						}
+						else
+						{
+												
+						//Clic Gauche sur un héros SANS en avoir choisi un avant
 						
-								c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
-								
-								if (h instanceof Heros)
+							if(e.getButton() == 1 && selected == false)	
+							{							
+								if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
 								{
-									c.toutDessiner(getGraphics());
-									repaint();
-									selection=0;
+									//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
+									h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
 								}
-	
-								selected = false;
+								if (h instanceof Heros)	//Case cliqué est un héros
+								{
+									selection = 1;
+									((Heros) h).estSelection(getGraphics(), c);
+									selected = true;
+								}
+								labelAlerte.setText("Mouvement d'un héros");
+								
+							}
+						
+						//Clic Gauche sur un héros EN ayant choisi un héros avant
+							
+							if(e.getButton() == 1 && selected == true)	
+							{
+								c.toutDessiner(getGraphics());
+								selection=0;
+								
+								if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
+								{
+									h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
+								}
+								if (h instanceof Heros)	//Case cliqué est un héros
+								{
+									selection = 1;
+									((Heros) h).estSelection(getGraphics(), c);
+									selected = true;
+								}
+								labelAlerte.setText("Mouvement d'un héros");
+							}
+						
+						//Clic droit
+						
+							if(e.getButton() == 3)
+							{
+								labelAlerte.setText("");
+								
+								if (selected)	//Si un héros à été précédemment selectionné
+								{
+									selected = false;
+									Position p = h.getPosition();
+							
+									c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
+									
+									if (h instanceof Heros)
+									{
+										c.toutDessiner(getGraphics());
+										repaint();
+										selection=0;
+									}
+								}
 							}
 						}
 					
