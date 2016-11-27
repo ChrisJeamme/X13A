@@ -30,6 +30,8 @@ public class PanneauJeu extends JPanel implements Serializable
 			private Carte c;
 			private JLabel labelInfo = new JLabel();
 			private JLabel labelAlerte = new JLabel();
+			private int selection=0;
+			private Element h; //Héros selectionné
 			
 			public PanneauJeuImbric(boolean chargement){
 				//Si chargement
@@ -61,17 +63,18 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 				addMouseListener(new MouseAdapter()	//Gestion des héros
 				{
-					Element h; //Héros selectionné
 					int test;
 					public void mousePressed(MouseEvent e)
 					{
 						//if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
 						//{
 							h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
-							if (h instanceof Heros)
+							if (h instanceof Heros){
+								selection=1;
 								((Heros) h).estSelection(getGraphics(), c);
+							}
 							test=1;
-							labelAlerte.setText("Mouvement d'un héros");
+							//labelAlerte.setText("Mouvement d'un héros");
 						//}
 					}
 					public void mouseReleased(MouseEvent e)
@@ -85,9 +88,13 @@ public class PanneauJeu extends JPanel implements Serializable
 					
 							c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
 							
-							c.toutDessiner(getGraphics());
-							
-							repaint();
+							if (h instanceof Heros)
+							{
+								c.toutDessiner(getGraphics());
+								repaint();
+								selection=0;
+							}
+
 							test=0;
 						}
 						
@@ -134,11 +141,14 @@ public class PanneauJeu extends JPanel implements Serializable
 			
 			public void paintComponent(Graphics g)
 			{
-				//super.paintComponent(g);
-				
-				labelAlerte.setText(c.informations);
+				super.paintComponent(g);
+				/* On dessine un fond */
+				g.setColor(new Color(50,90,100));
+				g.fillRect(0,0,IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE);
 				c.toutDessiner(g);
-				
+				if (selection!=1){
+					labelAlerte.setText(c.informations);
+				}
 			}
 
 			protected Carte chargementCarte()
@@ -228,7 +238,7 @@ public class PanneauJeu extends JPanel implements Serializable
 
 	public void paintComponent(Graphics g)
 	{
-		super.paintComponent(g);
+		//super.paintComponent(g);
 	}
 	
 	public void menuBar(final JFrame f){

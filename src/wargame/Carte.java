@@ -288,8 +288,8 @@ public class Carte implements ICarte, IConfig, Serializable
 	/** Déssine la carte avec ses éléments */
 	public void toutDessiner(Graphics g)
 	{
-		g.setColor(new Color(50,90,100));
-		g.fillRect(0,0,IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE);
+		//g.setColor(new Color(50,90,100));
+		//g.fillRect(0,0,IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE);
 
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
