@@ -73,7 +73,7 @@ public class Element implements IConfig, Serializable
 				nomFichier = "Troll0";
 				break;
 			case 6: //ORC
-				nomFichier = "Troll0";
+				nomFichier = "Orc0";
 				break;
 			case 7: //GOBELIN
 				nomFichier = "Troll0";
