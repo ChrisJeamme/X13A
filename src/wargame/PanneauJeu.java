@@ -17,16 +17,15 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JMenuBar menuBar;
 	private JButton sauvegarde;
 	private JButton menu;
-	public PanneauJeu(boolean chargement,final JFrame f)
+	public PanneauJeu(boolean chargement, final JFrame f)
 	{	
 		/*On ajoute la JMenuBar */
 		menuBar(f);
 		/*Classe imbriquée pour separer la JMenuBar du JPanel */
-		class PanneauJeuImbric extends JPanel implements Serializable{
-			/**
-			 * 
-			 */
+		class PanneauJeuImbric extends JPanel implements Serializable
+		{
 			private static final long serialVersionUID = 1L;
+			
 			private Carte c;
 			private JLabel labelInfo = new JLabel();
 			private JLabel labelAlerte = new JLabel();
@@ -151,6 +150,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				}
 			}
 
+			/** Charge la carte du fichier save et la place dans la carte de l'objet */
 			protected Carte chargementCarte()
 			{
 				ObjectInputStream ois = null;
@@ -197,6 +197,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			    return c;
 			}
 
+			/** Sauvegarde la carte de l'objet dans le fichier save */
 			protected void sauvegardeCarte()
 			{
 			    ObjectOutputStream oos = null;
@@ -241,10 +242,9 @@ public class PanneauJeu extends JPanel implements Serializable
 		//super.paintComponent(g);
 	}
 	
+	/** Menu du haut */
 	public void menuBar(final JFrame f)
 	{
-		//Menu du haut
-		
 		menuBar=new JMenuBar();
 		menuBar.setOpaque(true);
 		//menuBar.setPreferredSize(new Dimension(200,50));

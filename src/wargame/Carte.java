@@ -226,7 +226,15 @@ public class Carte implements ICarte, IConfig, Serializable
 			
 			//Case non vide		
 			
-				//Héros
+				//Même position
+			
+			if(pos.distance(pos2) == 0)
+			{
+				informations = "";
+				return false;
+			}
+			
+				//Autre Héros
 			
 			if(getElement(pos2) instanceof Heros)
 			{
