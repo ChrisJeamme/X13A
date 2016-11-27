@@ -14,12 +14,15 @@ import javax.swing.*;
 public class PanneauJeu extends JPanel implements Serializable
 {
 	private static final long serialVersionUID = 1877005263173998764L;
-	private JMenuBar menuBar;
+	private JPanel menuBar;
 	private JButton sauvegarde;
 	private JButton menu;
+	private JLabel labelAlerte = new JLabel();
+	private JPanel hautfenetre = new JPanel();
 	public PanneauJeu(boolean chargement,final JFrame f)
 	{	
 		/*On ajoute la JMenuBar */
+		hautfenetre.setLayout(new GridLayout(2,1));
 		menuBar(f);
 		/*Classe imbriquée pour separer la JMenuBar du JPanel */
 		class PanneauJeuImbric extends JPanel implements Serializable{
@@ -29,7 +32,6 @@ public class PanneauJeu extends JPanel implements Serializable
 			private static final long serialVersionUID = 1L;
 			private Carte c;
 			private JLabel labelInfo = new JLabel();
-			private JLabel labelAlerte = new JLabel();
 			private int selection=0;
 			private Element h; //Héros selectionné
 			
@@ -46,7 +48,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 				setBackground(new Color(200,200,200));
 				setOpaque(true);
-				setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+70));
+				setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+40));
 				
 				//Déclaration des JElements & Ecouteurs
 
@@ -68,13 +70,16 @@ public class PanneauJeu extends JPanel implements Serializable
 					{
 						//if (c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE] instanceof Heros) //La case où souris clic est un héros
 						//{
+						if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE)){
+							System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
 							h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];
-							if (h instanceof Heros){
-								selection=1;
-								((Heros) h).estSelection(getGraphics(), c);
-							}
+						}
+						if (h instanceof Heros){
+							selection=1;
+							((Heros) h).estSelection(getGraphics(), c);
 							test=1;
-							//labelAlerte.setText("Mouvement d'un héros");
+						}
+						labelAlerte.setText("Mouvement d'un héros");
 						//}
 					}
 					public void mouseReleased(MouseEvent e)
@@ -111,19 +116,12 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 				labelInfo.setOpaque(true);
 				labelInfo.setBackground(Color.WHITE);
-				labelInfo.setPreferredSize(new Dimension(500,70));	
+				labelInfo.setPreferredSize(new Dimension(500,40));	
 				labelInfo.setHorizontalAlignment(JLabel.CENTER);
-				labelInfo.setVerticalAlignment(JLabel.CENTER);
+				//labelInfo.setVerticalAlignment(JLabel.CENTER);
 				Font font1 = new Font("Calibri",Font.BOLD,17);
 				labelInfo.setFont(font1);
 				add(labelInfo,BorderLayout.SOUTH);
-				
-				labelAlerte.setPreferredSize(new Dimension(500,70));	
-				labelAlerte.setHorizontalAlignment(JLabel.CENTER);
-				labelAlerte.setVerticalAlignment(JLabel.CENTER);
-				Font font2 = new Font("Calibri",Font.BOLD,28);
-				labelAlerte.setFont(font2);
-				add(labelAlerte,BorderLayout.NORTH);
 				
 				/*Ajouté ici pour reconnaitre la fonction sauvegarde */
 				sauvegarde = new Boutton("Sauvegarder une partie", "img/BouttonF.png", "img/BouttonB.png");
@@ -133,7 +131,7 @@ public class PanneauJeu extends JPanel implements Serializable
 					public void mouseClicked(MouseEvent e)
 					{
 						sauvegardeCarte();
-						//labelAlerte.setText("Partie sauvegardé");
+						labelAlerte.setText("Partie sauvegardé");
 					}
 				});
 				menuBar.add(sauvegarde);
@@ -232,7 +230,17 @@ public class PanneauJeu extends JPanel implements Serializable
 			
 		}
 		PanneauJeuImbric p2=new PanneauJeuImbric(chargement);		
-		this.add(p2,BorderLayout.SOUTH);
+		
+		labelAlerte.setPreferredSize(new Dimension(500,40));	
+		labelAlerte.setHorizontalAlignment(JLabel.CENTER);
+		labelAlerte.setVerticalAlignment(JLabel.CENTER);
+		labelAlerte.setOpaque(true);
+		Font font2 = new Font("Calibri",Font.BOLD,20);
+		labelAlerte.setFont(font2);
+		labelAlerte.setBackground(Color.WHITE);
+		hautfenetre.add(labelAlerte);
+		add(hautfenetre);
+		add(p2,BorderLayout.CENTER);
 
 	}
 
@@ -244,13 +252,15 @@ public class PanneauJeu extends JPanel implements Serializable
 	public void menuBar(final JFrame f){
 		//Menu du haut
 		
-		menuBar=new JMenuBar();
+		menuBar=new JPanel();
+		//menuBar.setBackground(new Color(0,0,0));
+		menuBar.setLayout(new GridLayout(1,3));
 		menuBar.setOpaque(true);
-		//menuBar.setPreferredSize(new Dimension(200,50));
-		menuBar.setBackground(new Color(125,125,125));
+		menuBar.setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,50));
+		//menuBar.setBackground(new Color(0,0,0));
 		//Bouton Menu dans barre du haut 
 		menu = new Boutton("Menu", "img/BouttonF.png", "img/BouttonB.png");
-		menu.setPreferredSize(new Dimension(300,30));
+		menu.setOpaque(true);
 		menu.addMouseListener(new MouseAdapter()
 		{
 			public void mouseClicked(MouseEvent e)
@@ -263,6 +273,6 @@ public class PanneauJeu extends JPanel implements Serializable
 		});
 		menuBar.add(menu);
 
-		super.add(menuBar,BorderLayout.NORTH);
+		hautfenetre.add(menuBar);
 	}
 }
