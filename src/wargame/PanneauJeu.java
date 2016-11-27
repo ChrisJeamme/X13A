@@ -231,7 +231,8 @@ public class PanneauJeu extends JPanel implements Serializable
 		super.paintComponent(g);
 	}
 	
-	public void menuBar(final JFrame f){
+	public void menuBar(final JFrame f)
+	{
 		//Menu du haut
 		
 		menuBar=new JMenuBar();
