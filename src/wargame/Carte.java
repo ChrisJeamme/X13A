@@ -139,6 +139,23 @@ public class Carte implements ICarte, IConfig, Serializable
 		return null;
 	}
 	
+	/** Trouve aléatoirement un monstre sur la carte */
+	public Monstre trouveMonstre()
+	{
+		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
+		{
+			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
+			{
+				if (caseCarte[i][j] instanceof Monstre)
+				{
+					return (Monstre)caseCarte[i][j];
+				}
+			}
+		}
+		System.out.println("Aucun monstre trouvé sur la carte");
+		return null;
+	}
+	
 	/** Trouve un héros choisi aléatoirement parmi les 8 positions adjacentes de pos */
 	public Heros trouveHeros(Position pos)
 	{

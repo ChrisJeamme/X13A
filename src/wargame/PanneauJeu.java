@@ -19,7 +19,7 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JButton menu;
 	private JLabel labelAlerte = new JLabel();
 	private JPanel hautfenetre = new JPanel();
-	private boolean aDejaJoue = false;
+	protected int numeroTour = 0;
 	
 	public PanneauJeu(boolean chargement, final JFrame f)
 	{	
@@ -33,8 +33,11 @@ public class PanneauJeu extends JPanel implements Serializable
 			
 			private Carte c;
 			private JLabel labelInfo = new JLabel();
+			private JLabel labelInfoTours = new JLabel();
 			private int selection=0;
 			private Element h; //Héros selectionné
+			private boolean aDejaJoue = false;
+			private int choixIA = 1;	//Par défaut à 1, il faudra faire un menu pour choisir
 			
 			public PanneauJeuImbric(boolean chargement)
 			{
@@ -76,47 +79,45 @@ public class PanneauJeu extends JPanel implements Serializable
 							labelAlerte.setText("Vous avez déjà joué ce tour !");
 						}
 						else
-						{
-												
-						//Clic Gauche sur un héros SANS en avoir choisi un avant
+						{					
+						//Clic Gauche
 						
-							if(e.getButton() == 1 && selected == false)	
-							{							
-								if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
+							if(e.getButton() == 1)	
+							{			
+								if(selected)	//Clic Gauche sur un héros EN ayant choisi un héros
 								{
-									//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
-									h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
+									c.toutDessiner(getGraphics());
+									selection=0;
+									
+									if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
+									{
+										h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
+									}
+									if (h instanceof Heros)	//Case cliqué est un héros
+									{
+										selection = 1;
+										((Heros) h).estSelection(getGraphics(), c);
+										selected = true;
+									}
+									labelAlerte.setText("Mouvement d'un héros");
 								}
-								if (h instanceof Heros)	//Case cliqué est un héros
+								else	//Clic Gauche sur un héros SANS avoir choisi un héros
 								{
-									selection = 1;
-									((Heros) h).estSelection(getGraphics(), c);
-									selected = true;
+									if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
+									{
+										//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
+										h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
+									}
+									if (h instanceof Heros)	//Case cliqué est un héros
+									{
+										selection = 1;
+										((Heros) h).estSelection(getGraphics(), c);
+										selected = true;
+									}
+									labelAlerte.setText("Mouvement d'un héros");
 								}
-								labelAlerte.setText("Mouvement d'un héros");
-								
 							}
-						
-						//Clic Gauche sur un héros EN ayant choisi un héros avant
-							
-							if(e.getButton() == 1 && selected == true)	
-							{
-								c.toutDessiner(getGraphics());
-								selection=0;
-								
-								if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
-								{
-									h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
-								}
-								if (h instanceof Heros)	//Case cliqué est un héros
-								{
-									selection = 1;
-									((Heros) h).estSelection(getGraphics(), c);
-									selected = true;
-								}
-								labelAlerte.setText("Mouvement d'un héros");
-							}
-						
+				
 						//Clic droit
 						
 							if(e.getButton() == 3)
@@ -135,11 +136,12 @@ public class PanneauJeu extends JPanel implements Serializable
 										c.toutDessiner(getGraphics());
 										repaint();
 										selection=0;
+										numeroTour++;
+										aDejaJoue = true;			// Sert à terminer un tour
 									}
 								}
 							}
 						}
-					
 					}
 				});
 				
@@ -153,6 +155,14 @@ public class PanneauJeu extends JPanel implements Serializable
 				Font font1 = new Font("Calibri",Font.BOLD,17);
 				labelInfo.setFont(font1);
 				add(labelInfo,BorderLayout.SOUTH);
+				
+				labelInfoTours.setOpaque(true);
+				labelInfoTours.setBackground(Color.WHITE);
+				labelInfoTours.setPreferredSize(new Dimension(500,40));	
+				labelInfoTours.setHorizontalAlignment(JLabel.CENTER);
+				//labelInfo.setVerticalAlignment(JLabel.CENTER);
+				labelInfoTours.setFont(font1);
+				add(labelInfoTours,BorderLayout.SOUTH);
 				
 				/*Ajouté ici pour reconnaitre la fonction sauvegarde */
 				sauvegarde = new Boutton("Sauvegarder une partie", "img/BouttonF.png", "img/BouttonB.png");
@@ -168,6 +178,54 @@ public class PanneauJeu extends JPanel implements Serializable
 				menuBar.add(sauvegarde);
 			}
 			
+			public void ia()
+			{
+				
+				///////////////  Gérer ici l'IA  ///////////////////////
+				//
+				//			II		A
+				//			II	   AAA
+				//			II	  AA AA
+				//			II	 AA   AA
+				//
+				////////////////////////////////////////////////////////
+				
+				switch(choixIA)
+				{
+					case 1:
+						iaRandom();
+						break;
+					case 2:
+						iaLvl1();
+						break;
+				}
+				
+				labelAlerte.setText("L'adversaire a joué");
+				aDejaJoue = false;
+				numeroTour++;
+			}
+			
+			/** IA avec actions simples */
+			protected void iaLvl1()
+			{
+				//Explorer tous les monstres
+				//Cherche ceux qui ont des ennemies à attaquer
+				//Choisir parmi eux avec une fonction qui attribue une valeur à chaque combat possible
+			}
+
+			/** IA avec actions random */
+			protected void iaRandom()
+			{
+				Monstre m = c.trouveMonstre();
+				
+				m.seDeplace(new Position(m.getPosition().getX()+1, m.getPosition().getY()+1));	//A l'arrache pour qu'il fasse quelque chose
+				
+				repaint();
+				
+				//Si un ennemi à proximité, on l'attaque
+				//Sinon on se déplace
+			}
+
 			public void paintComponent(Graphics g)
 			{
 				super.paintComponent(g);
@@ -175,8 +233,15 @@ public class PanneauJeu extends JPanel implements Serializable
 				g.setColor(new Color(50,90,100));
 				g.fillRect(0,0,IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE);
 				c.toutDessiner(g);
-				if (selection!=1){
+				if (selection!=1)
+				{
 					labelAlerte.setText(c.informations);
+				}
+				labelInfoTours.setText("Tour numéro: "+numeroTour);
+				
+				if(aDejaJoue)
+				{
+					ia();
 				}
 			}
 
