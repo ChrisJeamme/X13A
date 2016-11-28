@@ -226,14 +226,31 @@ public class PanneauJeu extends JPanel implements Serializable
 					if((h = c.trouveHeros(m[i].getPosition())) != null)
 					{
 						boolean issu = m[i].combat(h);
-						System.out.println("Héros à proximité du monstre trouvé");
-						labelAlerte.setText("Le monstre "+m+" attaque "+h+"et a "+((issu)?"gagné":"perdu"));
+						
+						if (issu)	//Si combat gagné par le monstre <=> Héros mort
+						{
+							c.mort((Soldat)c.caseCarte[h.getPosition().getX()][h.getPosition().getY()]);
+							repaint();
+							
+							labelAlerte.setText("Le monstre "+m+"a attaqué "+h+" qui en est mort");
+						}
+						else 
+						{
+							if (m[i].getPoints()<=0)	//Si le monstre est mort
+								labelAlerte.setText("Le monstre "+m+" est mort en attanquant "+h);
+							c.mort((Soldat)c.caseCarte[m[i].getPosition().getX()][m[i].getPosition().getY()]);
+							repaint();
+						}
+					}
+					else
+					{
+						System.out.println("Héros à proximité du monstre PAS trouvé");
 					}
 				}
 				
 				if(h==null)	//Sinon on se déplace
 				{
-					System.out.println("Héros à proximité du monstre PAS trouvé");
+					//Aucune vérif sur le déplacement + enlève le brouillard !
 					m[m.length/2].seDeplace(new Position(m[m.length/2].getPosition().getX()+1, m[m.length/2].getPosition().getY()+1));	//A l'arrache pour qu'il fasse quelque chose
 					labelAlerte.setText("Le monstre "+m+" se déplace");
 				}

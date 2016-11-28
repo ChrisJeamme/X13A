@@ -183,20 +183,20 @@ public class Carte implements ICarte, IConfig, Serializable
 		int y = pos.getY();
 		
 		//Vérification que le cadre des positions adjacentes ne dépassent pas une limite
-		int limiteHaut = (y+1>=0)? y+1 : 0;
-		int limiteBas = (y-1<=IConfig.HAUTEUR_CARTE)? y-1 : IConfig.HAUTEUR_CARTE;
-		int limiteGauche = (x+1>=0)? x+1 : 0;
-		int limiteDroite = (x-1<=IConfig.LARGEUR_CARTE)? x-1 : IConfig.LARGEUR_CARTE;
+		int limiteHaut = (y-1>=0)? y-1 : 0;
+		int limiteBas = (y+1<=IConfig.HAUTEUR_CARTE)? y+1 : IConfig.HAUTEUR_CARTE;
+		int limiteGauche = (x-1>=0)? x-1 : 0;
+		int limiteDroite = (x+1<=IConfig.LARGEUR_CARTE)? x+1 : IConfig.LARGEUR_CARTE;
 		
-		for(int i=limiteHaut; i<=limiteBas; i++)
+		for(int i=limiteHaut; i<limiteBas; i++)
 		{
-			for(int j=limiteGauche; j<=limiteDroite; j++)
+			for(int j=limiteGauche; j<limiteDroite; j++)
 			{
 				//System.out.println(caseCarte[i][j]);
-				if (caseCarte[i][j] instanceof Heros)
+				if (caseCarte[j][i] instanceof Heros)
 				{
 					//System.out.println("Trouvé !");
-					return (Heros) caseCarte[i][j];
+					return (Heros) caseCarte[j][i];
 				}
 			}
 		}
