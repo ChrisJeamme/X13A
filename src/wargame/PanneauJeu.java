@@ -74,7 +74,7 @@ public class PanneauJeu extends JPanel implements Serializable
 					
 					public void mouseClicked(MouseEvent e)
 					{
-						if (aDejaJoue)
+						if (aDejaJoue)	//En ce moment impossible d'être dans ce cas car les monstres jouent directement après actionHeros, mais si on fait bouton FinTour OK
 						{
 							labelAlerte.setText("Vous avez déjà joué ce tour !");
 						}
@@ -162,7 +162,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				labelInfoTours.setHorizontalAlignment(JLabel.CENTER);
 				//labelInfo.setVerticalAlignment(JLabel.CENTER);
 				labelInfoTours.setFont(font1);
-				add(labelInfoTours,BorderLayout.SOUTH);
+				//add(labelInfoTours,BorderLayout.SOUTH);				/////////////////////////////////////// A REMETTRE POUR LES TOURS
 				
 				/*Ajouté ici pour reconnaitre la fonction sauvegarde */
 				sauvegarde = new Boutton("Sauvegarder une partie", "img/BouttonF.png", "img/BouttonB.png");
@@ -200,7 +200,7 @@ public class PanneauJeu extends JPanel implements Serializable
 						break;
 				}
 				
-				labelAlerte.setText("L'adversaire a joué");
+				//labelAlerte.setText("L'adversaire a joué");
 				aDejaJoue = false;
 				numeroTour++;
 			}
@@ -216,14 +216,27 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** IA avec actions random */
 			protected void iaRandom()
 			{
-				Monstre m = c.trouveMonstre();
-				
-				m.seDeplace(new Position(m.getPosition().getX()+1, m.getPosition().getY()+1));	//A l'arrache pour qu'il fasse quelque chose
-				
-				repaint();
+				Heros h = null;
+				Monstre[] m = c.trouveToutMonstre();
 				
 				//Si un ennemi à proximité, on l'attaque
-				//Sinon on se déplace
+				
+				for(int i=0; i<m.length; i++)	//Pour tous les monstres trouvés
+				{
+					if((h = c.trouveHeros(m[i].getPosition())) != null)
+					{
+						boolean issu = m[i].combat(h);
+						System.out.println("Héros à proximité du monstre trouvé");
+						labelAlerte.setText("Le monstre "+m+" attaque "+h+"et a "+((issu)?"gagné":"perdu"));
+					}
+				}
+				
+				if(h==null)	//Sinon on se déplace
+				{
+					System.out.println("Héros à proximité du monstre PAS trouvé");
+					m[m.length/2].seDeplace(new Position(m[m.length/2].getPosition().getX()+1, m[m.length/2].getPosition().getY()+1));	//A l'arrache pour qu'il fasse quelque chose
+					labelAlerte.setText("Le monstre "+m+" se déplace");
+				}
 			}
 
 			public void paintComponent(Graphics g)

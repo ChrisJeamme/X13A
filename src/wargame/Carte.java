@@ -192,8 +192,10 @@ public class Carte implements ICarte, IConfig, Serializable
 		{
 			for(int j=limiteGauche; j<=limiteDroite; j++)
 			{
+				//System.out.println(caseCarte[i][j]);
 				if (caseCarte[i][j] instanceof Heros)
 				{
+					//System.out.println("Trouvé !");
 					return (Heros) caseCarte[i][j];
 				}
 			}
