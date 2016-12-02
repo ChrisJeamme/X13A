@@ -13,5 +13,9 @@ public class Test1
 		for(TypesH h: TypesH.values())
 			System.out.println(h+" "+h.getPoints()+" "+h.getPortee()+" "+h.getPuissance()+" "+h.getTir());
 		
+		
+		//TODO Des try catch, qui peuvent ouvrir des fenetres JOptionPane()
+		//TODO sauvegarder avec la DATE, charger selon les fichiers présents dans le dossier, créer fichier déconne
+		//TODO Tout commenter
 	}
 }

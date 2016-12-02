@@ -4,12 +4,20 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.*;
+
+import org.omg.CORBA.Current;
 
 public class PanneauJeu extends JPanel implements Serializable
 {
@@ -21,7 +29,7 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JPanel hautfenetre = new JPanel();
 	protected int numeroTour = 0;
 	
-	public PanneauJeu(boolean chargement, final JFrame f)
+	public PanneauJeu(Carte c, final JFrame f)
 	{	
 		/*On ajoute la JMenuBar */
 		hautfenetre.setLayout(new GridLayout(2,1));
@@ -31,21 +39,25 @@ public class PanneauJeu extends JPanel implements Serializable
 		{
 			private static final long serialVersionUID = 1L;
 			
+			/** Carte du panneau */
 			private Carte c;
+			/** Label où il y aura les informations supplémentaires */
 			private JLabel labelInfo = new JLabel();
+			/**  */
 			private JLabel labelInfoTours = new JLabel();
+			/**  */
 			private int selection=0;
-			private Element h; //Héros selectionné
+			/** Le héros selectionné */
+			private Element h;
+			/**  */
 			private boolean aDejaJoue = false;
-			private int choixIA = 1;	//Par défaut à 1, il faudra faire un menu pour choisir
+			/** Choix de l'IA: Par défaut à 1, il faudra faire un menu pour choisir */
+			private int choixIA = 1;	//
 			
-			public PanneauJeuImbric(boolean chargement)
-			{
-				//Si chargement
-				if(chargement)
-					c = chargementCarte();
-				else
-					c = new Carte();
+			
+			public PanneauJeuImbric(Carte carte)
+			{				
+				c = carte;
 				
 				//Configuration d'affichage
 				
@@ -275,64 +287,23 @@ public class PanneauJeu extends JPanel implements Serializable
 				}
 			}
 
-			/** Charge la carte du fichier save et la place dans la carte de l'objet */
-			protected Carte chargementCarte()
-			{
-				ObjectInputStream ois = null;
-				Carte c = null;
-
-			    try
-			    {
-			      final FileInputStream fichier = new FileInputStream("save");
-			      ois = new ObjectInputStream(fichier);
-			      c = (Carte) ois.readObject();
-			    }
-			    catch (final java.io.IOException e)
-			    {
-			      e.printStackTrace();
-			    }
-			    catch (final ClassNotFoundException e)
-			    {
-			      e.printStackTrace();
-			    }
-			    finally
-			    {
-			    	try
-			    	{
-			    		if (ois != null)
-			    			{
-			    				ois.close();
-			    			}
-			    	}
-			    	catch (final IOException ex)
-			    	{
-			    		ex.printStackTrace();
-			    	}
-			    }
-			    
-			    for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
-				{
-					for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
-					{
-						c.caseCarte[i][j].changerImage();
-					}
-				}
-						
-			    
-			    return c;
-			}
-
 			/** Sauvegarde la carte de l'objet dans le fichier save */
 			protected void sauvegardeCarte()
 			{
 			    ObjectOutputStream oos = null;
 
 			    try
-			    {
-			      final FileOutputStream fichier = new FileOutputStream("save");
-			      oos = new ObjectOutputStream(fichier);
-			      oos.writeObject(c);
-			      oos.flush();
+			    {			        
+			    	//String date = "";
+			    	
+			        //PrintWriter pWriter = new PrintWriter(new FileWriter("Sauvegarde: "+date, true));	//On crée le fichier
+			        //pWriter.close();
+					final FileOutputStream fichier = new FileOutputStream("save/Sauvegarde 1"/*+date*/);			//On l'ouvre
+					
+					
+					oos = new ObjectOutputStream(fichier);
+					oos.writeObject(c);
+					oos.flush();
 			    }
 			    catch (final java.io.IOException e)
 			    {
@@ -354,11 +325,10 @@ public class PanneauJeu extends JPanel implements Serializable
 			      }
 			    }
 				
-			}
-			
+			}			
 		}
 		
-		PanneauJeuImbric p2=new PanneauJeuImbric(chargement);		
+		PanneauJeuImbric p2 = new PanneauJeuImbric(c);		
 		
 		labelAlerte.setPreferredSize(new Dimension(500,40));	
 		labelAlerte.setHorizontalAlignment(JLabel.CENTER);
@@ -394,7 +364,6 @@ public class PanneauJeu extends JPanel implements Serializable
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				//TODO
 				((Fenetre) f).retourMenu();
 				repaint();
 				revalidate();

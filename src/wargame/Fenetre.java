@@ -7,12 +7,19 @@ import java.awt.event.MouseEvent;
 
 public class Fenetre extends JFrame
 {
+	/** */
 	private JPanel p;
-	JButton chargement;
+	/** */
+	JButton chargement;		
+	/** */														//TODO mettre public et tout
 	JButton lancement;
+	/** */
 	JPanel tmp;
+	/** */
 	JMenuBar menuBar;
+	/** */
 	PanneauJeu panneau;
+	
 	static final long serialVersionUID=0;
 	
 	public Fenetre()
@@ -48,14 +55,9 @@ public class Fenetre extends JFrame
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				remove(p);	//On supprime le menu
+				p.setVisible(false);
 				
-				//Ici je pensais faire
-				//p = new InterfaceChargementJeu();
-				//Qui elle appelle PanneauJeu avec la carte chargé 
-				//Mais comment pourra t-elle se supprimer elle meme?
-				
-				panneau = new PanneauJeu(false,f); //Panneau sans chargement
+				panneau = new PanneauJeu(new Carte(),f); //Panneau sans chargement
 				setContentPane(panneau);
 				repaint();
 				revalidate();
@@ -72,12 +74,19 @@ public class Fenetre extends JFrame
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				tmp=p;
-				remove(p);	//On supprime le menu
-				panneau = new PanneauJeu(true,f); //Panneau avec chargement
-				setContentPane(panneau);
-				repaint();
-				revalidate();
+				ChargementPartie chargement = new ChargementPartie();	//On invoque le dialogue de chargement de partie
+				add(chargement);
+				Carte c = chargement.getCarte();
+				
+				if (c != null)	//Si le dialog OK
+				{
+					p.setVisible(false);	//On efface le menu
+					
+					panneau = new PanneauJeu(c, f); //Panneau avec chargement
+					setContentPane(panneau);
+					repaint();
+					revalidate();
+				}
 			}
 		});
 		
@@ -87,12 +96,11 @@ public class Fenetre extends JFrame
 		setVisible(true);
 	}
 
-	public void retourMenu(){
-		/*J'enleve le JPanel actuel pour en remettre un autre */
-		remove(p);	
-		setContentPane(new LancementJeu());
-		/*Sans oublier le contenu*/
-		boutons();
+	public void retourMenu()
+	{
+		p.setVisible(true);
+		setContentPane(p);
+		
 		repaint();
 		revalidate();
 	}
