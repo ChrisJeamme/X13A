@@ -251,8 +251,8 @@ public class PanneauJeu extends JPanel implements Serializable
 				if(h==null)	//Sinon on se déplace
 				{
 					//Aucune vérif sur le déplacement + enlève le brouillard !
-					m[m.length/2].seDeplace(new Position(m[m.length/2].getPosition().getX()+1, m[m.length/2].getPosition().getY()+1));	//A l'arrache pour qu'il fasse quelque chose
-					labelAlerte.setText("Le monstre "+m+" se déplace");
+					//m[m.length/2].seDeplace(new Position(m[m.length/2].getPosition().getX()+1, m[m.length/2].getPosition().getY()+1));	//A l'arrache pour qu'il fasse quelque chose
+					//labelAlerte.setText("Le monstre "+m+" se déplace");
 				}
 			}
 
