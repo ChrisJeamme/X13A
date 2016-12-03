@@ -53,7 +53,7 @@ public class Fenetre extends JFrame
 		p.add(lancement,gbc);
 		lancement.addMouseListener(new MouseAdapter()
 		{
-			public void mouseClicked(MouseEvent e)
+			public void mousePressed(MouseEvent e)
 			{
 				p.setVisible(false);
 				
@@ -72,7 +72,7 @@ public class Fenetre extends JFrame
 		p.add(chargement,gbc);
 		chargement.addMouseListener(new MouseAdapter()
 		{
-			public void mouseClicked(MouseEvent e)
+			public void mousePressed(MouseEvent e)
 			{
 				ChargementPartie chargement = new ChargementPartie();	//On invoque le dialogue de chargement de partie
 				add(chargement);

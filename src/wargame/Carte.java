@@ -11,13 +11,12 @@ public class Carte implements ICarte, IConfig, Serializable
 {
 	private static final long serialVersionUID = 3933938513841317615L;
 	
-	public Element[][] caseCarte;
+	public Element[][] caseCarte; //On peut (il faut) passer private et utiliser getElement
 	public String informations = "";
-	
 	public Carte()
 	{
 		caseCarte = new Element[IConfig.LARGEUR_CARTE][IConfig.HAUTEUR_CARTE];
-
+		
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 		{
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
@@ -58,7 +57,6 @@ public class Carte implements ICarte, IConfig, Serializable
 			}
 		}
 		
-		//caseCarte[8][8]=new Heros(TypesH.getTypeHAlea(),8,8);
 	}
 
 	public Element getElement(Position pos)
@@ -87,26 +85,6 @@ public class Carte implements ICarte, IConfig, Serializable
 		int x = pos.getX();
 		int y = pos.getY();
 		
-		//Vérification que le cadre des positions adjacentes ne dépassent pas une limite
-		
-		/* J'ai rien compris a ça mais erreur donc j'en fais une autre en attendant 
-		 
-		int limiteHaut = (y+1>=0)? y+1 : 0;
-		int limiteBas = (y-1<=IConfig.HAUTEUR_CARTE)? y-1 : IConfig.HAUTEUR_CARTE;
-		int limiteGauche = (x+1>=0)? x+1 : 0;
-		int limiteDroite = (x-1<=IConfig.LARGEUR_CARTE)? x-1 : IConfig.LARGEUR_CARTE;
-		
-		for(int i=limiteHaut; i<=limiteBas; i++)
-		{
-			for(int j=limiteGauche; j<=limiteDroite; j++)
-			{
-				if (caseCarte[i][j].estVide())
-				{
-					return new Position(i,j);
-				}
-			}
-		}
-		*/
 		for(int i=x-1; i<=x+1; i++)
 		{
 			if (i<IConfig.LARGEUR_CARTE && i>=0)
@@ -326,9 +304,19 @@ public class Carte implements ICarte, IConfig, Serializable
 		return false;		//Pas une position valide
 	}
 	
-	public void jouerSoldats(PanneauJeu pj)
+	public void jouerSoldats()
 	{
-		
+		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
+		{
+			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
+			{
+				if (caseCarte[i][j] instanceof Heros)
+				{
+					if (((Heros)caseCarte[i][j]).getTourJoue()==false) ((Heros)caseCarte[i][j]).heal();
+					else ((Heros)caseCarte[i][j]).setTourJoue(false);
+				}
+			}
+		}
 	}
 	
 	/** Déssine la carte avec ses éléments */

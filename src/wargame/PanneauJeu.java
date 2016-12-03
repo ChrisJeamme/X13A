@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 
@@ -25,6 +26,7 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JPanel menuBar;
 	private JButton sauvegarde;
 	private JButton menu;
+	private JButton fintour;
 	private JLabel labelAlerte = new JLabel();
 	private JPanel hautfenetre = new JPanel();
 	protected int numeroTour = 0;
@@ -50,7 +52,6 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** Le héros selectionné */
 			private Element h;
 			/**  */
-			private boolean aDejaJoue = false;
 			/** Choix de l'IA: Par défaut à 1, il faudra faire un menu pour choisir */
 			private int choixIA = 1;	//
 			
@@ -82,77 +83,50 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 				addMouseListener(new MouseAdapter()	//Gestion des héros
 				{
-					boolean selected = false;
-					
-					public void mouseClicked(MouseEvent e)
+					private boolean selected;
+					public void mousePressed(MouseEvent e)
 					{
-						if (aDejaJoue)	//En ce moment impossible d'être dans ce cas car les monstres jouent directement après actionHeros, mais si on fait bouton FinTour OK
-						{
-							labelAlerte.setText("Vous avez déjà joué ce tour !");
-						}
-						else
-						{					
 						//Clic Gauche
-						
-							if(e.getButton() == 1)	
-							{			
-								if(selected)	//Clic Gauche sur un héros EN ayant choisi un héros
-								{
-									c.toutDessiner(getGraphics());
-									selection=0;
-									
-									if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
-									{
-										h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
-									}
-									if (h instanceof Heros)	//Case cliqué est un héros
-									{
-										selection = 1;
-										((Heros) h).estSelection(getGraphics(), c);
-										selected = true;
-									}
-									labelAlerte.setText("Mouvement d'un héros");
+						labelAlerte.setText("");
+						if(e.getButton() == 1)	
+						{			
+							c.toutDessiner(getGraphics());
+							if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
+							{
+								//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
+								h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
+							}
+							if (h instanceof Heros)	//Case cliqué est un héros
+							{
+								selection = 1;
+								if (((Heros)h).getTourJoue()==true){
+									labelAlerte.setText("Ce Heros a déjà joué");
 								}
-								else	//Clic Gauche sur un héros SANS avoir choisi un héros
-								{
-									if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
-									{
-										//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
-										h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
-									}
-									if (h instanceof Heros)	//Case cliqué est un héros
-									{
-										selection = 1;
-										((Heros) h).estSelection(getGraphics(), c);
-										selected = true;
-									}
+								else{
+									((Heros) h).estSelection(getGraphics(), c);
 									labelAlerte.setText("Mouvement d'un héros");
+									selected=true;
 								}
 							}
+									
+								
+						}
 				
 						//Clic droit
-						
-							if(e.getButton() == 3)
+						if(e.getButton() == 3 && selected==true)
+						{
+							labelAlerte.setText("");
+							Position p = h.getPosition();
+							if (c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE))==true)
+								((Heros) h).setTourJoue(true);
+							if (h instanceof Heros)
 							{
-								labelAlerte.setText("");
-								
-								if (selected)	//Si un héros à été précédemment selectionné
-								{
-									selected = false;
-									Position p = h.getPosition();
-							
-									c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE));
-									
-									if (h instanceof Heros)
-									{
-										c.toutDessiner(getGraphics());
-										repaint();
-										selection=0;
-										numeroTour++;
-										aDejaJoue = true;			// Sert à terminer un tour
-									}
-								}
+								c.toutDessiner(getGraphics());
+								repaint();
+								selection=0;
+								//numeroTour++;
 							}
+							selected=false;
 						}
 					}
 				});
@@ -176,18 +150,32 @@ public class PanneauJeu extends JPanel implements Serializable
 				labelInfoTours.setFont(font1);
 				//add(labelInfoTours,BorderLayout.SOUTH);				/////////////////////////////////////// A REMETTRE POUR LES TOURS
 				
+				fintour= new Boutton("Fin de Tour", "img/BouttonF.png", "img/BouttonB.png");
+				fintour.setOpaque(true);
+				fintour.addMouseListener(new MouseAdapter()
+				{
+					public void mousePressed(MouseEvent e)
+					{
+						finirTour(c);
+					}
+				});
+				
+				menuBar.add(fintour);
+				
 				/*Ajouté ici pour reconnaitre la fonction sauvegarde */
 				sauvegarde = new Boutton("Sauvegarder une partie", "img/BouttonF.png", "img/BouttonB.png");
 				sauvegarde.setPreferredSize(new Dimension(300,30));
 				sauvegarde.addMouseListener(new MouseAdapter()
 				{
-					public void mouseClicked(MouseEvent e)
+					public void mousePressed(MouseEvent e)
 					{
 						sauvegardeCarte();
 						labelAlerte.setText("Partie sauvegardé");
 					}
 				});
 				menuBar.add(sauvegarde);
+				
+				
 			}
 			
 			public void ia()
@@ -213,10 +201,9 @@ public class PanneauJeu extends JPanel implements Serializable
 				}
 				
 				//labelAlerte.setText("L'adversaire a joué");
-				aDejaJoue = false;
-				numeroTour++;
+				//numeroTour++;
 			}
-			
+	
 			/** IA avec actions simples */
 			protected void iaLvl1()
 			{
@@ -280,11 +267,12 @@ public class PanneauJeu extends JPanel implements Serializable
 					labelAlerte.setText(c.informations);
 				}
 				labelInfoTours.setText("Tour numéro: "+numeroTour);
-				
+				/* J'enleve en attendant pour me simplifier les tours
 				if(aDejaJoue)
 				{
 					ia();
 				}
+				*/
 			}
 
 			/** Sauvegarde la carte de l'objet dans le fichier save */
@@ -326,6 +314,13 @@ public class PanneauJeu extends JPanel implements Serializable
 			    }
 				
 			}			
+		
+			public void finirTour(Carte c){
+				c.jouerSoldats();
+				//ia();
+			}
+			
+
 		}
 		
 		PanneauJeuImbric p2 = new PanneauJeuImbric(c);		
@@ -362,7 +357,7 @@ public class PanneauJeu extends JPanel implements Serializable
 		menu.setOpaque(true);
 		menu.addMouseListener(new MouseAdapter()
 		{
-			public void mouseClicked(MouseEvent e)
+			public void mousePressed(MouseEvent e)
 			{
 				((Fenetre) f).retourMenu();
 				repaint();
@@ -370,7 +365,8 @@ public class PanneauJeu extends JPanel implements Serializable
 			}
 		});
 		menuBar.add(menu);
-
+		
 		hautfenetre.add(menuBar);
 	}
+
 }

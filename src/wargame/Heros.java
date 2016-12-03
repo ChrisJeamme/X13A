@@ -10,6 +10,7 @@ public class Heros extends Soldat implements ISoldat
 	private static final long serialVersionUID = 3756416095361088558L;
 	
 	private final TypesH TYPE;
+	private boolean tourJoue=false;
 	
 	public Heros(int x, int y)
 	{
@@ -135,5 +136,19 @@ public class Heros extends Soldat implements ISoldat
 			g.drawLine((i+1)*IConfig.NB_PIX_CASE,j*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);
 			g.drawLine(i*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);
 		}
+	}
+
+	public void setTourJoue(boolean ajoue){
+		tourJoue=ajoue;
+	}
+	
+	public boolean getTourJoue(){
+		return tourJoue;
+	}
+
+	public void heal(){ //Tour non joué
+		if (points_de_vie>TYPE.getPoints()-3)
+			points_de_vie=TYPE.getPoints();
+		else points_de_vie=points_de_vie+3; //A définir de combien
 	}
 }
