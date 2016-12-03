@@ -356,4 +356,9 @@ public class Carte implements ICarte, IConfig, Serializable
 		}
 	}
 	
+	public int verifFinJeu(){ /* 0 on continue 1 on gagne 2 on perd */
+		if (trouveHeros()==null) return 2;
+		else if (trouveMonstre()==null) return 1;
+		else return 0;
+	}
 }

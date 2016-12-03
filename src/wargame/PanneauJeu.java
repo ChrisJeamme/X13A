@@ -29,7 +29,11 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JButton fintour;
 	private JLabel labelAlerte = new JLabel();
 	private JPanel hautfenetre = new JPanel();
-	protected int numeroTour = 0;
+	private JLabel labelInfo = new JLabel();
+	private JLabel labelfin=new JLabel();
+	private JPanel p2;
+	private int numeroTour = 1;
+	private int affichagefin=0;
 	
 	public PanneauJeu(Carte c, final JFrame f)
 	{	
@@ -44,14 +48,11 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** Carte du panneau */
 			private Carte c;
 			/** Label où il y aura les informations supplémentaires */
-			private JLabel labelInfo = new JLabel();
-			/**  */
 			private JLabel labelInfoTours = new JLabel();
 			/**  */
 			private int selection=0;
 			/** Le héros selectionné */
 			private Element h;
-			/**  */
 			/** Choix de l'IA: Par défaut à 1, il faudra faire un menu pour choisir */
 			private int choixIA = 1;	//
 			
@@ -74,7 +75,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				{
 					public void mouseMoved(MouseEvent e)
 					{
-						if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE)	//Si position souris correcte
+						if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE && affichagefin==0) //Si position souris correcte
 							if(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].visible==true)	//Et sur une case visible
 								labelInfo.setText(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].toString());	//On met à jour le labelInfo
 						else labelInfo.setText("");
@@ -86,48 +87,53 @@ public class PanneauJeu extends JPanel implements Serializable
 					private boolean selected;
 					public void mousePressed(MouseEvent e)
 					{
-						//Clic Gauche
-						labelAlerte.setText("");
-						if(e.getButton() == 1)	
-						{			
-							c.toutDessiner(getGraphics());
-							if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
-							{
-								//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
-								h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
-							}
-							if (h instanceof Heros)	//Case cliqué est un héros
-							{
-								selection = 1;
-								if (((Heros)h).getTourJoue()==true){
-									labelAlerte.setText("Ce Heros a déjà joué");
-								}
-								else{
-									((Heros) h).estSelection(getGraphics(), c);
-									labelAlerte.setText("Mouvement d'un héros");
-									selected=true;
-								}
-							}
-									
-								
-						}
-				
-						//Clic droit
-						if(e.getButton() == 3 && selected==true)
-						{
+						if (affichagefin==0){ /* Si on a pas fini */
+						
+							//Clic Gauche
 							labelAlerte.setText("");
-							Position p = h.getPosition();
-							if (c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE))==true)
-								((Heros) h).setTourJoue(true);
-							if (h instanceof Heros)
-							{
+							if(e.getButton() == 1)	
+							{			
 								c.toutDessiner(getGraphics());
-								repaint();
-								selection=0;
-								//numeroTour++;
+								if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
+								{
+									//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
+									h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
+								}
+								if (h instanceof Heros)	//Case cliqué est un héros
+								{
+									selection = 1;
+									if (((Heros)h).getTourJoue()==true){
+										labelAlerte.setText("Ce Heros a déjà joué");
+									}
+									else{
+										((Heros) h).estSelection(getGraphics(), c);
+										labelAlerte.setText("Mouvement d'un héros");
+										selected=true;
+									}
+								}
+										
+									
 							}
-							selected=false;
-						}
+					
+							//Clic droit
+							if(e.getButton() == 3 && selected==true)
+							{
+								labelAlerte.setText("");
+								Position p = h.getPosition();
+								if (c.actionHeros(p, new Position(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE))==true)
+								{
+									((Heros) h).setTourJoue(true);
+									if (c.verifFinJeu()!=0) finJeu(c.verifFinJeu());
+								}
+								if (h instanceof Heros)
+								{
+									c.toutDessiner(getGraphics());
+									repaint();
+									selection=0;
+								}
+								selected=false;
+							}
+						}/*fin du if */
 					}
 				});
 				
@@ -142,12 +148,14 @@ public class PanneauJeu extends JPanel implements Serializable
 				labelInfo.setFont(font1);
 				add(labelInfo,BorderLayout.SOUTH);
 				
+				/*
 				labelInfoTours.setOpaque(true);
 				labelInfoTours.setBackground(Color.WHITE);
 				labelInfoTours.setPreferredSize(new Dimension(500,40));	
 				labelInfoTours.setHorizontalAlignment(JLabel.CENTER);
 				//labelInfo.setVerticalAlignment(JLabel.CENTER);
 				labelInfoTours.setFont(font1);
+				*/
 				//add(labelInfoTours,BorderLayout.SOUTH);				/////////////////////////////////////// A REMETTRE POUR LES TOURS
 				
 				fintour= new Boutton("Fin de Tour", "img/BouttonF.png", "img/BouttonB.png");
@@ -157,6 +165,7 @@ public class PanneauJeu extends JPanel implements Serializable
 					public void mousePressed(MouseEvent e)
 					{
 						finirTour(c);
+						numeroTour++;
 					}
 				});
 				
@@ -199,9 +208,8 @@ public class PanneauJeu extends JPanel implements Serializable
 						iaLvl1();
 						break;
 				}
-				
+				if (c.verifFinJeu()!=0) finJeu(c.verifFinJeu());
 				//labelAlerte.setText("L'adversaire a joué");
-				//numeroTour++;
 			}
 	
 			/** IA avec actions simples */
@@ -266,7 +274,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				{
 					labelAlerte.setText(c.informations);
 				}
-				labelInfoTours.setText("Tour numéro: "+numeroTour);
+				//labelInfoTours.setText("Tour numéro: "+numeroTour);
 				/* J'enleve en attendant pour me simplifier les tours
 				if(aDejaJoue)
 				{
@@ -278,6 +286,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** Sauvegarde la carte de l'objet dans le fichier save */
 			protected void sauvegardeCarte()
 			{
+				System.out.println("TEST");
 			    ObjectOutputStream oos = null;
 
 			    try
@@ -316,15 +325,40 @@ public class PanneauJeu extends JPanel implements Serializable
 			}			
 		
 			public void finirTour(Carte c){
+				labelAlerte.setText("Fin du tour "+numeroTour);
 				c.jouerSoldats();
 				//ia();
+			}
+			public void finJeu(int fin){
+				affichagefin=1; /*sert a ne pas supprimer le message de fin vu qu'on peut encore cliquer */
+				if (fin==1){ /* a ne pas laisser  bien sur ! */
+					labelInfo.setText("Quel génie !");
+				}
+				else{
+					labelInfo.setText("Pauvre merde");
+				}
+				repaint();
+				sauvegarde.setVisible(false);
+				fintour.setVisible(false);
+				/*Si quand on gagne on veut plus pouvoir cliquer > balayage carte et visible=false; */
+
+				labelfin.setVisible(true);
+				labelfin.setHorizontalAlignment(JLabel.CENTER);
+				labelfin.setVerticalAlignment(JLabel.CENTER);
+				labelfin.setOpaque(false);
+				Font font3 = new Font("Calibri",Font.BOLD,130);
+				labelfin.setFont(font3);
+				add(labelfin,BorderLayout.CENTER);
+				if (fin==1)
+					labelfin.setText("<html><center><font color = #ED7700 >Gagné !</font><br><font size=120 color = #ECFD00 >[En "+numeroTour+" tours]</font></center</html>");
+				else labelfin.setText("<html><center><font color = #00C6ED >Perdu !</font><br><font size=120 color = #7F00ED > [En "+numeroTour+" tours]</font></center></html>");
+				repaint();
 			}
 			
 
 		}
 		
-		PanneauJeuImbric p2 = new PanneauJeuImbric(c);		
-		
+		PanneauJeuImbric p2 = new PanneauJeuImbric(c);	
 		labelAlerte.setPreferredSize(new Dimension(500,40));	
 		labelAlerte.setHorizontalAlignment(JLabel.CENTER);
 		labelAlerte.setVerticalAlignment(JLabel.CENTER);
