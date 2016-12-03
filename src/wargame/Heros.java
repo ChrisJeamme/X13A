@@ -74,16 +74,16 @@ public class Heros extends Soldat implements ISoldat
 			{
 				if (j+v>=0 && j+v<IConfig.HAUTEUR_CARTE && i+l<IConfig.LARGEUR_CARTE)
 				{
-					if (c.caseCarte[i+l][j+v] instanceof Obstacle)
+					if (c.getElement(i+l,j+v) instanceof Obstacle)
 						/* Rien */ ;
-					else if (c.caseCarte[i+l][j+v] instanceof Heros){
+					else if (c.getElement(i+l,j+v) instanceof Heros){
 						g.setColor(Color.GREEN);
 						g.drawLine((i+l)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i+l+1)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE);
 						g.drawLine((i+l)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i+l)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE);
 						g.drawLine((i+l+1)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i+l+1)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE);
 						g.drawLine((i+l)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE,(i+l+1)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE);
 					}
-					else if (c.caseCarte[i+l][j+v] instanceof Monstre){
+					else if (c.getElement(i+l,j+v) instanceof Monstre){
 						g.setColor(Color.RED);
 						g.drawLine((i+l)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i+l+1)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE);
 						g.drawLine((i+l)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i+l)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE);
@@ -102,16 +102,16 @@ public class Heros extends Soldat implements ISoldat
 				if (j+v>=0 && j+v<IConfig.HAUTEUR_CARTE && i-l>=0)
 				{
 					//caseCarte[i-l][j+v].visible=true;
-					if (c.caseCarte[i-l][j+v] instanceof Obstacle)
+					if (c.getElement(i-l,j+v) instanceof Obstacle)
 						/*Rien*/ ;
-					else if (c.caseCarte[i-l][j+v] instanceof Heros){
+					else if (c.getElement(i-l,j+v) instanceof Heros){
 						g.setColor(Color.GREEN);
 						g.drawLine((i-l)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i-l+1)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE);
 						g.drawLine((i-l)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i-l)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE);
 						g.drawLine((i-l+1)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i-l+1)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE);
 						g.drawLine((i-l)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE,(i-l+1)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE);
 					}
-					else if (c.caseCarte[i-l][j+v] instanceof Monstre){
+					else if (c.getElement(i-l,j+v) instanceof Monstre){
 						g.setColor(Color.RED);
 						g.drawLine((i-l)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i-l+1)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE);
 						g.drawLine((i-l)*IConfig.NB_PIX_CASE,(j+v)*IConfig.NB_PIX_CASE,(i-l)*IConfig.NB_PIX_CASE,(j+v+1)*IConfig.NB_PIX_CASE);

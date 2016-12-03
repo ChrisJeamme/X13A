@@ -76,8 +76,8 @@ public class PanneauJeu extends JPanel implements Serializable
 					public void mouseMoved(MouseEvent e)
 					{
 						if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE && affichagefin==0) //Si position souris correcte
-							if(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].visible==true)	//Et sur une case visible
-								labelInfo.setText(c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE].toString());	//On met à jour le labelInfo
+							if(c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE).visible==true)	//Et sur une case visible
+								labelInfo.setText(c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE).toString());	//On met à jour le labelInfo
 						else labelInfo.setText("");
 					}
 				});
@@ -97,7 +97,7 @@ public class PanneauJeu extends JPanel implements Serializable
 								if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
 								{
 									//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
-									h = c.caseCarte[e.getX()/IConfig.NB_PIX_CASE][e.getY()/IConfig.NB_PIX_CASE];	// h = Case cliqué
+									h = c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE);	// h = Case cliqué
 								}
 								if (h instanceof Heros)	//Case cliqué est un héros
 								{
@@ -236,7 +236,7 @@ public class PanneauJeu extends JPanel implements Serializable
 						
 						if (issu)	//Si combat gagné par le monstre <=> Héros mort
 						{
-							c.mort((Soldat)c.caseCarte[h.getPosition().getX()][h.getPosition().getY()]);
+							c.mort((Soldat)c.getElement(h.getPosition().getX(),h.getPosition().getY()));
 							repaint();
 							
 							labelAlerte.setText("Le monstre "+m+"a attaqué "+h+" qui en est mort");
@@ -245,7 +245,7 @@ public class PanneauJeu extends JPanel implements Serializable
 						{
 							if (m[i].getPoints()<=0)	//Si le monstre est mort
 								labelAlerte.setText("Le monstre "+m+" est mort en attanquant "+h);
-							c.mort((Soldat)c.caseCarte[m[i].getPosition().getX()][m[i].getPosition().getY()]);
+							c.mort((Soldat)c.getElement(m[i].getPosition().getX(),m[i].getPosition().getY()));
 							repaint();
 						}
 					}
@@ -272,7 +272,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				c.toutDessiner(g);
 				if (selection!=1)
 				{
-					labelAlerte.setText(c.informations);
+					labelAlerte.setText(c.getInfo());
 				}
 				//labelInfoTours.setText("Tour numéro: "+numeroTour);
 				/* J'enleve en attendant pour me simplifier les tours

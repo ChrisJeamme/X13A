@@ -90,7 +90,7 @@ public class ChargementPartie extends JPanel implements IConfig
 		{
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 			{
-				c.caseCarte[i][j].changerImage();
+				c.getElement(i,j).changerImage();
 			}
 		}
 				

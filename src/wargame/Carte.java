@@ -11,8 +11,8 @@ public class Carte implements ICarte, IConfig, Serializable
 {
 	private static final long serialVersionUID = 3933938513841317615L;
 	
-	public Element[][] caseCarte; //On peut (il faut) passer private et utiliser getElement
-	public String informations = "";
+	private Element[][] caseCarte; //On peut (il faut) passer private et utiliser getElement
+	private String informations = "";
 	public Carte()
 	{
 		caseCarte = new Element[IConfig.LARGEUR_CARTE][IConfig.HAUTEUR_CARTE];
@@ -64,6 +64,11 @@ public class Carte implements ICarte, IConfig, Serializable
 		int x = pos.getX();
 		int y = pos.getY();
 		
+		return caseCarte[x][y];
+	}
+	
+	public Element getElement(int x,int y)
+	{
 		return caseCarte[x][y];
 	}
 	
@@ -360,5 +365,8 @@ public class Carte implements ICarte, IConfig, Serializable
 		if (trouveHeros()==null) return 2;
 		else if (trouveMonstre()==null) return 1;
 		else return 0;
+	}
+	public String getInfo(){
+		return informations;
 	}
 }
