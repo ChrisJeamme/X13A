@@ -64,10 +64,109 @@ public class Heros extends Soldat implements ISoldat
 	}
 	
 	public void estSelection(Graphics g,Carte c){
-		
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2)); /* Pour augmenter la largeur des traits ? */
+        
 		int i=this.getPosition().getX();
 		int j=this.getPosition().getY();
-
+		
+		if (((Soldat)c.getElement(i,j)).getPortee()==1){ /*Cas a part pour les nains, portee en carré */
+			if (j+1<IConfig.HAUTEUR_CARTE && i+1<IConfig.LARGEUR_CARTE){
+				if (c.getElement(i+1,j+1) instanceof Obstacle)
+					;
+				else if (c.getElement(i+1,j+1) instanceof Heros){
+					g.setColor(Color.GREEN);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+				}
+				else if (c.getElement(i+1,j+1) instanceof Monstre){
+					g.setColor(Color.RED);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+				}
+				else{
+					g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */
+					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
+					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
+				}
+			}
+			if (j-1>=0 && i-1>=0){
+				if (c.getElement(i-1,j-1) instanceof Obstacle)
+					;
+				else if (c.getElement(i-1,j-1) instanceof Heros){
+					g.setColor(Color.GREEN);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i-1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+				}
+				else if (c.getElement(i-1,j-1) instanceof Monstre){
+					g.setColor(Color.RED);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i-1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+				}
+				else{
+					g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */
+					
+					g.fillRect((i-1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
+						
+					g.fillRect((i-1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
+				}
+			}
+			if (j-1>=0 && i+1<IConfig.LARGEUR_CARTE){
+				if (c.getElement(i+1,j-1) instanceof Obstacle)
+					;
+				else if (c.getElement(i+1,j-1) instanceof Heros){
+					g.setColor(Color.GREEN);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+				}
+				else if (c.getElement(i+1,j-1) instanceof Monstre){
+					g.setColor(Color.RED);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1+1)*IConfig.NB_PIX_CASE,(j-1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
+				}
+				else{
+					g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */				
+					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
+					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
+				}
+			}
+			if (i-1>=0 && j+1<IConfig.HAUTEUR_CARTE){
+				if (c.getElement(i-1,j+1) instanceof Obstacle)
+					;
+				else if (c.getElement(i-1,j+1) instanceof Heros){
+					g.setColor(Color.GREEN);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i-1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+				}
+				else if (c.getElement(i-1,j+1) instanceof Monstre){
+					g.setColor(Color.RED);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i-1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
+				}
+				else{
+					g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */
+					g.fillRect((i-1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
+					g.fillRect((i-1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
+				}
+			}
+		}
+		
 		for (int v=-this.getPortee(); v<=this.getPortee();v++)
 		{
 			for (int l=0; l<=this.getPortee()-(Math.abs(v));l++)
@@ -127,10 +226,7 @@ public class Heros extends Soldat implements ISoldat
 					}
 				}
 			}
-
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setStroke(new BasicStroke(2)); /* Pour augmenter la largeur des traits ? */
-            g.setColor(new Color(125,0,250));
+		    g.setColor(new Color(125,0,250));
 			g.drawLine(i*IConfig.NB_PIX_CASE,j*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,j*IConfig.NB_PIX_CASE);
 			g.drawLine(i*IConfig.NB_PIX_CASE,j*IConfig.NB_PIX_CASE,i*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);
 			g.drawLine((i+1)*IConfig.NB_PIX_CASE,j*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);

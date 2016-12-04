@@ -51,16 +51,17 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 	/** Renvoi vrai si le combat est gagné par le soldat courant */
 	public boolean combat(Soldat soldat)
 	{
-		if (this.getPosition().estVoisine(soldat.getPosition()))	//A coté de l'ennemi
+		if (this.getPosition().estVoisine(soldat.getPosition()))	//A coté de l'ennemi (8 cases)
 		{
 			soldat.points_de_vie -= Math.random()*this.puissance;
-			if (soldat.points_de_vie>0)
-				this.points_de_vie -= Math.random()*soldat.puissance;			
+			if (soldat.points_de_vie>0){
+					this.points_de_vie -= Math.random()*soldat.puissance;	
+			}
 		}
 		else															//A distance de l'ennemi
 		{
 			soldat.points_de_vie -= Math.random()*this.tir;
-			if (soldat.points_de_vie>0)
+			if (soldat.points_de_vie>0 && getPosition().distance(soldat.getPosition())<=soldat.getPortee()) // On verifie la portee de l'ennemi
 				this.points_de_vie -= Math.random()*soldat.tir;
 		}
 		

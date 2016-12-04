@@ -190,7 +190,13 @@ public class Carte implements ICarte, IConfig, Serializable
 	public boolean deplaceSoldat(Position pos, Soldat soldat)
 	{	
 		/* On peut se deplace que d'une case */
-		if (pos.distance(soldat.getPosition())!=1)
+		if (soldat.getPortee()==1){ /* Cas du nain */
+			if( Math.abs((pos.getX()-soldat.getPosition().getX()))>1 || Math.abs((pos.getY()-soldat.getPosition().getY()))>1 || pos.distance(soldat.getPosition())>2){
+				informations = "Hors de portée";
+				return false;
+			}
+		}
+		else if (pos.distance(soldat.getPosition())!=1)
 		{
 			informations = "Hors de portée";
 			return false;
@@ -267,7 +273,15 @@ public class Carte implements ICarte, IConfig, Serializable
 			
 			if(getElement(pos2) instanceof Monstre)	
 			{
-				if (pos.distance(pos2)>((Soldat)caseCarte[pos.getX()][pos.getY()]).getPortee())
+				if (((Soldat)caseCarte[pos.getX()][pos.getY()]).getPortee()==1){ /* Cas du nain */
+					if( Math.abs((pos2.getX()-pos.getX()))>1 || Math.abs((pos2.getY()-pos.getY()))>1 || pos2.distance(pos)>2){
+						if (caseCarte[pos2.getX()][pos2.getY()].visible==true)
+							informations= "Ennemi hors de portee";
+						else informations="Hors de portee";
+						return false;
+					}
+				}
+				else if (pos.distance(pos2)>((Soldat)caseCarte[pos.getX()][pos.getY()]).getPortee())
 				{
 					/* Pour ne pas avoir des infos dans le brouillard de guerre */
 					if (caseCarte[pos2.getX()][pos2.getY()].visible==true)
@@ -327,18 +341,34 @@ public class Carte implements ICarte, IConfig, Serializable
 	/** Déssine la carte avec ses éléments */
 	public void toutDessiner(Graphics g)
 	{
-		//g.setColor(new Color(50,90,100));
-		//g.fillRect(0,0,IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE);
-
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 				caseCarte[i][j].visible=false;
+		
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 		{
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 			{
 				if (caseCarte[i][j] instanceof Heros)
 				{
+					if (((Soldat)caseCarte[i][j]).getPortee()==1){ /*Cas a part pour les nains, portee en carré */
+						if (j+1<IConfig.HAUTEUR_CARTE && i+1<IConfig.LARGEUR_CARTE){
+							caseCarte[i+1][j+1].visible=true;
+							caseCarte[i+1][j+1].seDessiner(g);
+						}
+						if (j-1>=0 && i-1>=0){
+							caseCarte[i-1][j-1].visible=true;
+							caseCarte[i-1][j-1].seDessiner(g);
+						}
+						if (j-1>=0 && i+1<IConfig.LARGEUR_CARTE){
+							caseCarte[i+1][j-1].visible=true;
+							caseCarte[i+1][j-1].seDessiner(g);
+						}
+						if (i-1>=0 && j+1<IConfig.HAUTEUR_CARTE){
+							caseCarte[i-1][j+1].visible=true;
+							caseCarte[i-1][j+1].seDessiner(g);
+						}
+					}
 					/* Jean-Code Degueux, pas fait un carré je trouve ça plus sympa*/
 					for (int k=-((Soldat)caseCarte[i][j]).getPortee(); k<=((Soldat)caseCarte[i][j]).getPortee();k++)
 					{
