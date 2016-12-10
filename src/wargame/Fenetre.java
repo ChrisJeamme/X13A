@@ -7,21 +7,18 @@ import java.awt.event.MouseEvent;
 
 public class Fenetre extends JFrame
 {
-	/** */
+	/** Panneau contenant les boutons du menu */
 	private JPanel p;
-	/** */
+	/** Bouton chargement */
 	JButton chargement;		
-	/** */														//TODO mettre public et tout
+	/** Bouton lancement */														//TODO mettre public et tout
 	JButton lancement;
-	/** */
-	JPanel tmp;
-	/** */
-	JMenuBar menuBar;
-	/** */
+	/** Panneau contenant le jeu */
 	PanneauJeu panneau;
 	
 	static final long serialVersionUID=0;
 	
+	/** Constructeur qui fixe les caractéristiques principales de la fenêtre */
 	public Fenetre()
 	{
 		super("Ja va Saigner !");	
@@ -33,6 +30,7 @@ public class Fenetre extends JFrame
 	
 	}
 
+	/** Affichage des boutons lancement et chargement */
 	public void boutons()
 	{
 		/*Ne contient pas que les boutons mais aussi le JPanel*/
@@ -96,6 +94,7 @@ public class Fenetre extends JFrame
 		setVisible(true);
 	}
 
+	/** Fonction qui réaffiche le menu */
 	public void retourMenu()
 	{
 		p.setVisible(true);
