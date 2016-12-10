@@ -1,13 +1,12 @@
 package wargame;
 
-import javax.swing.*;
 import wargame.ISoldat.TypesH;
 
 public class Test1
 {
 	public static void main(String[] args)
 	{
-		JFrame frame = new Fenetre();
+		new Fenetre();
 
 		
 		for(TypesH h: TypesH.values())

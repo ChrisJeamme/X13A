@@ -111,36 +111,38 @@ public class Carte implements ICarte, IConfig, Serializable
 		int rd=(int) (Math.random()*4);
 		int i=0;
 		while(i<2){
-			switch(rd){
-			case (0):
+			if (rd==0){
 				if ((new Position(x-1,y)).estValide() && estVide(new Position(x-1,y)))
 					return new Position(x-1,y);
 				
 				else if((new Position(x+1,y)).estValide() && estVide(new Position(x+1,y)))
 					return new Position(x+1,y);
 				rd=1;
-			case(1):
+			}
+			if (rd==1){
 				if((new Position(x+1,y)).estValide() && estVide(new Position(x+1,y)))
 					return new Position(x+1,y);
 				else if ((new Position(x-1,y)).estValide() && estVide(new Position(x-1,y)))
 					return new Position(x-1,y);
 				rd=2;
-			case(2):
+			}
+			if (rd==2){
 				if ((new Position(x,y-1)).estValide() && estVide(new Position(x,y-1)))
 					return new Position(x,y-1);
 				else if((new Position(x,y+1)).estValide() && estVide(new Position(x,y+1)))
 					return new Position(x,y+1);
 				rd=3;
-			case(3):
+			}
+			if (rd==3){
 				if ((new Position(x,y+1)).estValide() && estVide(new Position(x,y+1)))
 					return new Position(x,y+1);
 				else if((new Position(x,y-1)).estValide() && estVide(new Position(x,y-1)))
 					return new Position(x,y-1);
-				rd=1;
+				rd=0;
 			}
 			i++;
 		}
-		return pos;
+		return pos; //Bloqué
 	}
 	
 	/** Trouve aléatoirement un héros sur la carte */
@@ -180,7 +182,7 @@ public class Carte implements ICarte, IConfig, Serializable
 	/** Trouve tous les monstres de la carte */
 	public Monstre[] trouveToutMonstre()
 	{
-		Monstre[] tab = new Monstre[15];
+		Monstre[] tab = new Monstre[IConfig.NB_MONSTRES];
 		int indice=0;
 		
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
@@ -224,7 +226,30 @@ public class Carte implements ICarte, IConfig, Serializable
 		
 		return null;
 	}
-	
+	public Position avoirPositionVers(Monstre m, Position pos){ // Toujours appelé correctement > void
+		int x=m.getPosition().getX();
+		int y=m.getPosition().getY();
+		int x2=pos.getX();
+		int y2=pos.getY();
+		if (x<x2){
+			if (new Position(x+1,y).estValide() && estVide(new Position(x+1,y)))
+				return(new Position(x+1,y));
+			else if (y>y2){
+				if (new Position(x,y-1).estValide() && estVide(new Position(x,y-1)))
+					return (new Position(x,y-1));
+				else return (trouvePositionVideAlea(m.getPosition())); // On recule dans tous les cas
+			}
+		}else{
+			if (new Position(x-1,y).estValide() && estVide(new Position(x-1,y)))
+				return (new Position(x-1,y));
+			else if (y>y2){
+				if (new Position(x,y-1).estValide() && estVide(new Position(x,y-1)))
+					return (new Position(x,y-1));
+				return (trouvePositionVideAlea(m.getPosition())); // On recule dans tous les cas
+			}
+		}
+		return trouvePositionVideAlea(m.getPosition());
+	}
 	/** Effectue le déplacement du soldat, pas de vérification ! (voir actionHeros) */
 	public boolean deplaceSoldat(Position pos, Soldat soldat,int affichage)
 	{	
@@ -270,7 +295,7 @@ public class Carte implements ICarte, IConfig, Serializable
 			caseCarte[perso.getPosition().getX()][perso.getPosition().getY()] = new Element(perso.getPosition());
 	}
 	
-	/** Déplacement d'un soldat, renvoi vrai si effecuté et faux sinon (Obstacle, allié, combat perdu)*/
+
 	public boolean actionHeros(Position pos, Position pos2)
 	{
 		/* Futurement a verif si il a deja joué > false */
@@ -383,17 +408,19 @@ public class Carte implements ICarte, IConfig, Serializable
 	{
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++){
-				//caseCarte[i][j].seDessiner(g); //modif le temps de l'ia
-				caseCarte[i][j].visible=false;
+				caseCarte[i][j].visible=true;
+				caseCarte[i][j].seDessiner(g); //modif le temps de l'ia
+
 			}
-		
+	
+		/*
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 		{
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 			{
 				if (caseCarte[i][j] instanceof Heros)
 				{
-					if (((Soldat)caseCarte[i][j]).getPortee()==1){ /*Cas a part pour les nains, portee en carré */
+					if (((Soldat)caseCarte[i][j]).getPortee()==1){ /*Cas a part pour les nains, portee en carré *//*
 						if (j+1<IConfig.HAUTEUR_CARTE && i+1<IConfig.LARGEUR_CARTE){
 							caseCarte[i+1][j+1].visible=true;
 							caseCarte[i+1][j+1].seDessiner(g);
@@ -411,7 +438,7 @@ public class Carte implements ICarte, IConfig, Serializable
 							caseCarte[i-1][j+1].seDessiner(g);
 						}
 					}
-					/* Jean-Code Degueux, pas fait un carré je trouve ça plus sympa*/
+					/* Jean-Code Degueux, pas fait un carré je trouve ça plus sympa*//*
 					for (int k=-((Soldat)caseCarte[i][j]).getPortee(); k<=((Soldat)caseCarte[i][j]).getPortee();k++)
 					{
 						for (int l=0; l<=((Soldat)caseCarte[i][j]).getPortee()-(Math.abs(k));l++)
@@ -430,7 +457,7 @@ public class Carte implements ICarte, IConfig, Serializable
 					}
 				}
 			}
-		}
+		}*/
 	}
 	
 	public int verifFinJeu(){ /* 0 on continue 1 on gagne 2 on perd */

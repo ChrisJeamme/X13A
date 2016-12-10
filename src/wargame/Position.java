@@ -22,6 +22,7 @@ public class Position implements IConfig, Serializable
 	{
 		return !(x<0 || x>=LARGEUR_CARTE || y<0 || y>=HAUTEUR_CARTE);
 	}
+	
 	public String toString() { return "("+x+","+y+")"; }
 	
 	public boolean estVoisine(Position pos)

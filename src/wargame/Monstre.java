@@ -55,4 +55,13 @@ public class Monstre extends Soldat
 
 		//.... On dessine un carré à la position pos de 20x20 ?
 	}
+	public void heal(){ //Tour non joué
+		if (points_de_vie>TYPE.getPoints()-3)
+			points_de_vie=TYPE.getPoints();
+		else points_de_vie=points_de_vie+3; //A définir de combien
+	}
+	
+	public TypesM getTYPE(){
+		return TYPE;
+	}
 }

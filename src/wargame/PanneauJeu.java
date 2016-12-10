@@ -37,8 +37,6 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** Carte du panneau */
 			private Carte c;
 			/** Label où il y aura les informations supplémentaires */
-			private JLabel labelInfoTours = new JLabel();
-			/**  */
 			private int selection=0;
 			/** Le héros selectionné */
 			private Element h;
@@ -205,9 +203,98 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** IA avec actions simples */
 			protected void iaLvl1()
 			{
-				//Explorer tous les monstres
-				//Cherche ceux qui ont des ennemies à attaquer
-				//Choisir parmi eux avec une fonction qui attribue une valeur à chaque combat possible
+				// Mieux que random mais non fonctionnelle a 100 %
+				Heros h;
+				Monstre[] m = c.trouveToutMonstre();
+				Heros[] tabheros=new Heros[IConfig.NB_HEROS];
+				int indicetab=0;
+				boolean verif;
+				// On recupere tous les Heros repérés
+				for(int b=0; b<m.length;b++)	
+				{	
+					if (m[b]==null) break; // Les autres sont morts
+					h=null;
+					
+					int i=m[b].getPosition().getX(),j=m[b].getPosition().getY();
+					
+					for (int v=-m[b].getPortee(); v<=m[b].getPortee();v++)
+					{
+						for (int l=0; l<=m[b].getPortee()-(Math.abs(v));l++)
+						{
+							if ((new Position(i+l,j+v)).estValide())
+							{
+								if (c.getElement(i+l,j+v) instanceof Heros)
+								{
+									h=(Heros)(c.getElement(i+l,j+v));
+									verif=false;
+									// Je verif si il y était pas déjà
+									for (int z=0; z<indicetab;z++)
+										if (h.getPosition().distance(tabheros[z].getPosition())==0)
+											verif=true;
+									if (!verif){
+										tabheros[indicetab]=h;
+										indicetab++;
+									}
+								}
+								
+							}
+							if ((new Position(i-l,j+v)).estValide())
+							{
+								if (c.getElement(i-l,j+v) instanceof Heros)
+								{
+									h=(Heros)(c.getElement(i-l,j+v));
+									verif=false;
+									// Je verif si il y était pas déjà
+									for (int z=0; z<indicetab;z++)
+										if (h.getPosition().distance(tabheros[z].getPosition())==0)
+											verif=true;
+									if (!verif){
+										tabheros[indicetab]=h;
+										indicetab++;
+									}
+								}
+							}
+						}
+					}	
+						if(h==null)	//Sinon on se déplace
+					{
+						c.deplaceSoldat(c.trouvePositionVideAlea(m[b].getPosition()),m[b],0);
+					}
+				}
+				// Recuperation faite
+				for(int b=0; b<m.length;b++)	
+				{							
+					if (m[b]==null) break; // Les autres sont morts
+					h=null;
+					int[] distance=new int[indicetab];
+					int distancemin=1000,indicemin=0;
+					if (indicetab>0){
+
+						for (int z=0; z<indicetab;z++){
+							distance[z]=tabheros[z].getPosition().distance(m[b].getPosition());
+							if (distance[z]<distancemin){
+								distancemin=distance[z];
+								indicemin=z;
+							}
+						}
+						// Si n'a pas tout sa vie et est hors d'atteinte, se regenere 
+						if (tabheros[indicemin].getPortee()<distancemin && m[b].getPoints()<m[b].getTYPE().getPoints()){
+							m[b].heal();
+						}
+						else{
+							if ( (tabheros[indicemin].getPosition()).distance( m[b].getPosition())  <=m[b].getPortee() ){
+								if (m[b].combat(tabheros[indicemin])) //Heros mort
+									c.mort(tabheros[indicemin]);
+								c.mort(m[b]);
+							}
+							else c.deplaceSoldat(c.avoirPositionVers(m[b],tabheros[indicemin].getPosition()),m[b],0);
+						}
+					}else{ // Sinon on va de gauche a droite, on balaye la carte
+						if (numeroTour%40>20)
+							c.deplaceSoldat(c.avoirPositionVers(m[b],new Position(0,(m[b].getPosition().getY()+5)%IConfig.HAUTEUR_CARTE)),m[b], 0);
+						else c.deplaceSoldat(c.avoirPositionVers(m[b],new Position(IConfig.LARGEUR_CARTE-1,(m[b].getPosition().getY()+5)%IConfig.HAUTEUR_CARTE)),m[b], 0);
+					}
+				}
 			}
 
 			/** IA avec actions random */
@@ -222,9 +309,7 @@ public class PanneauJeu extends JPanel implements Serializable
 		
 					if (m[b]==null) break; // Les autres sont morts
 					h=null;
-					//System.out.println("bl "+b);
 					int i=m[b].getPosition().getX(),j=m[b].getPosition().getY();
-					//System.out.println("test: "+i+" "+j);
 					for (int v=-m[b].getPortee(); v<=m[b].getPortee();v++)
 					{
 						for (int l=0; l<=m[b].getPortee()-(Math.abs(v));l++)
@@ -351,7 +436,7 @@ public class PanneauJeu extends JPanel implements Serializable
 
 		}
 		
-		PanneauJeuImbric p2 = new PanneauJeuImbric(c);	
+		p2 = new PanneauJeuImbric(c);	
 		labelAlerte.setPreferredSize(new Dimension(500,40));	
 		labelAlerte.setHorizontalAlignment(JLabel.CENTER);
 		labelAlerte.setVerticalAlignment(JLabel.CENTER);
