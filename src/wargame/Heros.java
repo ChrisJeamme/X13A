@@ -60,7 +60,10 @@ public class Heros extends Soldat implements ISoldat
 		
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 		
-		//.... On dessine un carré à la position pos de 20x20 ?
+		if (tourJoue){
+			g.setColor(new Color(50,50,50,100)); /* Opacité en 4en (pas une %) */
+			g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE);
+		}
 	}
 	
 	public void estSelection(Graphics g,Carte c){

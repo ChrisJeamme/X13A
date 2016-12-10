@@ -408,19 +408,19 @@ public class Carte implements ICarte, IConfig, Serializable
 	{
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++){
-				caseCarte[i][j].visible=true;
-				caseCarte[i][j].seDessiner(g); //modif le temps de l'ia
+				caseCarte[i][j].visible=false;
+				//caseCarte[i][j].seDessiner(g); //modif le temps de l'ia
 
 			}
 	
-		/*
+		
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 		{
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
 			{
 				if (caseCarte[i][j] instanceof Heros)
 				{
-					if (((Soldat)caseCarte[i][j]).getPortee()==1){ /*Cas a part pour les nains, portee en carré *//*
+					if (((Soldat)caseCarte[i][j]).getPortee()==1){ /*Cas a part pour les nains, portee en carré */
 						if (j+1<IConfig.HAUTEUR_CARTE && i+1<IConfig.LARGEUR_CARTE){
 							caseCarte[i+1][j+1].visible=true;
 							caseCarte[i+1][j+1].seDessiner(g);
@@ -438,7 +438,7 @@ public class Carte implements ICarte, IConfig, Serializable
 							caseCarte[i-1][j+1].seDessiner(g);
 						}
 					}
-					/* Jean-Code Degueux, pas fait un carré je trouve ça plus sympa*//*
+					/* Jean-Code Degueux, pas fait un carré je trouve ça plus sympa*/
 					for (int k=-((Soldat)caseCarte[i][j]).getPortee(); k<=((Soldat)caseCarte[i][j]).getPortee();k++)
 					{
 						for (int l=0; l<=((Soldat)caseCarte[i][j]).getPortee()-(Math.abs(k));l++)
@@ -457,7 +457,7 @@ public class Carte implements ICarte, IConfig, Serializable
 					}
 				}
 			}
-		}*/
+		}
 	}
 	
 	public int verifFinJeu(){ /* 0 on continue 1 on gagne 2 on perd */
