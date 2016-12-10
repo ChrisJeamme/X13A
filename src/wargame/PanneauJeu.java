@@ -24,7 +24,7 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JPanel p2;
 	private int numeroTour = 1;
 	private int affichagefin=0;
-	
+	private int affichagetour=0;
 	public PanneauJeu(Carte c, final JFrame f)
 	{	
 		/*On ajoute la JMenuBar */
@@ -34,7 +34,6 @@ public class PanneauJeu extends JPanel implements Serializable
 		class PanneauJeuImbric extends JPanel implements Serializable
 		{
 			private static final long serialVersionUID = 1L;
-			
 			/** Carte du panneau */
 			private Carte c;
 			/** Label où il y aura les informations supplémentaires */
@@ -77,6 +76,7 @@ public class PanneauJeu extends JPanel implements Serializable
 					private boolean selected;
 					public void mousePressed(MouseEvent e)
 					{
+						affichagetour=0;
 						if (affichagefin==0){ /* Si on a pas fini */
 						
 							//Clic Gauche
@@ -154,8 +154,9 @@ public class PanneauJeu extends JPanel implements Serializable
 				{
 					public void mousePressed(MouseEvent e)
 					{
-						finirTour(c);
-						numeroTour++;
+						finirTour(c);				
+						numeroTour++;				
+						
 					}
 				});
 				
@@ -199,7 +200,6 @@ public class PanneauJeu extends JPanel implements Serializable
 						break;
 				}
 				if (c.verifFinJeu()!=0) finJeu(c.verifFinJeu());
-				//labelAlerte.setText("L'adversaire a joué");
 			}
 	
 			/** IA avec actions simples */
@@ -212,47 +212,66 @@ public class PanneauJeu extends JPanel implements Serializable
 
 			/** IA avec actions random */
 			protected void iaRandom()
-			{
-				Heros h = null;
+			{		
+				Heros h;
 				Monstre[] m = c.trouveToutMonstre();
-				
 				//Si un ennemi à proximité, on l'attaque
-				
-				for(int i=0; i<m.length; i++)	//Pour tous les monstres trouvés
-				{
-					if((h = c.trouveHeros(m[i].getPosition())) != null)
+				// Reviens a faire une action Monstre avec choix aleatoire
+				for(int b=0; b<m.length;b++)	//Pour tous les monstres trouvés
+				{	
+		
+					if (m[b]==null) break; // Les autres sont morts
+					h=null;
+					//System.out.println("bl "+b);
+					int i=m[b].getPosition().getX(),j=m[b].getPosition().getY();
+					//System.out.println("test: "+i+" "+j);
+					for (int v=-m[b].getPortee(); v<=m[b].getPortee();v++)
 					{
-						boolean issu = m[i].combat(h);
-						
-						if (issu)	//Si combat gagné par le monstre <=> Héros mort
+						for (int l=0; l<=m[b].getPortee()-(Math.abs(v));l++)
 						{
-							c.mort((Soldat)c.getElement(h.getPosition().getX(),h.getPosition().getY()));
-							repaint();
-							
-							labelAlerte.setText("Le monstre "+m+"a attaqué "+h+" qui en est mort");
+							if ((new Position(i+l,j+v)).estValide())
+							{
+								if (c.getElement(i+l,j+v) instanceof Heros)
+								{
+									
+									h=(Heros)(c.getElement(i+l,j+v));
+									if (m[b].combat(h)) //Heros mort
+										c.mort(h);
+									c.mort(m[b]);
+									//Je casse la boucle for l et v pour ne pas avoir 2 actions pour le meme Monstre
+									l=1000;
+									v=1000;
+								}
+								
+							}
+							if ((new Position(i-l,j+v)).estValide())
+							{
+								if (c.getElement(i-l,j+v) instanceof Heros)
+								{
+									h=(Heros)(c.getElement(i-l,j+v));
+									if (m[b].combat(h)) //Heros mort
+										c.mort(h);
+									c.mort(m[b]); // SI Points de vie <=0 > l'enleve)
+									//Je casse la boucle for l et v
+									l=1000;
+									v=1000;
+								}
+							}
 						}
-						else 
-						{
-							if (m[i].getPoints()<=0)	//Si le monstre est mort
-								labelAlerte.setText("Le monstre "+m+" est mort en attanquant "+h);
-							c.mort((Soldat)c.getElement(m[i].getPosition().getX(),m[i].getPosition().getY()));
-							repaint();
-						}
-					}
-					else
+					}	
+					if(h==null)	//Sinon on se déplace
 					{
-						System.out.println("Héros à proximité du monstre PAS trouvé");
+						c.deplaceSoldat(c.trouvePositionVideAlea(m[b].getPosition()),m[b],0);
 					}
-				}
-				
-				if(h==null)	//Sinon on se déplace
-				{
-					//Aucune vérif sur le déplacement + enlève le brouillard !
-					//m[m.length/2].seDeplace(new Position(m[m.length/2].getPosition().getX()+1, m[m.length/2].getPosition().getY()+1));	//A l'arrache pour qu'il fasse quelque chose
-					//labelAlerte.setText("Le monstre "+m+" se déplace");
 				}
 			}
-
+			public void finirTour(Carte c){
+				affichagetour=1;
+				c.jouerSoldats();
+				ia();
+				labelAlerte.setText("Fin du tour "+numeroTour+" (L'IA a jouée)");
+				repaint();
+			}
 			public void paintComponent(Graphics g)
 			{
 				super.paintComponent(g);
@@ -260,17 +279,10 @@ public class PanneauJeu extends JPanel implements Serializable
 				g.setColor(new Color(50,90,100));
 				g.fillRect(0,0,IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE);
 				c.toutDessiner(g);
-				if (selection!=1)
+				if (selection!=1 && affichagetour==0)
 				{
 					labelAlerte.setText(c.getInfo());
 				}
-				//labelInfoTours.setText("Tour numéro: "+numeroTour);
-				/* J'enleve en attendant pour me simplifier les tours
-				if(aDejaJoue)
-				{
-					ia();
-				}
-				*/
 			}
 
 			/** Sauvegarde la carte de l'objet dans le fichier save */
@@ -310,11 +322,6 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 			}			
 		
-			public void finirTour(Carte c){
-				labelAlerte.setText("Fin du tour "+numeroTour);
-				c.jouerSoldats();
-				//ia();
-			}
 			public void finJeu(int fin){
 				affichagefin=1; /*sert a ne pas supprimer le message de fin vu qu'on peut encore cliquer */
 				if (fin==1){ /* a ne pas laisser  bien sur ! */

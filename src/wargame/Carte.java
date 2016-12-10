@@ -104,6 +104,45 @@ public class Carte implements ICarte, IConfig, Serializable
 		return new Position(-1,-1); //On renvoi une position invalide dans l'attente de trouver une meilleure solution
 	}
 	
+	public Position trouvePositionVideAlea(Position pos) // Pour IA Random
+	{
+		int x = pos.getX();
+		int y = pos.getY();
+		int rd=(int) (Math.random()*4);
+		int i=0;
+		while(i<2){
+			switch(rd){
+			case (0):
+				if ((new Position(x-1,y)).estValide() && estVide(new Position(x-1,y)))
+					return new Position(x-1,y);
+				
+				else if((new Position(x+1,y)).estValide() && estVide(new Position(x+1,y)))
+					return new Position(x+1,y);
+				rd=1;
+			case(1):
+				if((new Position(x+1,y)).estValide() && estVide(new Position(x+1,y)))
+					return new Position(x+1,y);
+				else if ((new Position(x-1,y)).estValide() && estVide(new Position(x-1,y)))
+					return new Position(x-1,y);
+				rd=2;
+			case(2):
+				if ((new Position(x,y-1)).estValide() && estVide(new Position(x,y-1)))
+					return new Position(x,y-1);
+				else if((new Position(x,y+1)).estValide() && estVide(new Position(x,y+1)))
+					return new Position(x,y+1);
+				rd=3;
+			case(3):
+				if ((new Position(x,y+1)).estValide() && estVide(new Position(x,y+1)))
+					return new Position(x,y+1);
+				else if((new Position(x,y-1)).estValide() && estVide(new Position(x,y-1)))
+					return new Position(x,y-1);
+				rd=1;
+			}
+			i++;
+		}
+		return pos;
+	}
+	
 	/** Trouve aléatoirement un héros sur la carte */
 	public Heros trouveHeros()
 	{
@@ -141,7 +180,7 @@ public class Carte implements ICarte, IConfig, Serializable
 	/** Trouve tous les monstres de la carte */
 	public Monstre[] trouveToutMonstre()
 	{
-		Monstre[] tab = new Monstre[NB_MONSTRES];
+		Monstre[] tab = new Monstre[15];
 		int indice=0;
 		
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
@@ -187,18 +226,19 @@ public class Carte implements ICarte, IConfig, Serializable
 	}
 	
 	/** Effectue le déplacement du soldat, pas de vérification ! (voir actionHeros) */
-	public boolean deplaceSoldat(Position pos, Soldat soldat)
+	public boolean deplaceSoldat(Position pos, Soldat soldat,int affichage)
 	{	
+		/* affichage 1 > informations pour le Heros sinon IA, pas d'affichage */
 		/* On peut se deplace que d'une case */
 		if (soldat.getPortee()==1){ /* Cas du nain */
 			if( Math.abs((pos.getX()-soldat.getPosition().getX()))>1 || Math.abs((pos.getY()-soldat.getPosition().getY()))>1 || pos.distance(soldat.getPosition())>2){
-				informations = "Hors de portée";
+				if (affichage==1) informations = "Hors de portée";
 				return false;
 			}
 		}
 		else if (pos.distance(soldat.getPosition())!=1)
 		{
-			informations = "Hors de portée";
+			if (affichage==1) informations = "Hors de portée";
 			return false;
 		}
 		int x = soldat.getPosition().getX();
@@ -248,7 +288,7 @@ public class Carte implements ICarte, IConfig, Serializable
 			{
 				informations = "";
 				//informations = "Changement de position effectué";
-				return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);
+				return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()],1);
 			}
 			
 			//Case non vide		
@@ -342,8 +382,10 @@ public class Carte implements ICarte, IConfig, Serializable
 	public void toutDessiner(Graphics g)
 	{
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
-			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++)
+			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++){
+				//caseCarte[i][j].seDessiner(g); //modif le temps de l'ia
 				caseCarte[i][j].visible=false;
+			}
 		
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 		{

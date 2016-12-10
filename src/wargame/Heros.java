@@ -71,7 +71,7 @@ public class Heros extends Soldat implements ISoldat
 		int j=this.getPosition().getY();
 		
 		if (((Soldat)c.getElement(i,j)).getPortee()==1){ /*Cas a part pour les nains, portee en carré */
-			if (j+1<IConfig.HAUTEUR_CARTE && i+1<IConfig.LARGEUR_CARTE){
+			if ((new Position(i+1,j+1)).estValide()){
 				if (c.getElement(i+1,j+1) instanceof Obstacle)
 					;
 				else if (c.getElement(i+1,j+1) instanceof Heros){
@@ -94,7 +94,7 @@ public class Heros extends Soldat implements ISoldat
 					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 				}
 			}
-			if (j-1>=0 && i-1>=0){
+			if ((new Position(i-1,j-1)).estValide()){
 				if (c.getElement(i-1,j-1) instanceof Obstacle)
 					;
 				else if (c.getElement(i-1,j-1) instanceof Heros){
@@ -119,7 +119,7 @@ public class Heros extends Soldat implements ISoldat
 					g.fillRect((i-1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 				}
 			}
-			if (j-1>=0 && i+1<IConfig.LARGEUR_CARTE){
+			if ((new Position(i+1,j-1)).estValide()){
 				if (c.getElement(i+1,j-1) instanceof Obstacle)
 					;
 				else if (c.getElement(i+1,j-1) instanceof Heros){
@@ -142,7 +142,7 @@ public class Heros extends Soldat implements ISoldat
 					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 				}
 			}
-			if (i-1>=0 && j+1<IConfig.HAUTEUR_CARTE){
+			if ((new Position(i-1,j+1)).estValide()){
 				if (c.getElement(i-1,j+1) instanceof Obstacle)
 					;
 				else if (c.getElement(i-1,j+1) instanceof Heros){
@@ -171,7 +171,7 @@ public class Heros extends Soldat implements ISoldat
 		{
 			for (int l=0; l<=this.getPortee()-(Math.abs(v));l++)
 			{
-				if (j+v>=0 && j+v<IConfig.HAUTEUR_CARTE && i+l<IConfig.LARGEUR_CARTE)
+				if ((new Position(i+l,j+v)).estValide())
 				{
 					if (c.getElement(i+l,j+v) instanceof Obstacle)
 						/* Rien */ ;
@@ -198,7 +198,7 @@ public class Heros extends Soldat implements ISoldat
 					}
 					
 				}
-				if (j+v>=0 && j+v<IConfig.HAUTEUR_CARTE && i-l>=0)
+				if ((new Position(i-l,j+v)).estValide())
 				{
 					//caseCarte[i-l][j+v].visible=true;
 					if (c.getElement(i-l,j+v) instanceof Obstacle)
