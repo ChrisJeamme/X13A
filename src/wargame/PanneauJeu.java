@@ -2,23 +2,13 @@ package wargame;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.io.Serializable;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
-
+import java.util.Locale;
 import javax.swing.*;
-
-import org.omg.CORBA.Current;
 
 public class PanneauJeu extends JPanel implements Serializable
 {
@@ -286,17 +276,13 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** Sauvegarde la carte de l'objet dans le fichier save */
 			protected void sauvegardeCarte()
 			{
-				System.out.println("TEST");
 			    ObjectOutputStream oos = null;
 
 			    try
-			    {			        
-			    	//String date = "";
+			    {			 
+			    	Calendar calendrier = Calendar.getInstance(new Locale("FRANCE"));	//La date à mettre dans le nom
 			    	
-			        //PrintWriter pWriter = new PrintWriter(new FileWriter("Sauvegarde: "+date, true));	//On crée le fichier
-			        //pWriter.close();
-					final FileOutputStream fichier = new FileOutputStream("save/Sauvegarde 1"/*+date*/);			//On l'ouvre
-					
+					final FileOutputStream fichier = new FileOutputStream("save/"+calendrier.getTime().toString().replaceAll(":", "-")+".sav");			//On l'ouvre
 					
 					oos = new ObjectOutputStream(fichier);
 					oos.writeObject(c);

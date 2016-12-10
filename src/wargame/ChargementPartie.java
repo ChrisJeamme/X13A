@@ -2,7 +2,7 @@ package wargame;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -19,29 +19,36 @@ public class ChargementPartie extends JPanel implements IConfig
 	
 	public ChargementPartie()
 	{	
-	    String[] choixSave = {"Sauvegarde 3: 02/12/2016 16h23m10s", "Sauvegarde 2", "Sauvegarde 1"};	//Sera rempli avec les save trouvés
+		//On cherche tous les choix de sauvegarde possible
+	    String[] choixSave = chercheSave();
 	    
-	    //String[] choixSave = chercheSave();
-	    
-	    String choix = (String)JOptionPane.showInputDialog
-	    		(
-		    		null,
-		    		"Quelle partie charger?",
-		    		"Chargement",
-		    		JOptionPane.QUESTION_MESSAGE,
-		    		null,
-		    		choixSave,
-		    		choixSave[choixSave.length-1]
-	    		);
-	    
-	    //if (choix == null) throw ErreurDialog ??
-	    
-	    if (choix == null)	//Si jamais le dialog était annulé
+	    if (choixSave.length != 0)	//Si on a trouvé au moins une sauvegarde
 	    {
-	    	c = null;
+	    	String choix = (String)JOptionPane.showInputDialog
+	    
+		    		(
+			    		null,
+			    		"Quelle partie charger?",
+			    		"Chargement",
+			    		JOptionPane.QUESTION_MESSAGE,
+			    		null,
+			    		choixSave,
+			    		choixSave[choixSave.length-1]
+		    		);
+	    
+		    //if (choix == null) throw ErreurDialog ??
+		    
+		    if (choix == null)	//Si jamais le dialog était annulé
+		    {
+		    	c = null;
+		    }
+		    else
+		    	c = chargementCarte(choix);
 	    }
-	    else
-	    	c = chargementCarte(choix);
+	    else	//On a pas trouvé de sauvegarde
+	    {
+		    JOptionPane.showMessageDialog(null,"Erreur: Aucune sauvegarde trouvé");
+	    }
 	}
 	
 	
@@ -98,10 +105,19 @@ public class ChargementPartie extends JPanel implements IConfig
 	    return c;
 	}
 	
-	private String[] chercheSave()		//Pas testé !!!!!!!!!
+	/** Cherche dans le dossier save tout les fichiers avec extension .sac et renvoi le tableau */
+	private String[] chercheSave()
 	{
-		String[] s = new File("save").list();
+	    FilenameFilter filtre = new FilenameFilter()	//Filtre de nom
+	    {
+			public boolean accept(File dir, String name)
+			{
+				return name.endsWith(".sav");
+			}
+		};
 		
-		return s;
+		String[] choixSave = new File("save/").list(filtre);
+		
+		return choixSave;
 	}
 }
