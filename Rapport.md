@@ -66,9 +66,12 @@ Travaillé majoritairement sur:
 + UML
 + Généralités
 
-## Liste exhaustive des ressources utilisés (lol)
+## Liste exhaustive des ressources utilisées (lol)
 
 Outils, livres, tutoriels, site web
 (putain mais lol !)
 
 + Google.fr
+
++ Images
+    - Hobbit: Image basée sur http://www.otakia.com/wp-content/uploads/V_1/article_3723/8484.jpg
