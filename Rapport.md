@@ -31,6 +31,10 @@ Nous allons donc présenter en plusieurs parties la manière dont nous sommes ar
 
 blabla uml ici + commentaire de pq comment
 
+### Diagramme de classes
+
+![UML](JavaSaignerUML.png)
+
 ## Techniques de POO mises en oeuvre
 
 Héritage, encapsulation, polymorphisme, exceptions etc.
@@ -83,8 +87,9 @@ Un label alerte informe l'utilisateur (sous la barre de menu) tel que celui-ci a
 Deux IA possibles:
     + Une IA random comme demandée par le sujet (choixIA=1)
     + Une IA améliorée: Celle-ci repère tous les Héros à portée du groupe de Monstres et chaque Monstre essayera de rejoindre ou attaquer l'ennemi le plus près. Un Monstre peut également se régénerer si celui-ci est hors de portée d'attaque et n'a pas tout sa vie.
-    
-## Temps de travail et répartition
+<<<<<<< HEAD
+
+## Estimation temps de travail
 
 **Christopher JEAMME**  
 Temps: Environ 50h
@@ -106,10 +111,11 @@ Travaillé majoritairement sur:
 + Généralités
 
 **Dimitri BRUYERE**  
-Temps:  
+Temps: Environ 30 heures 
 Travaillé majoritairement sur:
++ Fonctions de jeu
++ Organisation des classes
 + UML
-+ Généralités
 
 ## Bilan
 
@@ -133,3 +139,8 @@ Outils, livres, tutoriels, site web
 + https://developpez.net/forums/
 
 + https://docs.oracle.com
+<<<<<<< HEAD
+=======
+
+## Bilan
+>>>>>>> branch 'develop' of https://github.com/ChrisJeamme/X13A.git
