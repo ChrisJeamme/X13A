@@ -476,7 +476,10 @@ public class PanneauJeu extends JPanel implements Serializable
 
 	}
 
-	/** Menu du haut */
+	/**
+	 *  Menu du haut
+	 * @param f La JFrame actuelle
+	 */
 	public void menuBar(final JFrame f)
 	{
 		menuBar=new JPanel();

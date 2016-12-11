@@ -21,7 +21,11 @@ public class Element implements IConfig, Serializable
 	public boolean visible = false;
 	public boolean vide = true;
 	
-	/** Constructeur principal d'un Element avec x et y séparés */
+	/**
+	 * Constructeur principal d'un Element avec x et y séparés
+	 * @param x La coordonnée x de la position voulu
+	 * @param y La coordonnée y de la position voulu
+	 */
 	public Element(int x, int y)
 	{
 		pos = new Position(x,y);
@@ -29,25 +33,37 @@ public class Element implements IConfig, Serializable
 		changerImage();
 	}
 	
-	/** Constructeur d'un Element avec une position */
+	/**
+	 *  Constructeur d'un Element avec une position
+	 *  @param p Position voulu
+	 */
 	public Element(Position p)
 	{
 		this(p.getX(),p.getY());
 	}
 	
-	/** Retourne vrai si l'élément est vide (N'est pas une instance de Soldat / Monstre) */
+	/**
+	 * Evalue si l'élément est vide (N'est pas une instance de Soldat / Monstre)
+	 * @return Vrai si l'élément est vide 
+	 */
 	public boolean estVide()
 	{
 		return vide;
 	}
 	
-	/** Retourne la position de l'Element */
+	
+	/**
+	 * @return La position de l'élement
+	 */
 	public Position getPosition()
 	{
 		return pos;
 	}
 	
-	/** Changer la position de l'Element par newpos */
+	/**
+	 * Changer la position de l'Element par newpos
+	 * @param newPos Nouvelle position voulu
+	 */
 	public void setPosition(Position newPos)
 	{
 		pos=newPos;

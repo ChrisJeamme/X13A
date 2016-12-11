@@ -51,8 +51,10 @@ public class ChargementPartie extends JPanel implements IConfig
 	    }
 	}
 	
-	
-	/** Retourne la carte chargée */
+	/**
+	 *  Permet de retourner la carte chargé
+	 * @return La carte chargée
+	 */
 	public Carte getCarte()
 	{
 		return c;
