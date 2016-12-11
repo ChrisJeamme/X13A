@@ -16,7 +16,9 @@ public class ChargementPartie extends JPanel implements IConfig
 	
 	/** Carte choisie par l'utilisateur */
 	private Carte c;
-	
+	/**
+	 * Constructeur ChargementPartie
+	 */
 	public ChargementPartie()
 	{	
 		//On cherche tous les choix de sauvegarde possible
