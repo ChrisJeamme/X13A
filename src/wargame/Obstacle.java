@@ -24,7 +24,7 @@ public class Obstacle extends Element implements IConfig
 	{ 
 		super(pos);
 		TYPE = type; 
-		vide=false;
+		setVide(false);
 		
 		if(TYPE.name() == "ROCHER")			{typeImage = 3;changerImage();}
 		if(TYPE.name() == "FORET")			{typeImage = 1;changerImage();}

@@ -32,7 +32,7 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 	public Soldat(int x,int y)
 	{
 		super(x,y);
-		vide=false;
+		setVide(false);
 	}
 	
 	/** 

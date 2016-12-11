@@ -13,7 +13,7 @@ public class Fenetre extends JFrame
 	private JPanel p;
 	/** Bouton chargement */
 	JButton chargement;		
-	/** Bouton lancement */														//TODO mettre public et tout
+	/** Bouton lancement */														
 	JButton lancement;
 	/** Panneau contenant le jeu */
 	PanneauJeu panneau;

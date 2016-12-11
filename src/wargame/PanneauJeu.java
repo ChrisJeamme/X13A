@@ -49,8 +49,6 @@ public class PanneauJeu extends JPanel implements Serializable
 			private static final long serialVersionUID = 1L;
 			/** Carte du panneau */
 			private Carte c;
-			/** Label où il y aura les informations supplémentaires */
-			//private JLabel labelInfoTours = new JLabel();
 			/**  */
 			private int selection=0;
 			/** Le héros selectionné */
@@ -77,7 +75,7 @@ public class PanneauJeu extends JPanel implements Serializable
 					public void mouseMoved(MouseEvent e)
 					{
 						if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE && affichagefin==0) //Si position souris correcte
-							if(c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE).visible==true)	//Et sur une case visible
+							if(c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE).estVisible())	//Et sur une case visible
 								labelInfo.setText(c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE).toString());	//On met à jour le labelInfo
 						else labelInfo.setText("");
 					}
