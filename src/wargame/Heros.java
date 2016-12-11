@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 /**
- * Classe des Heros
+ * Classe des Elements Heros
  */
 public class Heros extends Soldat implements ISoldat
 {

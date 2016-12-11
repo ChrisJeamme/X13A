@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * Classe des Monstres
+ * Classe des Elements Monstres
  */
 public class Monstre extends Soldat
 {
