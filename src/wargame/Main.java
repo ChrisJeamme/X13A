@@ -2,7 +2,7 @@ package wargame;
 
 import wargame.ISoldat.TypesH;
 
-public class Test1
+public class Main
 {
 	public static void main(String[] args)
 	{
