@@ -2,6 +2,9 @@ package wargame;
 
 import wargame.ISoldat.TypesH;
 
+/**
+ * Classe Main: Lance l'interface
+ */
 public class Main
 {
 	public static void main(String[] args)

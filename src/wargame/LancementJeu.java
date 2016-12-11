@@ -6,7 +6,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
+/**
+ * Classe de configuraiton du JPanel LancementJeu
+ */
 public class LancementJeu extends JPanel implements IConfig
 {
 	private static final long serialVersionUID = 1877005263173998764L;
