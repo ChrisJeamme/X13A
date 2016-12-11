@@ -1,9 +1,35 @@
 # **Rapport de projet** 
 # POO: Wargame
+**Groupe**:
+* BRUYERE Dimitri
+* JEAMME Christopher
+* PEURIERE Romain
 
 ## Introduction
 
-But du projet et plan du rapport
+Le projet comme présenté par le sujet nous a demandé de créer un jeu de wargame en Java (Basé sur une guerre dans le monde imaginaire du seigneur des anneaux).
+
+
+Celui-ci tout d'abord devait implémenter le fonctionnement de base demandé par le sujet et par la suite des améliorations libres (dont certaines étaient proposées).
+Il s'agit donc d'un jeu tour par tour d'un joueur contre le général-ordinateur, le but étant à chaque tour de donner un ordre à ses différentes unités et de par une stratégie, réussir à éliminer tous les ennemis avant que ceux-ci n'y parviennent. Tout ceci en utilisant à bon escient les principes de la programmation orientée object (Java) que nous avons pu étudier en cours.
+
+Nous allons donc présenter en plusieurs parties la manière dont nous sommes arrivés à ce résultat.
+
+**Plan**
++ Analyse du projet
+    <br>Cette partie décrira la structure de notre code par le biai d'un diagramme UML ainsi que l'explication de clui-ci.
++ Techniques de POO mises en oeuvre
+    <br>Nous déciront ici quellques principes de la Programmation Orientée Objet nous avons utilisé.
++ Présentation des résultats
+    <br>Il sera ici expliqué nos principales fonctionnalités.
++ Temps de travail et répartition
+    <br>Contient le détail de notre organisation du travail.
++ Bilan
++ Annexes
+
+## Analyse du projet
+
+blabla uml ici + commentaire de pq comment
 
 ## Techniques de POO mises en oeuvre
 
@@ -22,7 +48,7 @@ L'héritage est principalement utilisé via la structure de base donnée de base
 + **Polymorphisme**
 Nottament utilisé pour les interfaces et la classe imbriquée, n'existant pas au niveau d'au dessus, un upcasting a lieu par la suite. De la même façon pour les Elements qui sont souvent cast dans leur classe par la suite.
 
-## Présentation synthétique des résultat
+## Présentation des résultat
 
 Fonctionnalités / Interface
 
@@ -58,7 +84,7 @@ Deux IA possibles:
     + Une IA random comme demandée par le sujet (choixIA=1)
     + Une IA améliorée: Celle-ci repère tous les Héros à portée du groupe de Monstres et chaque Monstre essayera de rejoindre ou attaquer l'ennemi le plus près. Un Monstre peut également se régénerer si celui-ci est hors de portée d'attaque et n'a pas tout sa vie.
     
-## Estimation temps de travail
+## Temps de travail et répartition
 
 **Christopher JEAMME**  
 Temps: Environ 50h
@@ -85,7 +111,14 @@ Travaillé majoritairement sur:
 + UML
 + Généralités
 
-## Liste exhaustive des ressources utilisées (lol)
+## Bilan
+
+
+## Annexes
+
+###Images ?
+
+###Liste exhaustive des ressources utilisées (lol)
 
 Outils, livres, tutoriels, site web
 (putain mais lol !)
@@ -100,5 +133,3 @@ Outils, livres, tutoriels, site web
 + https://developpez.net/forums/
 
 + https://docs.oracle.com
-
-## Bilan
