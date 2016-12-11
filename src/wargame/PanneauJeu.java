@@ -13,17 +13,28 @@ import javax.swing.*;
 public class PanneauJeu extends JPanel implements Serializable
 {
 	private static final long serialVersionUID = 1877005263173998764L;
+	
+	/** Menu du haut pour les boutons*/
 	private JPanel menuBar;
+	/** Bouton de sauvegarde en jeu */
 	private JButton sauvegarde;
+	/** Bouton de retour au menu */
 	private JButton menu;
+	/** Bouton de fin de tour*/
 	private JButton fintour;
+	/** Label des alertes (Hors de porté, combat, etc.) */
 	private JLabel labelAlerte = new JLabel();
+	/**  */
 	private JPanel hautfenetre = new JPanel();
+	/** Label des infos (element selectionné, points de vie, etc.) */
 	private JLabel labelInfo = new JLabel();
+	/** Label gagné/perdu de fin de partie */
 	private JLabel labelfin=new JLabel();
-	private JPanel p2;
+	/** Numéro de tour */
 	private int numeroTour = 1;
+	/**  */
 	private int affichagefin=0;
+	/**  */
 	private int affichagetour=0;
 	
 	public PanneauJeu(Carte c, final JFrame f)
@@ -31,6 +42,7 @@ public class PanneauJeu extends JPanel implements Serializable
 		/*On ajoute la JMenuBar */
 		hautfenetre.setLayout(new GridLayout(2,1));
 		menuBar(f);
+		
 		/*Classe imbriquée pour separer la JMenuBar du JPanel */
 		class PanneauJeuImbric extends JPanel implements Serializable
 		{
@@ -38,14 +50,13 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** Carte du panneau */
 			private Carte c;
 			/** Label où il y aura les informations supplémentaires */
-			private JLabel labelInfoTours = new JLabel();
+			//private JLabel labelInfoTours = new JLabel();
 			/**  */
 			private int selection=0;
 			/** Le héros selectionné */
 			private Element h;
 			/** Choix de l'IA: Par défaut à 1, il faudra faire un menu pour choisir */
 			private int choixIA = 2;	//
-			
 			
 			public PanneauJeuImbric(Carte carte)
 			{				
@@ -59,7 +70,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				setOpaque(true);
 				setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+40));
 				
-				//Déclaration des JElements & Ecouteurs
+				//Gestion des écouteurs
 
 				addMouseMotionListener(new MouseMotionAdapter() //Gestion des héros
 				{
@@ -156,8 +167,7 @@ public class PanneauJeu extends JPanel implements Serializable
 					public void mousePressed(MouseEvent e)
 					{
 						finirTour(c);				
-						numeroTour++;				
-						
+						numeroTour++;		
 					}
 				});
 				
@@ -175,15 +185,12 @@ public class PanneauJeu extends JPanel implements Serializable
 					}
 				});
 				menuBar.add(sauvegarde);
-				
-				
 			}
 			
 			/** Selon le choix de l'ia on va appeler la méthode correspondante */
 			public void ia()
 			{
-				
-				///////////////  Gérer ici l'IA  ///////////////////////
+				////////////////////////////////////////////////////////
 				//
 				//			II		A
 				//			II	   AAA
@@ -306,7 +313,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			{		
 				Heros h;
 				Monstre[] m = c.trouveToutMonstre();
-				//Si un ennemi à proximité, on l'attaque
+				// Si un ennemi à proximité, on l'attaque
 				// Reviens a faire une action Monstre avec choix aleatoire
 				for(int b=0; b<m.length;b++)	//Pour tous les monstres trouvés
 				{	
@@ -421,14 +428,17 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 			}			
 		
+			/** Gère la fin de la partie */
 			public void finJeu(int fin)
 			{
-				affichagefin=1; /*sert a ne pas supprimer le message de fin vu qu'on peut encore cliquer */
-				if (fin==1){ /* a ne pas laisser  bien sur ! */
-					labelInfo.setText("Quel génie !");
+				affichagefin = 1; /*sert a ne pas supprimer le message de fin vu qu'on peut encore cliquer */
+				if (fin == 1)		/* a ne pas laisser  bien sur ! */
+				{ 
+					labelInfo.setText("Bravo !");
 				}
-				else{
-					labelInfo.setText("Pauvre merde");
+				else
+				{
+					labelInfo.setText("Dommage ..");
 				}
 				repaint();
 				sauvegarde.setVisible(false);
@@ -444,7 +454,8 @@ public class PanneauJeu extends JPanel implements Serializable
 				add(labelfin,BorderLayout.CENTER);
 				if (fin==1)
 					labelfin.setText("<html><center><font color = #ED7700 >Gagné !</font><br><font size=120 color = #ECFD00 >[En "+numeroTour+" tours]</font></center</html>");
-				else labelfin.setText("<html><center><font color = #00C6ED >Perdu !</font><br><font size=120 color = #7F00ED > [En "+numeroTour+" tours]</font></center></html>");
+				else
+					labelfin.setText("<html><center><font color = #00C6ED >Perdu !</font><br><font size=120 color = #7F00ED > [En "+numeroTour+" tours]</font></center></html>");
 				repaint();
 			}
 			
@@ -475,7 +486,7 @@ public class PanneauJeu extends JPanel implements Serializable
 		menuBar.setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,50));
 		//menuBar.setBackground(new Color(0,0,0));
 		//Bouton Menu dans barre du haut 
-		menu = new Boutton("Menu", "img/BouttonF.png", "img/BouttonB.png");
+		menu = new Boutton("(Echap) Menu", "img/BouttonF.png", "img/BouttonB.png");
 		menu.setOpaque(true);
 		menu.addMouseListener(new MouseAdapter()
 		{
