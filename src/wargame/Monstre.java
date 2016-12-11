@@ -2,13 +2,19 @@ package wargame;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Monstre extends Soldat
 {
 	private static final long serialVersionUID = 1232616690858916564L;
 	
 	private final TypesM TYPE;
-	
+	private boolean enCombat;
+	private transient Image imageCombat;
 	public Monstre(int x, int y)
 	{
 		super(x,y);
@@ -52,6 +58,13 @@ public class Monstre extends Soldat
 		//g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
 	    
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
+	    try
+		{
+		      imageCombat = ImageIO.read(new File("img/combat.png"));	//On charge l'image correspondante au type de case
+		}
+		catch (IOException e){e.printStackTrace();} 
+	    if (enCombat)
+	    	g.drawImage(imageCombat, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 
 		//.... On dessine un carré à la position pos de 20x20 ?
 	}
@@ -63,5 +76,8 @@ public class Monstre extends Soldat
 	
 	public TypesM getTYPE(){
 		return TYPE;
+	}
+	public void setEnCombat(boolean b){
+		enCombat=b;
 	}
 }

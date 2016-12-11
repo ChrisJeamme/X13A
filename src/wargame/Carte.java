@@ -338,6 +338,7 @@ public class Carte implements ICarte, IConfig, Serializable
 			
 			if(getElement(pos2) instanceof Monstre)	
 			{
+				((Monstre)getElement(pos2)).setEnCombat(true);
 				if (((Soldat)caseCarte[pos.getX()][pos.getY()]).getPortee()==1){ /* Cas du nain */
 					if( Math.abs((pos2.getX()-pos.getX()))>1 || Math.abs((pos2.getY()-pos.getY()))>1 || pos2.distance(pos)>2){
 						if (caseCarte[pos2.getX()][pos2.getY()].visible==true)
