@@ -17,23 +17,21 @@ public class Position implements IConfig, Serializable
 	 */
 	Position(int x, int y) { this.x = x; this.y = y; }
 	/**
-	 * Retourne la position horizontale
-	 * @return x
+	 * @return x Retourne la position horizontale
 	 */
 	public int getX() { return x; }
 	/**
-	 *  Retourne la position verticale
-	 * @return y
+	 * @return y Retourne la position verticale
 	 */
 	public int getY() { return y; }
 	/**
 	 *  Change la position horizontale
-	 * @param x
+	 * @param x Coordonnée X
 	 */
 	public void setX(int x) { this.x = x; }
 	/**
 	 * Change la position verticale
-	 * @param y
+	 * @param y Coordonnée Y
 	 */
 	public void setY(int y) { this.y = y; }
 	/**
@@ -59,7 +57,7 @@ public class Position implements IConfig, Serializable
 	}
 	/**
 	 * Retourne la distance entre la position courante et le parametre
-	 * @param pos
+	 * @param pos l'autre position
 	 * @return Valeur de la distance
 	 */
 	public int distance(Position pos)

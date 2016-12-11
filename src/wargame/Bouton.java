@@ -14,8 +14,8 @@ public class Bouton extends JButton
 	/**
 	 * Constructeur Bouton
 	 * @param texte Texte du bouton
-	 * @param img 
-	 * @param imgHover
+	 * @param img Image du bouton
+	 * @param imgHover Image du bouton cliqué
 	 */
 	public Bouton(String texte, String img, String imgHover)
 	{
