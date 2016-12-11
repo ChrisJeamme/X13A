@@ -287,7 +287,7 @@ public class Carte implements ICarte, IConfig, Serializable
 	 * Effectue le déplacement du soldat, pas de vérification ! (voir actionHeros)
 	 * @param pos Position vers laquelle se déplace le soldat
 	 * @param soldat Soldat que l'on déplace
-	 * @affichage Permet d'avoir les informations relatives au deplacement ou non
+	 * @param affichage Permet d'avoir les informations relatives au deplacement ou non
 	 * @return Vrai si deplacement effectué (possible) non sinon
 	 */
 	public boolean deplaceSoldat(Position pos, Soldat soldat,int affichage)
