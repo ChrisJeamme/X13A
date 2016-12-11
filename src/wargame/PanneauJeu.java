@@ -24,15 +24,15 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JButton menu;
 	/** Bouton de fin de tour*/
 	private JButton fintour;
-	/** Label des alertes (Hors de porté, combat, etc.) */
+	/** Label des alertes (Hors de porte, combat, etc.) */
 	private JLabel labelAlerte = new JLabel();
 	/** Partie haute de la fenetre (au dessus de la map) */
 	private JPanel hautfenetre = new JPanel();
-	/** Label des infos (element selectionné, points de vie, etc.) */
+	/** Label des infos (element selectionne, points de vie, etc.) */
 	private JLabel labelInfo = new JLabel();
-	/** Label gagné/perdu de fin de partie */
+	/** Label gagne/perdu de fin de partie */
 	private JLabel labelfin=new JLabel();
-	/** Numéro de tour */
+	/** Numero de tour */
 	private int numeroTour = 1;
 	/** Permet de laisser l'affichage à la fin de partie: 1 si la partie est finie 0 sinon */
 	private int affichagefin=0;
@@ -50,24 +50,24 @@ public class PanneauJeu extends JPanel implements Serializable
 		hautfenetre.setLayout(new GridLayout(2,1));
 		menuBar(f);
 		
-		/*Classe imbriquée pour separer la JMenuBar du JPanel */
+		/*Classe imbriquee pour separer la JMenuBar du JPanel */
 		/**
-		 * Classe imbriquée de la map
+		 * Classe imbriquee de la map
 		 */
 		class PanneauJeuImbric extends JPanel implements Serializable
 		{
 			private static final long serialVersionUID = 1L;
 			/** Carte du panneau */
 			private Carte c;
-			/** 1 si un Heros est selectionné 0 sinon */
+			/** 1 si un Heros est selectionne 0 sinon */
 			private int selection=0;
-			/** Le héros selectionné */
+			/** Le heros selectionne */
 			private Element h;
-			/** Choix de l'IA: Par défaut à 1 (random) sinon 2 */
+			/** Choix de l'IA: Par defaut à 1 (random) sinon 2 */
 			private int choixIA = 2;
 			
 			/**
-			 * Constructeur de la classe imbriquée
+			 * Constructeur de la classe imbriquee
 			 * @param carte Carte actuelle
 			 */
 			public PanneauJeuImbric(Carte carte)
@@ -82,9 +82,9 @@ public class PanneauJeu extends JPanel implements Serializable
 				setOpaque(true);
 				setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,IConfig.HAUTEUR_CARTE*IConfig.NB_PIX_CASE+40));
 				
-				//Gestion des écouteurs
+				//Gestion des ecouteurs
 
-				addMouseMotionListener(new MouseMotionAdapter() //Gestion des héros
+				addMouseMotionListener(new MouseMotionAdapter() //Gestion des heros
 				{
 					public void mouseMoved(MouseEvent e)
 					{
@@ -95,7 +95,7 @@ public class PanneauJeu extends JPanel implements Serializable
 					}
 				});
 				
-				addMouseListener(new MouseAdapter()	//Gestion des héros
+				addMouseListener(new MouseAdapter()	//Gestion des heros
 				{
 					private boolean selected;
 					public void mousePressed(MouseEvent e)
@@ -111,17 +111,17 @@ public class PanneauJeu extends JPanel implements Serializable
 								if ( (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE) && (e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE))
 								{
 									//System.out.println("test :"+e.getX()/IConfig.NB_PIX_CASE+" "+e.getY()/IConfig.NB_PIX_CASE);
-									h = c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE);	// h = Case cliqué
+									h = c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE);	// h = Case clique
 								}
-								if (h instanceof Heros)	//Case cliqué est un héros
+								if (h instanceof Heros)	//Case clique est un heros
 								{
 									selection = 1;
 									if (((Heros)h).getTourJoue()==true){
-										labelAlerte.setText("Ce Heros a déjà joué");
+										labelAlerte.setText("Ce Heros a dejà joue");
 									}
 									else{
 										((Heros) h).estSelection(getGraphics(), c);
-										labelAlerte.setText("Mouvement d'un héros");
+										labelAlerte.setText("Mouvement d'un heros");
 										selected=true;
 									}
 								}
@@ -176,7 +176,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 				menuBar.add(fintour);
 				
-				/*Ajouté ici pour reconnaitre la fonction sauvegarde */
+				/*Ajoute ici pour reconnaitre la fonction sauvegarde */
 				sauvegarde = new Bouton("Sauvegarder une partie", "img/BouttonF.png", "img/BouttonB.png");
 				sauvegarde.setPreferredSize(new Dimension(300,30));
 				sauvegarde.addMouseListener(new MouseAdapter()
@@ -184,13 +184,13 @@ public class PanneauJeu extends JPanel implements Serializable
 					public void mousePressed(MouseEvent e)
 					{
 						sauvegardeCarte();
-						labelAlerte.setText("Partie sauvegardé");
+						labelAlerte.setText("Partie sauvegarde");
 					}
 				});
 				menuBar.add(sauvegarde);
 			}
 			
-			/** Selon le choix de l'ia on va appeler la méthode correspondante */
+			/** Selon le choix de l'ia on va appeler la methode correspondante */
 			public void ia()
 			{
 				////////////////////////////////////////////////////////
@@ -222,7 +222,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				 Heros[] tabheros=new Heros[IConfig.NB_HEROS];
 				 int indicetab=0;
 				 boolean verif;
-				 // On recupere tous les Heros repérés
+				 // On recupere tous les Heros reperes
 				 for(int b=0; b<m.length;b++)	
 				 {	
 				 	if (m[b]==null) break; // Les autres sont morts
@@ -240,7 +240,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				 				{
 				 					h=(Heros)(c.getElement(i+l,j+v));
 				 					verif=false;
-				 					// Je verif si il y était pas déjà
+				 					// Je verif si il y etait pas dejà
 				 					for (int z=0; z<indicetab;z++)
 				 						if (h.getPosition().distance(tabheros[z].getPosition())==0)
 				 							verif=true;
@@ -257,7 +257,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				 				{
 				 					h=(Heros)(c.getElement(i-l,j+v));
 				 					verif=false;
-				 					// Je verif si il y était pas déjà
+				 					// Je verif si il y etait pas dejà
 				 					for (int z=0; z<indicetab;z++)
 				 						if (h.getPosition().distance(tabheros[z].getPosition())==0)
 				 							verif=true;
@@ -306,14 +306,14 @@ public class PanneauJeu extends JPanel implements Serializable
 				 }
 			}
 
-			/** IA avec actions random: attaque si a portée, se deplace au hasard sinon */
+			/** IA avec actions random: attaque si a portee, se deplace au hasard sinon */
 			protected void iaRandom()
 			{		
 				Heros h;
 				Monstre[] m = c.trouveToutMonstre();
-				// Si un ennemi à proximité, on l'attaque
+				// Si un ennemi à proximite, on l'attaque
 				// Reviens a faire une action Monstre avec choix aleatoire
-				for(int b=0; b<m.length;b++)	//Pour tous les monstres trouvés
+				for(int b=0; b<m.length;b++)	//Pour tous les monstres trouves
 				{	
 		
 					if (m[b]==null) break; // Les autres sont morts
@@ -356,7 +356,7 @@ public class PanneauJeu extends JPanel implements Serializable
 							}
 						}
 					}	
-					if(h==null)	//Sinon on se déplace
+					if(h==null)	//Sinon on se deplace
 					{
 						c.deplaceSoldat(c.trouvePositionVideAlea(m[b].getPosition()),m[b],0);
 					}
@@ -372,7 +372,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				affichagetour=1;
 				c.jouerSoldats();
 				ia();
-				labelAlerte.setText("Fin du tour "+numeroTour+" (L'IA a jouée)");
+				labelAlerte.setText("Fin du tour "+numeroTour+" (L'IA a jouee)");
 				repaint();
 			}
 			/**
@@ -428,7 +428,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				
 			}			
 		
-			/** Gère la fin de la partie */
+			/** Gere la fin de la partie */
 			public void finJeu(int fin)
 			{
 				affichagefin = 1; /*sert a ne pas supprimer le message de fin vu qu'on peut encore cliquer */
@@ -453,7 +453,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				labelfin.setFont(font3);
 				add(labelfin,BorderLayout.CENTER);
 				if (fin==1)
-					labelfin.setText("<html><center><font color = #ED7700 >Gagné !</font><br><font size=120 color = #ECFD00 >[En "+numeroTour+" tours]</font></center</html>");
+					labelfin.setText("<html><center><font color = #ED7700 >Gagne !</font><br><font size=120 color = #ECFD00 >[En "+numeroTour+" tours]</font></center</html>");
 				else
 					labelfin.setText("<html><center><font color = #00C6ED >Perdu !</font><br><font size=120 color = #7F00ED > [En "+numeroTour+" tours]</font></center></html>");
 				repaint();

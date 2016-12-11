@@ -8,7 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Classe créant la fenetre de jeu (menu)
+ * Classe creant la fenetre de jeu (menu)
  */
 public class Fenetre extends JFrame
 {
@@ -20,12 +20,12 @@ public class Fenetre extends JFrame
 	private JButton lancement;
 	/** Panneau contenant le jeu */
 	private PanneauJeu panneau;
-	/** Sert à activer/désactiver des raccourci clavier */
+	/** Sert à activer/desactiver des raccourci clavier */
 	private boolean partieDemarre = false;
 	
 	static final long serialVersionUID=0;
 	
-	/** Constructeur qui fixe les caractéristiques principales de la fenêtre */
+	/** Constructeur qui fixe les caracteristiques principales de la fenetre */
 	public Fenetre()
 	{
 		super("Ja va Saigner !");	
@@ -72,12 +72,12 @@ public class Fenetre extends JFrame
 					retourMenu();		//On retourne au menu
 				}
 				
-				if ((e.getKeyCode()==49 || e.getKeyCode()==97) && partieDemarre == false)	//Touche 1 (pavé num ou l'autre)
+				if ((e.getKeyCode()==49 || e.getKeyCode()==97) && partieDemarre == false)	//Touche 1 (pave num ou l'autre)
 				{
 					lancementPartie();
 				}
 				
-				if ((e.getKeyCode()==50 || e.getKeyCode()==98) && partieDemarre == false) 	//Touche 2 (pavé num ou l'autre)
+				if ((e.getKeyCode()==50 || e.getKeyCode()==98) && partieDemarre == false) 	//Touche 2 (pave num ou l'autre)
 				{
 					chargementPartie();
 				}
@@ -146,7 +146,7 @@ public class Fenetre extends JFrame
 		revalidate();
 	}
 
-	/** Fonction qui réaffiche le menu */
+	/** Fonction qui reaffiche le menu */
 	public void retourMenu()
 	{
 		p.setVisible(true);

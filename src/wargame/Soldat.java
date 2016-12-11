@@ -44,14 +44,14 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 		return points_de_vie;
 	}
 	/**
-	 * Renvoie le Tour (non utilisé) du soldat
+	 * Renvoie le Tour (non utilise) du soldat
 	 */
 	public int getTour()
 	{
 		return this.getTour();
 	}
 	/**
-	 * Renvoie la portée du soldat
+	 * Renvoie la portee du soldat
 	 * @return portee_visuelle
 	 */
 	public int getPortee()
@@ -76,20 +76,20 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 	}
 	/**
 	 * Joue le tour
-	 * (Non utilisé)
+	 * (Non utilise)
 	 */
 	public void joueTour(int tour)
 	{
 		
 	}
 	/**
-	 * 	Methode de combat en le soldat actuel et celui passé en parametre
-	 * @param soldat Le soldat attaqué
-	 * @return Vrai si le combat est gagné par le soldat courant
+	 * 	Methode de combat en le soldat actuel et celui passe en parametre
+	 * @param soldat Le soldat attaque
+	 * @return Vrai si le combat est gagne par le soldat courant
 	 */
 	public boolean combat(Soldat soldat)
 	{
-		if (this.getPosition().estVoisine(soldat.getPosition()))	//A coté de l'ennemi (8 cases)
+		if (this.getPosition().estVoisine(soldat.getPosition()))	//A cote de l'ennemi (8 cases)
 		{
 			soldat.points_de_vie -= Math.random()*this.puissance;
 			if (soldat.points_de_vie>0){
@@ -103,7 +103,7 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 				this.points_de_vie -= Math.random()*soldat.tir;
 		}
 		
-		return (getPoints() > 0 && soldat.getPoints() <= 0);	//Vrai si combat gagné
+		return (getPoints() > 0 && soldat.getPoints() <= 0);	//Vrai si combat gagne
 	}
 	/**
 	 * Deplace le soldat a la nouvelle position

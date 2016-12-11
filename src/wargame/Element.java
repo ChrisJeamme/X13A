@@ -27,9 +27,9 @@ public class Element implements IConfig, Serializable
 	private boolean vide = true;
 	
 	/**
-	 * Constructeur principal d'un Element avec x et y séparés
-	 * @param x La coordonnée x de la position voulu
-	 * @param y La coordonnée y de la position voulu
+	 * Constructeur principal d'un Element avec x et y separes
+	 * @param x La coordonnee x de la position voulu
+	 * @param y La coordonnee y de la position voulu
 	 */
 	public Element(int x, int y)
 	{
@@ -48,8 +48,8 @@ public class Element implements IConfig, Serializable
 	}
 	
 	/**
-	 * Evalue si l'élément est vide (N'est pas une instance de Soldat / Monstre)
-	 * @return Vrai si l'élément est vide 
+	 * Evalue si l'element est vide (N'est pas une instance de Soldat / Monstre)
+	 * @return Vrai si l'element est vide 
 	 */
 	public boolean estVide()
 	{
@@ -57,8 +57,8 @@ public class Element implements IConfig, Serializable
 	}
 	
 	/**
-	 * 	Changer le fait que l'élément soit vide
-	 * @param b Vrai = l'élément sera vide
+	 * 	Changer le fait que l'element soit vide
+	 * @param b Vrai = l'element sera vide
 	 */
 	public void setVide(boolean b)
 	{
@@ -67,7 +67,7 @@ public class Element implements IConfig, Serializable
 	
 	/**
 	 * 
-	 * @return Vrai si l'élément est visible
+	 * @return Vrai si l'element est visible
 	 */
 	public boolean estVisible()
 	{
@@ -75,7 +75,7 @@ public class Element implements IConfig, Serializable
 	}
 	
 	/**
-	 * Change le fait que l'élément soit visible ou pas
+	 * Change le fait que l'element soit visible ou pas
 	 * @param b Vrai si on veut qu'il soit visible
 	 */
 	public void setVisible(boolean b)
@@ -84,7 +84,7 @@ public class Element implements IConfig, Serializable
 	}
 	
 	/**
-	 * @return La position de l'élement
+	 * @return La position de l'element
 	 */
 	public Position getPosition()
 	{
@@ -100,7 +100,7 @@ public class Element implements IConfig, Serializable
 		pos=newPos;
 	}
 	
-	/** Défini l'image stocké dans l'élément avec le numéro typeImage de l'élément */
+	/** Defini l'image stocke dans l'element avec le numero typeImage de l'element */
 	public void changerImage()
 	{
 		int choixAlea;
@@ -109,15 +109,15 @@ public class Element implements IConfig, Serializable
 		switch(typeImage)
 		{
 			case 1 : //FORET
-				choixAlea =(int)(Math.random() * (NB_SPRITE_FORET));	//On choisi aléatoirement un sprite de foret
+				choixAlea =(int)(Math.random() * (NB_SPRITE_FORET));	//On choisi aleatoirement un sprite de foret
 				nomFichier = "Foret"+choixAlea;
 				break;
 			case 2: //EAU
-				choixAlea =(int)(Math.random() * (NB_SPRITE_EAU));		//On choisi aléatoirement un sprite d'eau
+				choixAlea =(int)(Math.random() * (NB_SPRITE_EAU));		//On choisi aleatoirement un sprite d'eau
 				nomFichier = "Eau"+choixAlea;
 				break;
 			case 3: //ROCHER
-				choixAlea =(int)(Math.random() * (NB_SPRITE_ROCHER));		//On choisi aléatoirement un sprite de rocher
+				choixAlea =(int)(Math.random() * (NB_SPRITE_ROCHER));		//On choisi aleatoirement un sprite de rocher
 				nomFichier = "Rocher"+choixAlea;
 				break;
 			case 4: //ELEMENT

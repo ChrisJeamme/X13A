@@ -24,7 +24,7 @@ public class ChargementPartie extends JPanel implements IConfig
 		//On cherche tous les choix de sauvegarde possible
 	    String[] choixSave = chercheSave();
 	    
-	    if (choixSave.length != 0)	//Si on a trouvé au moins une sauvegarde
+	    if (choixSave.length != 0)	//Si on a trouve au moins une sauvegarde
 	    {
 	    	String choix = (String)JOptionPane.showInputDialog
 	    
@@ -40,22 +40,22 @@ public class ChargementPartie extends JPanel implements IConfig
 	    
 		    //if (choix == null) throw ErreurDialog ??
 		    
-		    if (choix == null)	//Si jamais le dialog était annulé
+		    if (choix == null)	//Si jamais le dialog etait annule
 		    {
 		    	c = null;
 		    }
 		    else
 		    	c = chargementCarte(choix);
 	    }
-	    else	//On a pas trouvé de sauvegarde
+	    else	//On a pas trouve de sauvegarde
 	    {
-		    JOptionPane.showMessageDialog(null,"Erreur: Aucune sauvegarde trouvé");
+		    JOptionPane.showMessageDialog(null,"Erreur: Aucune sauvegarde trouve");
 	    }
 	}
 	
 	/**
-	 *  Permet de retourner la carte chargé
-	 * @return La carte chargée
+	 *  Permet de retourner la carte charge
+	 * @return La carte chargee
 	 */
 	public Carte getCarte()
 	{

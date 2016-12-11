@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 /**
- * Classe permettant de créer les boutons
+ * Classe permettant de creer les boutons
  */
 public class Bouton extends JButton
 {
@@ -15,7 +15,7 @@ public class Bouton extends JButton
 	 * Constructeur Bouton
 	 * @param texte Texte du bouton
 	 * @param img Image du bouton
-	 * @param imgHover Image du bouton cliqué
+	 * @param imgHover Image du bouton clique
 	 */
 	public Bouton(String texte, String img, String imgHover)
 	{

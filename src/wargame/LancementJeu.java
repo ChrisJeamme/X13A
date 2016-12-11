@@ -13,12 +13,12 @@ public class LancementJeu extends JPanel implements IConfig
 {
 	private static final long serialVersionUID = 1877005263173998764L;
 	
-	/** L'image du titre y sera stocké lors de la construction */
+	/** L'image du titre y sera stocke lors de la construction */
 	private Image titre;
-	/** L'image de fond du menu y sera stocké lors de la construction */
+	/** L'image de fond du menu y sera stocke lors de la construction */
 	private Image fond;
 	
-	/** Constructeur qui fixe le titre et le fond et les caractéristiques principales de la fenêtre */
+	/** Constructeur qui fixe le titre et le fond et les caracteristiques principales de la fenetre */
 	public LancementJeu()
 	{	
 		try

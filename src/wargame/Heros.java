@@ -12,10 +12,10 @@ public class Heros extends Soldat implements ISoldat
 	private static final long serialVersionUID = 3756416095361088558L;
 	/** Type du Heros */
 	private final TypesH TYPE;
-	/** Vrai: le Heros a déjà joué, Faux sinon */
+	/** Vrai: le Heros a dejà joue, Faux sinon */
 	private boolean tourJoue=false;
 	/**
-	 * Constructeur Heros avec type aléatoire
+	 * Constructeur Heros avec type aleatoire
 	 * @param x Position horizontale
 	 * @param y Position verticale
 	 */
@@ -61,7 +61,7 @@ public class Heros extends Soldat implements ISoldat
 		return "("+this.getPosition().getX()+","+this.getPosition().getY()+") "+TYPE+" ("+points_de_vie+"PV/"+TYPE.getPoints()+")"; 
 	}
 	/**
-	 * Dessine l'element (image et si il a déjà joué)
+	 * Dessine l'element (image et si il a dejà joue)
 	 * @param g Graphics
 	 */
 	public void seDessiner(Graphics g)
@@ -69,12 +69,12 @@ public class Heros extends Soldat implements ISoldat
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 		
 		if (tourJoue){
-			g.setColor(new Color(50,50,50,100)); /* Opacité en 4en (pas une %) */
+			g.setColor(new Color(50,50,50,100)); /* Opacite en 4en (pas une %) */
 			g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE);
 		}
 	}
 	/**
-	 * Dessine la selection (affichage de la portée d'attaque, de déplacement et les héros alliés et ennemis) du Heros
+	 * Dessine la selection (affichage de la portee d'attaque, de deplacement et les heros allies et ennemis) du Heros
 	 * @param g Graphics
 	 * @param c Carte actuelle
 	 */
@@ -85,7 +85,7 @@ public class Heros extends Soldat implements ISoldat
 		int i=this.getPosition().getX();
 		int j=this.getPosition().getY();
 		
-		if (((Soldat)c.getElement(i,j)).getPortee()==1){ /*Cas a part pour les nains, portee en carré */
+		if (((Soldat)c.getElement(i,j)).getPortee()==1){ /*Cas a part pour les nains, portee en carre */
 			if ((new Position(i+1,j+1)).estValide()){
 				if (c.getElement(i+1,j+1) instanceof Obstacle)
 					;
@@ -104,7 +104,7 @@ public class Heros extends Soldat implements ISoldat
 					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
 				}
 				else{
-					g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */
+					g.setColor(new Color(255,0,0,50)); /* Opacite en 4en (pas une %) */
 					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 				}
@@ -127,7 +127,7 @@ public class Heros extends Soldat implements ISoldat
 					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
 				}
 				else{
-					g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */
+					g.setColor(new Color(255,0,0,50)); /* Opacite en 4en (pas une %) */
 					
 					g.fillRect((i-1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 						
@@ -152,7 +152,7 @@ public class Heros extends Soldat implements ISoldat
 					g.drawLine((i+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE,(i+1+1)*IConfig.NB_PIX_CASE,(j-1+1)*IConfig.NB_PIX_CASE);
 				}
 				else{
-					g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */				
+					g.setColor(new Color(255,0,0,50)); /* Opacite en 4en (pas une %) */				
 					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 					g.fillRect((i+1)*IConfig.NB_PIX_CASE+2,(j-1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 				}
@@ -175,7 +175,7 @@ public class Heros extends Soldat implements ISoldat
 					g.drawLine((i-1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE,(i-1+1)*IConfig.NB_PIX_CASE,(j+1+1)*IConfig.NB_PIX_CASE);
 				}
 				else{
-					g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */
+					g.setColor(new Color(255,0,0,50)); /* Opacite en 4en (pas une %) */
 					g.fillRect((i-1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 					g.fillRect((i-1)*IConfig.NB_PIX_CASE+2,(j+1)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 				}
@@ -206,7 +206,7 @@ public class Heros extends Soldat implements ISoldat
 					}
 					else
 					{
-						g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */
+						g.setColor(new Color(255,0,0,50)); /* Opacite en 4en (pas une %) */
 						if (this.getPosition().distance(new Position(i+l,j+v))==1)
 							g.fillRect((i+l)*IConfig.NB_PIX_CASE+2,(j+v)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 						g.fillRect((i+l)*IConfig.NB_PIX_CASE+2,(j+v)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
@@ -234,7 +234,7 @@ public class Heros extends Soldat implements ISoldat
 					}
 					else if (l!=0)
 					{				
-						g.setColor(new Color(255,0,0,50)); /* Opacité en 4en (pas une %) */
+						g.setColor(new Color(255,0,0,50)); /* Opacite en 4en (pas une %) */
 						if (this.getPosition().distance(new Position(i-l,j+v))==1)
 							g.fillRect((i-l)*IConfig.NB_PIX_CASE+2,(j+v)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
 						g.fillRect((i-l)*IConfig.NB_PIX_CASE+2,(j+v)*IConfig.NB_PIX_CASE+2,IConfig.NB_PIX_CASE-1,IConfig.NB_PIX_CASE-1);
@@ -250,7 +250,7 @@ public class Heros extends Soldat implements ISoldat
 	}
 	/**
 	 * Fixe TourJoue 
-	 * @param ajoue vrai: a joué, faux sinon
+	 * @param ajoue vrai: a joue, faux sinon
 	 */
 	public void setTourJoue(boolean ajoue){
 		tourJoue=ajoue;
@@ -265,9 +265,9 @@ public class Heros extends Soldat implements ISoldat
 	/**
 	 * Heal le Heros
 	 */
-	public void heal(){ //Tour non joué
+	public void heal(){ //Tour non joue
 		if (points_de_vie>TYPE.getPoints()-3)
 			points_de_vie=TYPE.getPoints();
-		else points_de_vie=points_de_vie+3; //A définir de combien
+		else points_de_vie=points_de_vie+3; //A definir de combien
 	}
 }

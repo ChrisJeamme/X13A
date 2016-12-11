@@ -18,7 +18,7 @@ public class Carte implements ICarte, IConfig, Serializable
 	private String informations = "";
 	/**
 	 * Constructeur de la Carte
-	 * Place aléatoirement les éléments suivant IConfig
+	 * Place aleatoirement les elements suivant IConfig
 	 */
 	public Carte()
 	{
@@ -88,7 +88,7 @@ public class Carte implements ICarte, IConfig, Serializable
 		return caseCarte[x][y];
 	}
 	
-	/** Trouve aléatoirement une position vide sur la carte */
+	/** Trouve aleatoirement une position vide sur la carte */
 	public Position trouvePositionVide()
 	{  
 		int x=(int)(Math.random()*IConfig.LARGEUR_CARTE), y=(int)(Math.random()*IConfig.HAUTEUR_CARTE);
@@ -114,15 +114,15 @@ public class Carte implements ICarte, IConfig, Serializable
 						if (caseCarte[i][j].estVide())
 							return new Position(i,j);
 		}
-		//Non trouvé
+		//Non trouve
 		System.out.println("Il n'y a aucune case vide autour");
 
 		return new Position(-1,-1); //On renvoi une position invalide dans l'attente de trouver une meilleure solution
 	}
 	/**
 	 * Trouve une position vide choisie aleatoirement parmi les 8 positions adjacentes de pos
-	 * @param pos Position autour de laquelle la recherche est effectuée
-	 * @return Position trouvée
+	 * @param pos Position autour de laquelle la recherche est effectuee
+	 * @return Position trouvee
 	 */
 	public Position trouvePositionVideAlea(Position pos) // Pour IA Random
 	{
@@ -162,10 +162,10 @@ public class Carte implements ICarte, IConfig, Serializable
 			}
 			i++;
 		}
-		return pos; //Bloqué
+		return pos; //Bloque
 	}
 	
-	/** Retourne le premier Héros trouvé sur la carte */
+	/** Retourne le premier Heros trouve sur la carte */
 	public Heros trouveHeros()
 	{
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
@@ -178,11 +178,11 @@ public class Carte implements ICarte, IConfig, Serializable
 				}
 			}
 		}
-		System.out.println("Aucun héros trouvé sur la carte");
+		System.out.println("Aucun heros trouve sur la carte");
 		return null;
 	}
 	
-	/** Retourne le premier Monstre trouvé sur la carte */
+	/** Retourne le premier Monstre trouve sur la carte */
 	public Monstre trouveMonstre()
 	{
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
@@ -195,7 +195,7 @@ public class Carte implements ICarte, IConfig, Serializable
 				}
 			}
 		}
-		System.out.println("Aucun monstre trouvé sur la carte");
+		System.out.println("Aucun monstre trouve sur la carte");
 		return null;
 	}
 	
@@ -223,16 +223,16 @@ public class Carte implements ICarte, IConfig, Serializable
 	}
 	
 	/** 
-	 * Trouve un héros choisi aléatoirement parmi les 8 positions adjacentes de pos 
-	 * @param pos Position autour de laquelle la recherche est effectuée
-	 * @return Le Heros trouvé ou null
+	 * Trouve un heros choisi aleatoirement parmi les 8 positions adjacentes de pos 
+	 * @param pos Position autour de laquelle la recherche est effectuee
+	 * @return Le Heros trouve ou null
 	 */
 	public Heros trouveHeros(Position pos)
 	{
 		int x = pos.getX();
 		int y = pos.getY();
 		
-		//Vérification que le cadre des positions adjacentes ne dépassent pas une limite
+		//Verification que le cadre des positions adjacentes ne depassent pas une limite
 		int limiteHaut = (y-1>=0)? y-1 : 0;
 		int limiteBas = (y+1<=IConfig.HAUTEUR_CARTE)? y+1 : IConfig.HAUTEUR_CARTE;
 		int limiteGauche = (x-1>=0)? x-1 : 0;
@@ -245,7 +245,7 @@ public class Carte implements ICarte, IConfig, Serializable
 				//System.out.println(caseCarte[i][j]);
 				if (caseCarte[j][i] instanceof Heros)
 				{
-					//System.out.println("Trouvé !");
+					//System.out.println("Trouve !");
 					return (Heros) caseCarte[j][i];
 				}
 			}
@@ -259,7 +259,7 @@ public class Carte implements ICarte, IConfig, Serializable
 	 * @param pos Position vers laquelle il veut aller
 	 * @return La Position adjacente à m accessible dans la direction de pos
 	 */
-	public Position avoirPositionVers(Monstre m, Position pos){ // Toujours appelé correctement > void
+	public Position avoirPositionVers(Monstre m, Position pos){ // Toujours appele correctement > void
 		int x=m.getPosition().getX();
 		int y=m.getPosition().getY();
 		int x2=pos.getX();
@@ -284,11 +284,11 @@ public class Carte implements ICarte, IConfig, Serializable
 		return trouvePositionVideAlea(m.getPosition());
 	}
 	/**
-	 * Effectue le déplacement du soldat, pas de vérification ! (voir actionHeros)
-	 * @param pos Position vers laquelle se déplace le soldat
-	 * @param soldat Soldat que l'on déplace
+	 * Effectue le deplacement du soldat, pas de verification ! (voir actionHeros)
+	 * @param pos Position vers laquelle se deplace le soldat
+	 * @param soldat Soldat que l'on deplace
 	 * @param affichage Permet d'avoir les informations relatives au deplacement ou non
-	 * @return Vrai si deplacement effectué (possible) non sinon
+	 * @return Vrai si deplacement effectue (possible) non sinon
 	 */
 	public boolean deplaceSoldat(Position pos, Soldat soldat,int affichage)
 	{	
@@ -296,13 +296,13 @@ public class Carte implements ICarte, IConfig, Serializable
 		/* On peut se deplace que d'une case */
 		if (soldat.getPortee()==1){ /* Cas du nain */
 			if( Math.abs((pos.getX()-soldat.getPosition().getX()))>1 || Math.abs((pos.getY()-soldat.getPosition().getY()))>1 || pos.distance(soldat.getPosition())>2){
-				if (affichage==1) informations = "Hors de portée";
+				if (affichage==1) informations = "Hors de portee";
 				return false;
 			}
 		}
 		else if (pos.distance(soldat.getPosition())!=1)
 		{
-			if (affichage==1) informations = "Hors de portée";
+			if (affichage==1) informations = "Hors de portee";
 			return false;
 		}
 		int x = soldat.getPosition().getX();
@@ -313,7 +313,7 @@ public class Carte implements ICarte, IConfig, Serializable
 		if( pos.estValide() && estVide(pos) )
 		{
 			caseCarte[newX][newY] = soldat;	//On place le soldat à sa nouvelle position (carte)
-			caseCarte[x][y] = new Element(x,y);	//On remplace la case laissé par le soldat par un Element simple
+			caseCarte[x][y] = new Element(x,y);	//On remplace la case laisse par le soldat par un Element simple
 			
 			soldat.seDeplace(pos); //On place le soldat à sa nouvelle position (dans son objet)
 			return true;
@@ -333,7 +333,7 @@ public class Carte implements ICarte, IConfig, Serializable
 
 	/** 
 	 * Rend mort le soldat si il doit l'etre
-	 * @param perso Soldat concerné 
+	 * @param perso Soldat concerne 
 	 */
 	public void mort(Soldat perso)
 	{
@@ -342,14 +342,14 @@ public class Carte implements ICarte, IConfig, Serializable
 	}
 	
 	/**
-	 * Fait l'action associée du Heros a la position pos vers la position pos2 (attaque, deplacement ou rien si impossible)
+	 * Fait l'action associee du Heros a la position pos vers la position pos2 (attaque, deplacement ou rien si impossible)
 	 * @param pos Position du Heros
 	 * @param pos2 Position (destination) de l'action
-	 * @return Vrai si action effectuée, Faux sinon
+	 * @return Vrai si action effectuee, Faux sinon
 	 */
 	public boolean actionHeros(Position pos, Position pos2)
 	{
-		/* Futurement a verif si il a deja joué > false */
+		/* Futurement a verif si il a deja joue > false */
 		
 		if (!(caseCarte[pos.getX()][pos.getY()] instanceof Heros))
 		{
@@ -363,13 +363,13 @@ public class Carte implements ICarte, IConfig, Serializable
 			if (estVide(pos2))	
 			{
 				informations = "";
-				//informations = "Changement de position effectué";
+				//informations = "Changement de position effectue";
 				return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()],1);
 			}
 			
 			//Case non vide		
 			
-				//Même position
+				//Meme position
 			
 			if(pos.distance(pos2) == 0)
 			{
@@ -377,11 +377,11 @@ public class Carte implements ICarte, IConfig, Serializable
 				return false;
 			}
 			
-				//Autre Héros
+				//Autre Heros
 			
 			if(getElement(pos2) instanceof Heros)
 			{
-				informations = "La position est un héros allié";
+				informations = "La position est un heros allie";
 				return false;
 			}
 	
@@ -407,9 +407,9 @@ public class Carte implements ICarte, IConfig, Serializable
 					return false;
 				}
 				informations = "Combat !";
-				if (((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]))	//Si combat gagné
+				if (((Soldat)caseCarte[pos.getX()][pos.getY()]).combat((Soldat)caseCarte[pos2.getX()][pos2.getY()]))	//Si combat gagne
 				{
-					//return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);	//On déplace et on renvoit vrai
+					//return deplaceSoldat(pos2,(Soldat)caseCarte[pos.getX()][pos.getY()]);	//On deplace et on renvoit vrai
 					/* Non on le deplace pas ?*/
 					if (((Soldat)caseCarte[pos2.getX()][pos2.getY()]).getPoints()<=0)
 						informations = "Monstre mort";
@@ -455,7 +455,7 @@ public class Carte implements ICarte, IConfig, Serializable
 		}
 	}
 	
-	/** Dessine la carte avec ses éléments 
+	/** Dessine la carte avec ses elements 
 	 * @param g Graphics
 	 */
 	public void toutDessiner(Graphics g)
@@ -474,7 +474,7 @@ public class Carte implements ICarte, IConfig, Serializable
 			{
 				if (caseCarte[i][j] instanceof Heros)
 				{
-					if (((Soldat)caseCarte[i][j]).getPortee()==1){ /*Cas a part pour les nains, portee en carré */
+					if (((Soldat)caseCarte[i][j]).getPortee()==1){ /*Cas a part pour les nains, portee en carre */
 						if (j+1<IConfig.HAUTEUR_CARTE && i+1<IConfig.LARGEUR_CARTE){
 							caseCarte[i+1][j+1].setVisible(true);
 							caseCarte[i+1][j+1].seDessiner(g);
@@ -492,7 +492,7 @@ public class Carte implements ICarte, IConfig, Serializable
 							caseCarte[i-1][j+1].seDessiner(g);
 						}
 					}
-					/* Jean-Code Degueux, pas fait un carré je trouve ça plus sympa*/
+					/* Jean-Code Degueux, pas fait un carre je trouve ça plus sympa*/
 					for (int k=-((Soldat)caseCarte[i][j]).getPortee(); k<=((Soldat)caseCarte[i][j]).getPortee();k++)
 					{
 						for (int l=0; l<=((Soldat)caseCarte[i][j]).getPortee()-(Math.abs(k));l++)
@@ -515,8 +515,8 @@ public class Carte implements ICarte, IConfig, Serializable
 	}
 	
 	/**
-	 * Verifie si le Jeu est terminé
-	 * @return Valeur associé
+	 * Verifie si le Jeu est termine
+	 * @return Valeur associe
 	 */
 	public int verifFinJeu(){ /* 0 on continue 1 on gagne 2 on perd */
 		if (trouveHeros()==null) return 2;
@@ -525,7 +525,7 @@ public class Carte implements ICarte, IConfig, Serializable
 	}
 	
 	/**
-	 * Permet d'obtenir informations (modifié par les actions)
+	 * Permet d'obtenir informations (modifie par les actions)
 	 * @return La variable qui stock les informations relatives aux actions
 	 */
 	public String getInfo()

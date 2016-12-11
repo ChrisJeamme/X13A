@@ -21,7 +21,7 @@ public class Monstre extends Soldat
 	private transient Image imageCombat;
 	
 	/**
-	 * Constructeur Monstre avec type aléatoire
+	 * Constructeur Monstre avec type aleatoire
 	 * @param x Position horizontale du monstre
 	 * @param y Position verticale du monstre
 	 */ 
@@ -82,10 +82,10 @@ public class Monstre extends Soldat
 
 	}
 	/** Heal le monstre */
-	public void heal(){ //Tour non joué
+	public void heal(){ //Tour non joue
 		if (points_de_vie>TYPE.getPoints()-3)
 			points_de_vie=TYPE.getPoints();
-		else points_de_vie=points_de_vie+3; //A définir de combien
+		else points_de_vie=points_de_vie+3; //A definir de combien
 	}
 	/** Retourne le type du Monstre 
 	 * @return Type du Monstre

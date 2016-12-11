@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Position implements IConfig, Serializable
 {
 	private static final long serialVersionUID = -4856873962311882663L;
-	/** Variables de position cartésiennes */
+	/** Variables de position cartesiennes */
 	private int x, y;
 	/**
 	 * Constructeur de position
@@ -26,12 +26,12 @@ public class Position implements IConfig, Serializable
 	public int getY() { return y; }
 	/**
 	 *  Change la position horizontale
-	 * @param x Coordonnée X
+	 * @param x Coordonnee X
 	 */
 	public void setX(int x) { this.x = x; }
 	/**
 	 * Change la position verticale
-	 * @param y Coordonnée Y
+	 * @param y Coordonnee Y
 	 */
 	public void setY(int y) { this.y = y; }
 	/**
