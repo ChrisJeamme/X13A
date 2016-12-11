@@ -24,7 +24,7 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JButton fintour;
 	/** Label des alertes (Hors de porté, combat, etc.) */
 	private JLabel labelAlerte = new JLabel();
-	/**  */
+	/** Partie haute de la fenetre (au dessus de la map) */
 	private JPanel hautfenetre = new JPanel();
 	/** Label des infos (element selectionné, points de vie, etc.) */
 	private JLabel labelInfo = new JLabel();
@@ -32,11 +32,16 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JLabel labelfin=new JLabel();
 	/** Numéro de tour */
 	private int numeroTour = 1;
-	/**  */
+	/** Permet de laisser l'affichage à la fin de partie: 1 si la partie est finie 0 sinon */
 	private int affichagefin=0;
-	/**  */
+	/** Permet de ne pas effacer l'affichage des tours */
 	private int affichagetour=0;
 	
+	/**
+	 * Constructeur PanneauJeu
+	 * @param c Carte actuelle
+	 * @param f JFrame actuelle
+	 */
 	public PanneauJeu(Carte c, final JFrame f)
 	{	
 		/*On ajoute la JMenuBar */
@@ -44,20 +49,25 @@ public class PanneauJeu extends JPanel implements Serializable
 		menuBar(f);
 		
 		/*Classe imbriquée pour separer la JMenuBar du JPanel */
+		/**
+		 * Classe imbriquée de la map
+		 */
 		class PanneauJeuImbric extends JPanel implements Serializable
 		{
 			private static final long serialVersionUID = 1L;
 			/** Carte du panneau */
 			private Carte c;
-			/** Label où il y aura les informations supplémentaires */
-			//private JLabel labelInfoTours = new JLabel();
-			/**  */
+			/** 1 si un Heros est selectionné 0 sinon */
 			private int selection=0;
 			/** Le héros selectionné */
 			private Element h;
-			/** Choix de l'IA: Par défaut à 1, il faudra faire un menu pour choisir */
-			private int choixIA = 2;	//
+			/** Choix de l'IA: Par défaut à 1 (random) sinon 2 */
+			private int choixIA = 2;
 			
+			/**
+			 * Constructeur de la classe imbriquée
+			 * @param carte Carte actuelle
+			 */
 			public PanneauJeuImbric(Carte carte)
 			{				
 				c = carte;
@@ -150,15 +160,6 @@ public class PanneauJeu extends JPanel implements Serializable
 				labelInfo.setFont(font1);
 				add(labelInfo,BorderLayout.SOUTH);
 				
-				/*
-				labelInfoTours.setOpaque(true);
-				labelInfoTours.setBackground(Color.WHITE);
-				labelInfoTours.setPreferredSize(new Dimension(500,40));	
-				labelInfoTours.setHorizontalAlignment(JLabel.CENTER);
-				//labelInfo.setVerticalAlignment(JLabel.CENTER);
-				labelInfoTours.setFont(font1);
-				*/
-				//add(labelInfoTours,BorderLayout.SOUTH);				/////////////////////////////////////// A REMETTRE POUR LES TOURS
 				
 				fintour= new Bouton("Fin de Tour", "img/BouttonF.png", "img/BouttonB.png");
 				fintour.setOpaque(true);
@@ -214,7 +215,6 @@ public class PanneauJeu extends JPanel implements Serializable
 			/** IA avec actions simples */
 			protected void iaLvl1()
 			{
-				// Mieux que random mais non fonctionnelle a 100 %
 				 Heros h;
 				 Monstre[] m = c.trouveToutMonstre();
 				 Heros[] tabheros=new Heros[IConfig.NB_HEROS];
@@ -304,7 +304,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				 }
 			}
 
-			/** IA avec actions random */
+			/** IA avec actions random: attaque si a portée, se deplace au hasard sinon */
 			protected void iaRandom()
 			{		
 				Heros h;
@@ -363,7 +363,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			
 			/**
 			 * 	Fini le tour: Fait les actions et appelle l'ia
-			 * @param c La carte
+			 * @param c La carte actuelle
 			 */
 			public void finirTour(Carte c)
 			{
@@ -373,7 +373,9 @@ public class PanneauJeu extends JPanel implements Serializable
 				labelAlerte.setText("Fin du tour "+numeroTour+" (L'IA a jouée)");
 				repaint();
 			}
-			
+			/**
+			 * Rafraichissement de la carte
+			 */
 			public void paintComponent(Graphics g)
 			{
 				super.paintComponent(g);
