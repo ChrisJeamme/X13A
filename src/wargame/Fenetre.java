@@ -15,13 +15,13 @@ public class Fenetre extends JFrame
 	/** Panneau contenant les boutons du menu */
 	private JPanel p;
 	/** Bouton chargement */
-	JButton chargement;		
+	private JButton chargement;		
 	/** Bouton lancement */														//TODO mettre public et tout
-	JButton lancement;
+	private JButton lancement;
 	/** Panneau contenant le jeu */
-	PanneauJeu panneau;
+	private PanneauJeu panneau;
 	/** Sert à activer/désactiver des raccourci clavier */
-	boolean partieDemarre = false;
+	private boolean partieDemarre = false;
 	
 	static final long serialVersionUID=0;
 	
