@@ -20,7 +20,7 @@ public class Fenetre extends JFrame
 	private JButton lancement;
 	/** Panneau contenant le jeu */
 	private PanneauJeu panneau;
-	/** Sert à activer/desactiver des raccourci clavier */
+	/** Sert  activer/desactiver des raccourci clavier */
 	private boolean partieDemarre = false;
 	
 	static final long serialVersionUID=0;

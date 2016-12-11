@@ -12,7 +12,7 @@ public class Heros extends Soldat implements ISoldat
 	private static final long serialVersionUID = 3756416095361088558L;
 	/** Type du Heros */
 	private final TypesH TYPE;
-	/** Vrai: le Heros a dejà joue, Faux sinon */
+	/** Vrai: le Heros a dej joue, Faux sinon */
 	private boolean tourJoue=false;
 	/**
 	 * Constructeur Heros avec type aleatoire
@@ -61,7 +61,7 @@ public class Heros extends Soldat implements ISoldat
 		return "("+this.getPosition().getX()+","+this.getPosition().getY()+") "+TYPE+" ("+points_de_vie+"PV/"+TYPE.getPoints()+")"; 
 	}
 	/**
-	 * Dessine l'element (image et si il a dejà joue)
+	 * Dessine l'element (image et si il a dej joue)
 	 * @param g Graphics
 	 */
 	public void seDessiner(Graphics g)

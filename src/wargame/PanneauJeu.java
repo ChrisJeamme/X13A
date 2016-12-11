@@ -34,7 +34,7 @@ public class PanneauJeu extends JPanel implements Serializable
 	private JLabel labelfin=new JLabel();
 	/** Numero de tour */
 	private int numeroTour = 1;
-	/** Permet de laisser l'affichage à la fin de partie: 1 si la partie est finie 0 sinon */
+	/** Permet de laisser l'affichage  la fin de partie: 1 si la partie est finie 0 sinon */
 	private int affichagefin=0;
 	/** Permet de ne pas effacer l'affichage des tours */
 	private int affichagetour=0;
@@ -63,7 +63,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			private int selection=0;
 			/** Le heros selectionne */
 			private Element h;
-			/** Choix de l'IA: Par defaut à 1 (random) sinon 2 */
+			/** Choix de l'IA: Par defaut  1 (random) sinon 2 */
 			private int choixIA = 2;
 			
 			/**
@@ -90,7 +90,7 @@ public class PanneauJeu extends JPanel implements Serializable
 					{
 						if (e.getX()/IConfig.NB_PIX_CASE<IConfig.LARGEUR_CARTE && e.getY()/IConfig.NB_PIX_CASE<IConfig.HAUTEUR_CARTE && affichagefin==0) //Si position souris correcte
 							if(c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE).estVisible())	//Et sur une case visible
-								labelInfo.setText(c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE).toString());	//On met à jour le labelInfo
+								labelInfo.setText(c.getElement(e.getX()/IConfig.NB_PIX_CASE,e.getY()/IConfig.NB_PIX_CASE).toString());	//On met  jour le labelInfo
 						else labelInfo.setText("");
 					}
 				});
@@ -117,7 +117,7 @@ public class PanneauJeu extends JPanel implements Serializable
 								{
 									selection = 1;
 									if (((Heros)h).getTourJoue()==true){
-										labelAlerte.setText("Ce Heros a dejà joue");
+										labelAlerte.setText("Ce Heros a dej joue");
 									}
 									else{
 										((Heros) h).estSelection(getGraphics(), c);
@@ -240,7 +240,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				 				{
 				 					h=(Heros)(c.getElement(i+l,j+v));
 				 					verif=false;
-				 					// Je verif si il y etait pas dejà
+				 					// Je verif si il y etait pas dej
 				 					for (int z=0; z<indicetab;z++)
 				 						if (h.getPosition().distance(tabheros[z].getPosition())==0)
 				 							verif=true;
@@ -257,7 +257,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				 				{
 				 					h=(Heros)(c.getElement(i-l,j+v));
 				 					verif=false;
-				 					// Je verif si il y etait pas dejà
+				 					// Je verif si il y etait pas dej
 				 					for (int z=0; z<indicetab;z++)
 				 						if (h.getPosition().distance(tabheros[z].getPosition())==0)
 				 							verif=true;
@@ -311,7 +311,7 @@ public class PanneauJeu extends JPanel implements Serializable
 			{		
 				Heros h;
 				Monstre[] m = c.trouveToutMonstre();
-				// Si un ennemi à proximite, on l'attaque
+				// Si un ennemi  proximite, on l'attaque
 				// Reviens a faire une action Monstre avec choix aleatoire
 				for(int b=0; b<m.length;b++)	//Pour tous les monstres trouves
 				{	
@@ -398,7 +398,7 @@ public class PanneauJeu extends JPanel implements Serializable
 
 			    try
 			    {			 
-			    	Calendar calendrier = Calendar.getInstance(new Locale("FRANCE"));	//La date à mettre dans le nom
+			    	Calendar calendrier = Calendar.getInstance(new Locale("FRANCE"));	//La date  mettre dans le nom
 			    	
 					final FileOutputStream fichier = new FileOutputStream("save/"+calendrier.getTime().toString().replaceAll(":", "-")+".sav");			//On l'ouvre
 					

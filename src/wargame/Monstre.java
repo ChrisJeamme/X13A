@@ -66,7 +66,7 @@ public class Monstre extends Soldat
 		return "("+this.getPosition().getX()+","+this.getPosition().getY()+") "+TYPE+" ("+points_de_vie+"PV/"+TYPE.getPoints()+")"; 
 	}
 	/** 
-	 * Dessine l'image du Monstre à sa position et si il est en combat à ce tour
+	 * Dessine l'image du Monstre  sa position et si il est en combat  ce tour
 	 * @param g Graphics
 	 */
 	public void seDessiner(Graphics g)

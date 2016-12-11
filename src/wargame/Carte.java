@@ -257,7 +257,7 @@ public class Carte implements ICarte, IConfig, Serializable
 	 * Cherche une position depuis la position actuelle allant vers la position pos
 	 * @param m Monstre actuel
 	 * @param pos Position vers laquelle il veut aller
-	 * @return La Position adjacente à m accessible dans la direction de pos
+	 * @return La Position adjacente  m accessible dans la direction de pos
 	 */
 	public Position avoirPositionVers(Monstre m, Position pos){ // Toujours appele correctement > void
 		int x=m.getPosition().getX();
@@ -312,10 +312,10 @@ public class Carte implements ICarte, IConfig, Serializable
 		
 		if( pos.estValide() && estVide(pos) )
 		{
-			caseCarte[newX][newY] = soldat;	//On place le soldat à sa nouvelle position (carte)
+			caseCarte[newX][newY] = soldat;	//On place le soldat  sa nouvelle position (carte)
 			caseCarte[x][y] = new Element(x,y);	//On remplace la case laisse par le soldat par un Element simple
 			
-			soldat.seDeplace(pos); //On place le soldat à sa nouvelle position (dans son objet)
+			soldat.seDeplace(pos); //On place le soldat  sa nouvelle position (dans son objet)
 			return true;
 		}
 		return false;
