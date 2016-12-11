@@ -341,7 +341,7 @@ public class Carte implements ICarte, IConfig, Serializable
 				((Monstre)getElement(pos2)).setEnCombat(true);
 				if (((Soldat)caseCarte[pos.getX()][pos.getY()]).getPortee()==1){ /* Cas du nain */
 					if( Math.abs((pos2.getX()-pos.getX()))>1 || Math.abs((pos2.getY()-pos.getY()))>1 || pos2.distance(pos)>2){
-						if (caseCarte[pos2.getX()][pos2.getY()].visible==true)
+						if (caseCarte[pos2.getX()][pos2.getY()].estVisible())
 							informations= "Ennemi hors de portee";
 						else informations="Hors de portee";
 						return false;
@@ -350,7 +350,7 @@ public class Carte implements ICarte, IConfig, Serializable
 				else if (pos.distance(pos2)>((Soldat)caseCarte[pos.getX()][pos.getY()]).getPortee())
 				{
 					/* Pour ne pas avoir des infos dans le brouillard de guerre */
-					if (caseCarte[pos2.getX()][pos2.getY()].visible==true)
+					if (caseCarte[pos2.getX()][pos2.getY()].estVisible())
 						informations= "Ennemi hors de portee";
 					else informations="Hors de portee";
 					return false;
@@ -377,7 +377,7 @@ public class Carte implements ICarte, IConfig, Serializable
 			
 			if(getElement(pos2) instanceof Obstacle) 
 			{					
-				if (caseCarte[pos2.getX()][pos2.getY()].visible==true)
+				if (caseCarte[pos2.getX()][pos2.getY()].estVisible())
 					informations = "La position est un obstacle";
 				else informations="Hors de portee";
 				return false;
@@ -409,7 +409,7 @@ public class Carte implements ICarte, IConfig, Serializable
 	{
 		for(int i=0; i<IConfig.LARGEUR_CARTE; i++)
 			for(int j=0; j<IConfig.HAUTEUR_CARTE; j++){
-				caseCarte[i][j].visible=false;
+				caseCarte[i][j].setVisible(false);
 				//caseCarte[i][j].seDessiner(g); //modif le temps de l'ia
 
 			}
@@ -423,19 +423,19 @@ public class Carte implements ICarte, IConfig, Serializable
 				{
 					if (((Soldat)caseCarte[i][j]).getPortee()==1){ /*Cas a part pour les nains, portee en carré */
 						if (j+1<IConfig.HAUTEUR_CARTE && i+1<IConfig.LARGEUR_CARTE){
-							caseCarte[i+1][j+1].visible=true;
+							caseCarte[i+1][j+1].setVisible(true);
 							caseCarte[i+1][j+1].seDessiner(g);
 						}
 						if (j-1>=0 && i-1>=0){
-							caseCarte[i-1][j-1].visible=true;
+							caseCarte[i-1][j-1].setVisible(true);
 							caseCarte[i-1][j-1].seDessiner(g);
 						}
 						if (j-1>=0 && i+1<IConfig.LARGEUR_CARTE){
-							caseCarte[i+1][j-1].visible=true;
+							caseCarte[i+1][j-1].setVisible(true);
 							caseCarte[i+1][j-1].seDessiner(g);
 						}
 						if (i-1>=0 && j+1<IConfig.HAUTEUR_CARTE){
-							caseCarte[i-1][j+1].visible=true;
+							caseCarte[i-1][j+1].setVisible(true);
 							caseCarte[i-1][j+1].seDessiner(g);
 						}
 					}
@@ -446,12 +446,12 @@ public class Carte implements ICarte, IConfig, Serializable
 						{
 							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i+l<IConfig.LARGEUR_CARTE)
 							{
-								caseCarte[i+l][j+k].visible=true;
+								caseCarte[i+l][j+k].setVisible(true);
 								caseCarte[i+l][j+k].seDessiner(g);
 							}
 							if (j+k>=0 && j+k<IConfig.HAUTEUR_CARTE && i-l>=0)
 							{
-								caseCarte[i-l][j+k].visible=true;
+								caseCarte[i-l][j+k].setVisible(true);
 								caseCarte[i-l][j+k].seDessiner(g);
 							}
 						}

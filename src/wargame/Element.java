@@ -22,9 +22,9 @@ public class Element implements IConfig, Serializable
 	/** Position de l'element */
 	private Position pos;
 	/** Si l'element est visible par l'utilisateur */
-	public boolean visible = false;
+	private boolean visible = false;
 	/** Si l'element est vide */
-	public boolean vide = true;
+	private boolean vide = true;
 	
 	/**
 	 * Constructeur principal d'un Element avec x et y séparés
@@ -56,6 +56,32 @@ public class Element implements IConfig, Serializable
 		return vide;
 	}
 	
+	/**
+	 * 	Changer le fait que l'élément soit vide
+	 * @param b Vrai = l'élément sera vide
+	 */
+	public void setVide(boolean b)
+	{
+		vide = b;
+	}
+	
+	/**
+	 * 
+	 * @return Vrai si l'élément est visible
+	 */
+	public boolean estVisible()
+	{
+		return visible;
+	}
+	
+	/**
+	 * Change le fait que l'élément soit visible ou pas
+	 * @param b Vrai si on veut qu'il soit visible
+	 */
+	public void setVisible(boolean b)
+	{
+		visible = b;
+	}
 	
 	/**
 	 * @return La position de l'élement
@@ -145,5 +171,4 @@ public class Element implements IConfig, Serializable
 	{ 
 		return "("+this.getPosition().getX()+","+this.getPosition().getY()+") "+" VIDE"; 
 	}
-	
 }
