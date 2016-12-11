@@ -4,14 +4,21 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
+/**
+ * Classe des Heros
+ */
 public class Heros extends Soldat implements ISoldat
 {
 	private static final long serialVersionUID = 3756416095361088558L;
-	
+	/** Type du Heros */
 	private final TypesH TYPE;
+	/** Vrai: le Heros a déjà joué, Faux sinon */
 	private boolean tourJoue=false;
-	
+	/**
+	 * Constructeur Heros avec type aléatoire
+	 * @param x Position horizontale
+	 * @param y Position verticale
+	 */
 	public Heros(int x, int y)
 	{
 		super(x,y);
@@ -26,7 +33,12 @@ public class Heros extends Soldat implements ISoldat
 		if(TYPE == TypesH.ELF)		{typeImage = 9;changerImage();}
 		if(TYPE == TypesH.HOBBIT)	{typeImage = 11;changerImage();}
 	}
-	
+	/**
+	 * Constructeur Heros avec type choisi
+	 * @param type Type du Heros
+	 * @param x Position horizontale
+	 * @param y Position verticale
+	 */
 	public Heros(TypesH type,int x, int y)
 	{
 		super(x,y);
@@ -43,12 +55,15 @@ public class Heros extends Soldat implements ISoldat
 		
 		
 	}
-	
+	/** Redefinition de toString() pour Heros */
 	public String toString() 
 	{ 
 		return "("+this.getPosition().getX()+","+this.getPosition().getY()+") "+TYPE+" ("+points_de_vie+"PV/"+TYPE.getPoints()+")"; 
 	}
-	
+	/**
+	 * Dessine l'element (image et si il a déjà joué)
+	 * @param g Graphics
+	 */
 	public void seDessiner(Graphics g)
 	{
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
@@ -58,7 +73,11 @@ public class Heros extends Soldat implements ISoldat
 			g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE);
 		}
 	}
-	
+	/**
+	 * Dessine la selection (affichage de la portée d'attaque, de déplacement et les héros alliés et ennemis) du Heros
+	 * @param g Graphics
+	 * @param c Carte actuelle
+	 */
 	public void estSelection(Graphics g,Carte c){
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(2)); /* Pour augmenter la largeur des traits ? */
@@ -229,15 +248,23 @@ public class Heros extends Soldat implements ISoldat
 			g.drawLine(i*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE,(i+1)*IConfig.NB_PIX_CASE,(j+1)*IConfig.NB_PIX_CASE);
 		}
 	}
-
+	/**
+	 * Fixe TourJoue 
+	 * @param ajoue vrai: a joué, faux sinon
+	 */
 	public void setTourJoue(boolean ajoue){
 		tourJoue=ajoue;
 	}
-	
+	/**
+	 * Retourne la valeur de tourJoue
+	 * @return tourJoue
+	 */
 	public boolean getTourJoue(){
 		return tourJoue;
 	}
-
+	/**
+	 * Heal le Heros
+	 */
 	public void heal(){ //Tour non joué
 		if (points_de_vie>TYPE.getPoints()-3)
 			points_de_vie=TYPE.getPoints();

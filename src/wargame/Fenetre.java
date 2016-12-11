@@ -7,6 +7,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Classe créant la fenetre de jeu (menu)
+ */
 public class Fenetre extends JFrame
 {
 	/** Panneau contenant les boutons du menu */

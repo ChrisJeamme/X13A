@@ -1,6 +1,5 @@
 package wargame;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -9,7 +8,9 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-/**  */
+/** 
+ *  Classe des Elements
+ */
 public class Element implements IConfig, Serializable
 {
 	private static final long serialVersionUID = -5790544026462153601L;
