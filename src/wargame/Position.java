@@ -50,8 +50,8 @@ public class Position implements IConfig, Serializable
 	public String toString() { return "("+x+","+y+")"; }
 	/** 
 	 * Cherche si la position courante est voisine de pos (8 cases autour)
-	 * @param pos position de recherche
-	 * @return vrai si position voisine faux sinon
+	 * @param pos Position de recherche
+	 * @return Vrai si position voisine faux sinon
 	 */
 	public boolean estVoisine(Position pos)
 	{

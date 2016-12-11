@@ -81,7 +81,7 @@ public class Fenetre extends JFrame
 			}
 		});
 		
-		lancement = new Boutton("(1)   Lancer une partie", "img/BouttonF.png", "img/BouttonB.png");
+		lancement = new Bouton("(1)   Lancer une partie", "img/BouttonF.png", "img/BouttonB.png");
 		lancement.setPreferredSize(new Dimension(300,30));
 		p.add(lancement,gbc);
 		lancement.addMouseListener(new MouseAdapter()
@@ -94,7 +94,7 @@ public class Fenetre extends JFrame
 		
 		//Bouton Chargement
 		
-		chargement = new Boutton("(2)   Charger une partie", "img/BouttonF.png", "img/BouttonB.png");
+		chargement = new Bouton("(2)   Charger une partie", "img/BouttonF.png", "img/BouttonB.png");
 		chargement.setPreferredSize(new Dimension(300,30));
 		gbc.gridy = -10;
 		p.add(chargement,gbc);

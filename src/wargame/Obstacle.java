@@ -25,7 +25,6 @@ public class Obstacle extends Element implements IConfig
 		super(pos);
 		TYPE = type; 
 		vide=false;
-		couleur=TYPE.COULEUR;
 		
 		if(TYPE.name() == "ROCHER")			{typeImage = 3;changerImage();}
 		if(TYPE.name() == "FORET")			{typeImage = 1;changerImage();}
@@ -36,9 +35,6 @@ public class Obstacle extends Element implements IConfig
 	
 	public void seDessiner(Graphics g)
 	{
-		g.setColor(couleur);
-		//g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
-		
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 		
 		//.... On dessine un carré à la position pos de 20x20 ?

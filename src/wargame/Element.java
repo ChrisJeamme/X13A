@@ -14,11 +14,15 @@ public class Element implements IConfig, Serializable
 {
 	private static final long serialVersionUID = -5790544026462153601L;
 	
-	public java.awt.Color couleur = Color.WHITE;
-	public transient Image image;
-	public int typeImage;
+	/** Image d'un element */
+	protected transient Image image;
+	/** Type de l'image */
+	protected int typeImage;
+	/** Position de l'element */
 	private Position pos;
+	/** Si l'element est visible par l'utilisateur */
 	public boolean visible = false;
+	/** Si l'element est vide */
 	public boolean vide = true;
 	
 	/**
@@ -125,14 +129,17 @@ public class Element implements IConfig, Serializable
 		}
 		catch (IOException e){e.printStackTrace();} 
 	}
-	
+	/**
+	 * Dessine l'element
+	 * @param g Graphics
+	 */
 	public void seDessiner(Graphics g)
 	{
-		g.setColor(couleur);
-		//g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 	}
-	
+	/**
+	 * Redefinition de toString pour l'element
+	 */
 	public String toString() 
 	{ 
 		return "("+this.getPosition().getX()+","+this.getPosition().getY()+") "+" VIDE"; 

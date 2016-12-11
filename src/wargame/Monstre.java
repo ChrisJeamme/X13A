@@ -23,7 +23,6 @@ public class Monstre extends Soldat
 		portee_visuelle=TYPE.getPortee();
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
-		couleur = Color.ORANGE;
 
 		//On met l'image correspondate au type d'ennemi
 		
@@ -40,7 +39,6 @@ public class Monstre extends Soldat
 		portee_visuelle=TYPE.getPortee();
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
-		couleur = Color.ORANGE;
 		
 		if(TYPE == TypesM.TROLL)		{typeImage = 5;changerImage();}
 		if(TYPE == TypesM.ORC)			{typeImage = 6;changerImage();}
@@ -54,9 +52,6 @@ public class Monstre extends Soldat
 	
 	public void seDessiner(Graphics g)
 	{
-		g.setColor(couleur);
-		//g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
-	    
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 	    try
 		{
@@ -66,7 +61,6 @@ public class Monstre extends Soldat
 	    if (enCombat)
 	    	g.drawImage(imageCombat, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 
-		//.... On dessine un carré à la position pos de 20x20 ?
 	}
 	public void heal(){ //Tour non joué
 		if (points_de_vie>TYPE.getPoints()-3)

@@ -5,11 +5,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-public class Boutton extends JButton
+/**
+ * Classe permettant de créer les boutons
+ */
+public class Bouton extends JButton
 {
 	private static final long serialVersionUID = -8348361669997490348L;
-
-	public Boutton(String texte, String img, String imgHover)
+	/**
+	 * Constructeur Bouton
+	 * @param texte Texte du bouton
+	 * @param img 
+	 * @param imgHover
+	 */
+	public Bouton(String texte, String img, String imgHover)
 	{
 		super(texte);
 		setForeground(Color.WHITE);

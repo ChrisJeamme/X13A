@@ -84,8 +84,8 @@ public abstract class Soldat extends Element implements ISoldat, IConfig
 	}
 	/**
 	 * 	Methode de combat en le soldat actuel et celui passé en parametre
-	 * @param soldat le soldat attaqué
-	 * @return vrai si le combat est gagné par le soldat courant
+	 * @param soldat Le soldat attaqué
+	 * @return Vrai si le combat est gagné par le soldat courant
 	 */
 	public boolean combat(Soldat soldat)
 	{

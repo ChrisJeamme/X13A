@@ -160,7 +160,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				*/
 				//add(labelInfoTours,BorderLayout.SOUTH);				/////////////////////////////////////// A REMETTRE POUR LES TOURS
 				
-				fintour= new Boutton("Fin de Tour", "img/BouttonF.png", "img/BouttonB.png");
+				fintour= new Bouton("Fin de Tour", "img/BouttonF.png", "img/BouttonB.png");
 				fintour.setOpaque(true);
 				fintour.addMouseListener(new MouseAdapter()
 				{
@@ -174,7 +174,7 @@ public class PanneauJeu extends JPanel implements Serializable
 				menuBar.add(fintour);
 				
 				/*Ajouté ici pour reconnaitre la fonction sauvegarde */
-				sauvegarde = new Boutton("Sauvegarder une partie", "img/BouttonF.png", "img/BouttonB.png");
+				sauvegarde = new Bouton("Sauvegarder une partie", "img/BouttonF.png", "img/BouttonB.png");
 				sauvegarde.setPreferredSize(new Dimension(300,30));
 				sauvegarde.addMouseListener(new MouseAdapter()
 				{
@@ -485,7 +485,7 @@ public class PanneauJeu extends JPanel implements Serializable
 		menuBar.setPreferredSize(new Dimension(IConfig.LARGEUR_CARTE*IConfig.NB_PIX_CASE,50));
 		//menuBar.setBackground(new Color(0,0,0));
 		//Bouton Menu dans barre du haut 
-		menu = new Boutton("(Echap) Menu", "img/BouttonF.png", "img/BouttonB.png");
+		menu = new Bouton("(Echap) Menu", "img/BouttonF.png", "img/BouttonB.png");
 		menu.setOpaque(true);
 		menu.addMouseListener(new MouseAdapter()
 		{

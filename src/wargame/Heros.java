@@ -20,7 +20,6 @@ public class Heros extends Soldat implements ISoldat
 		portee_visuelle=TYPE.getPortee();
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
-		couleur=Color.YELLOW;
 		
 		if(TYPE == TypesH.NAIN)		{typeImage = 10;changerImage();}
 		if(TYPE == TypesH.HUMAIN)	{typeImage = 8;changerImage();}
@@ -36,7 +35,6 @@ public class Heros extends Soldat implements ISoldat
 		portee_visuelle=TYPE.getPortee();
 		puissance=TYPE.getPuissance();
 		tir=TYPE.getTir();
-		couleur=Color.YELLOW;
 
 		if(TYPE == TypesH.NAIN)		{typeImage = 10;changerImage();}
 		if(TYPE == TypesH.HUMAIN)	{typeImage = 8;changerImage();}
@@ -53,11 +51,6 @@ public class Heros extends Soldat implements ISoldat
 	
 	public void seDessiner(Graphics g)
 	{
-		g.setColor(couleur);
-		//g.fillRect(getPosition().getX()*IConfig.NB_PIX_CASE+1,getPosition().getY()*IConfig.NB_PIX_CASE+1,IConfig.NB_PIX_CASE-2,IConfig.NB_PIX_CASE-2);
-		
-		//System.out.println(getPosition().getX());
-		
 	    g.drawImage(image, getPosition().getX()*IConfig.NB_PIX_CASE+1, getPosition().getY()*IConfig.NB_PIX_CASE+1, NB_PIX_CASE, NB_PIX_CASE, null);
 		
 		if (tourJoue){
