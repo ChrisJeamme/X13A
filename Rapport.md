@@ -80,10 +80,11 @@ Travaillé majoritairement sur:
 + Généralités
 
 **Dimitri BRUYERE**  
-Temps:  
+Temps: Environ 30 heures 
 Travaillé majoritairement sur:
++ Fonctions de jeu
++ Organisation des classes
 + UML
-+ Généralités
 
 ## Liste exhaustive des ressources utilisées (lol)
 
