@@ -413,7 +413,7 @@ public class Carte implements ICarte, IConfig, Serializable
 					/* Non on le deplace pas ?*/
 					if (((Soldat)caseCarte[pos2.getX()][pos2.getY()]).getPoints()<=0)
 						informations = "Monstre mort";
-					mort((Soldat)caseCarte[pos2.getX()][pos2.getY()]); /* Si mort, ça le supprime */
+					mort((Soldat)caseCarte[pos2.getX()][pos2.getY()]); /* Si mort, ca le supprime */
 				}
 				else 
 				{
@@ -492,7 +492,7 @@ public class Carte implements ICarte, IConfig, Serializable
 							caseCarte[i-1][j+1].seDessiner(g);
 						}
 					}
-					/* Jean-Code Degueux, pas fait un carre je trouve ça plus sympa*/
+					/* Jean-Code Degueux, pas fait un carre je trouve ca plus sympa*/
 					for (int k=-((Soldat)caseCarte[i][j]).getPortee(); k<=((Soldat)caseCarte[i][j]).getPortee();k++)
 					{
 						for (int l=0; l<=((Soldat)caseCarte[i][j]).getPortee()-(Math.abs(k));l++)
