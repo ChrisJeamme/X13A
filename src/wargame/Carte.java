@@ -513,6 +513,7 @@ public class Carte implements ICarte, IConfig, Serializable
 			}
 		}
 	}
+	
 	/**
 	 * Verifie si le Jeu est terminé
 	 * @return Valeur associé
@@ -522,8 +523,13 @@ public class Carte implements ICarte, IConfig, Serializable
 		else if (trouveMonstre()==null) return 1;
 		else return 0;
 	}
-	/** Permet d'obtenir informations (modifié par les actions */
-	public String getInfo(){
+	
+	/**
+	 * Permet d'obtenir informations (modifié par les actions)
+	 * @return La variable qui stock les informations relatives aux actions
+	 */
+	public String getInfo()
+	{
 		return informations;
 	}
 }
