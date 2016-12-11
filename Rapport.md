@@ -29,11 +29,32 @@ Nous allons donc présenter en plusieurs parties la manière dont nous sommes ar
 
 ## Analyse du projet
 
-blabla uml ici + commentaire de pq comment
-
 ### Diagramme de classes
 
 ![UML](JavaSaignerUML.png)
+
+### Explications
+
+Nous avons ici tout d'abord repris la structure de base donnée (à savoir les 3 Interfaces IConfig, ISoldat et ICarte ainsi que les classes Element/Soldat etc..)
+
+Ainsi nous pouvons repérer 3 classes principales:
++ Carte
++ Element
++ PanneauJeu
+
+1- La classe Carte sera la pour gérer toutes les actions faites sur celle-ci, à savoir toute action du joueur pendant la partie (déplacer, attaquer etc).
+
+2- La classe Element quant-à-elle est primordiale, la carte sera composés d'Element, ceux-ci pouvant être vide (Element même) ou bien un Soldat ou un Obstacle (héritage).
+Le Soldat lui-même pourra être un Héros (joueur) ou un Monstre (général-ordinateur).
+
+Notre choix de structure a plus divergé quant à l'organisation des interfaces.
+
+3- La classe Main est celle qui lance le jeu, mais celle-ci ne fait que appel à Fenetre qui crée la JFrame et le menu.
+LancementJeu n'est ici que pour parametrer le JPanel utilisé de la même façon pour Bouton avec les JButon.
+<br>   Tout le déroulement se fait dans PanneauJeu, Celui-ci gère le rafraichissement des différents éléments graphiques et réagis sur ses différents composants (clic, passage de la souris).
+C'est cette classe qui fera appel aux méthodes externes pour que le déroulement du jeu soit correct.
+
+Une classe au chargement a également été utile afin de condenser le code.
 
 ## Techniques de POO mises en oeuvre
 
@@ -117,6 +138,10 @@ Travaillé majoritairement sur:
 + UML
 
 ## Bilan
+
+Nous sommes parvenus à créer un jeu de wargame en java conforméments aux prérequis de sujet. Celui-ci implémente donc les fonctionnalités de base mais également d'autrescomme una IA améliorée, une interface graphique plus évoluée (un menu, des images, une selection visible...) ainsi qu'une gesiton de la sauvegarde permettant à l'utilisateur de sauvegarder et reprendre différentes parties. Les racccourcis clavier ont également été implémentés comme décrit plus haut.
+
+De très nombreuses améliorations auraient été également possibles, la ou nous avons préferé implementer plus de fonctionnalités, nous avons moins optimisé le code sur sa rapidité, sur son utilisation des principes de la POO (par exemple: rendre la classe Element abstract et créer une classe Elementvide aurait été possible). Outre le code lui-même, l'ajout de nombreuses fonctionnalités était toujours possible avec un temps de développement plus important (affichage amélioré: informations sur le combat, grille hexagonale etc..).
 
 ## Annexes
 
