@@ -6,7 +6,9 @@ import java.io.Serializable;
 import wargame.ISoldat.TypesH;
 import wargame.ISoldat.TypesM;
 import wargame.Obstacle.TypeObstacle;
-
+/**
+ * Classe de gestion de la Carte
+ */
 public class Carte implements ICarte, IConfig, Serializable
 {
 	private static final long serialVersionUID = 3933938513841317615L;

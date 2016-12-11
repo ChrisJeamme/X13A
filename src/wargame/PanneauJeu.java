@@ -9,7 +9,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Locale;
 import javax.swing.*;
-
+/**
+ * Classe du Panneau de Jeu
+ */
 public class PanneauJeu extends JPanel implements Serializable
 {
 	private static final long serialVersionUID = 1877005263173998764L;
