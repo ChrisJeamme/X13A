@@ -10,8 +10,5 @@ public class Main
 
 		for(TypesH h: TypesH.values())
 			System.out.println(h+" "+h.getPoints()+" "+h.getPortee()+" "+h.getPuissance()+" "+h.getTir());
-		
-		//TODO Des try catch, qui peuvent ouvrir des fenetres JOptionPane()
-		//TODO Tout commenter
 	}
 }
