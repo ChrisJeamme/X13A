@@ -57,7 +57,11 @@ Un label alerte informe l'utilisateur (sous la barre de menu) tel que celui-ci a
 Deux IA possibles:
     + Une IA random comme demandée par le sujet (choixIA=1)
     + Une IA améliorée: Celle-ci repère tous les Héros à portée du groupe de Monstres et chaque Monstre essayera de rejoindre ou attaquer l'ennemi le plus près. Un Monstre peut également se régénerer si celui-ci est hors de portée d'attaque et n'a pas tout sa vie.
-    
+
+## Diagramme de classes
+
+![UML](JavaSaignerUML.png)
+
 ## Estimation temps de travail
 
 **Christopher JEAMME**  
