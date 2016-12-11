@@ -267,10 +267,6 @@ public class PanneauJeu extends JPanel implements Serializable
 				 			}
 				 		}
 					}	
-				 	if(h==null)	//Sinon on se déplace
-				 	{
-				 		c.deplaceSoldat(c.trouvePositionVideAlea(m[b].getPosition()),m[b],0);
-				 	}
 				 }
 				 // Recuperation faite
 				 for(int b=0; b<m.length;b++)	

@@ -231,7 +231,7 @@ public class Carte implements ICarte, IConfig, Serializable
 		int y=m.getPosition().getY();
 		int x2=pos.getX();
 		int y2=pos.getY();
-		if (x<x2){
+		if (x<=x2){
 			if (new Position(x+1,y).estValide() && estVide(new Position(x+1,y)))
 				return(new Position(x+1,y));
 			else if (y>y2){
